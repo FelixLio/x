@@ -115,12 +115,12 @@ export const componentOverviewItems: ComponentOverviewItem[] = [
       "en-US": "Feedback",
     },
     groupOrder: 4,
-    cover: 
+    cover:
       "https://mdn.alipayobjects.com/huamei_b00jk5/afts/img/A*3nEPRYJbNQgAAAAAQFAAAAgAegitAQ/original",
     coverDark:
       "https://mdn.alipayobjects.com/huamei_b00jk5/afts/img/A*_7mMRrQVcXcAAAAAQEAAAAgAegitAQ/original",
-   }
-   {
+  },
+  {
     slug: "file-card",
     path: "/components/file-card",
     title: "FileCard",

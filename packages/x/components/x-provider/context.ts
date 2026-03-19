@@ -6,8 +6,8 @@ import { computed, inject } from "vue";
 import type { ActionsProps } from "../actions";
 import type { BubbleProps } from "../bubble";
 import type { ConversationsProps } from "../conversations";
-import type { SourcesProps } from "../sources";
 import type { FileCardProps } from "../file-card";
+import type { SourcesProps } from "../sources";
 import type { DesignTokenProviderProps } from "../theme/context";
 
 export interface BaseComponentConfig {
@@ -22,22 +22,14 @@ export interface XComponentConfig extends BaseComponentConfig {
 }
 
 export interface XComponentsConfig {
-  bubble?: Pick<BubbleProps, "style" | "styles" | "class" | "classes"> & {
-    className?: string;
-  };
+  bubble?: Pick<BubbleProps, "style" | "styles" | "class" | "classes">;
   conversations?: Pick<
     ConversationsProps,
     "style" | "styles" | "class" | "classes" | "shortcutKeys"
-  > & {
-    className?: string;
-  };
-  actions?: Pick<ActionsProps, "style" | "styles" | "class" | "classes"> & {
-    className?: string;
-  };
-  sources?: Pick<SourcesProps, "style" | "styles" | "class" | "classes"> & {
-  fileCard?: Pick<FileCardProps, "style" | "styles" | "class" | "classes"> & {
-    className?: string;
-  };
+  >;
+  actions?: Pick<ActionsProps, "style" | "styles" | "class" | "classes">;
+  sources?: Pick<SourcesProps, "style" | "styles" | "class" | "classes">;
+  fileCard?: Pick<FileCardProps, "style" | "styles" | "class" | "classes">;
 }
 
 export interface XProviderProps
