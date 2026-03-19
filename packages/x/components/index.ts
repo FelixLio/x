@@ -26,6 +26,7 @@ import Conversations, {
   ConversationsCreation,
   XConversations,
 } from "./conversations";
+import Sources from "./sources";
 import FileCard, { FileCardList, XFileCard, XFileCardList } from "./file-card";
 import XProvider from "./x-provider";
 
@@ -39,6 +40,7 @@ const components = [
   ConversationsCreation,
   XProvider,
   XActions,
+  Sources,
   XActionsAudio,
   XActionsCopy,
   XActionsFeedback,
@@ -88,8 +90,6 @@ export {
   CodeHighlighter,
   Conversations,
   ConversationsCreation,
-  FileCard,
-  FileCardList,
   XProvider,
   version,
   XActions,
@@ -103,6 +103,7 @@ export {
   XBubbleSystem,
   XCodeHighlighter,
   XConversations,
+  Sources,
   XFileCard,
   XFileCardList,
 };
@@ -138,6 +139,7 @@ export type {
   ShortcutKeys,
 } from "./conversations";
 
+export type { SourcesProps } from "./sources";
 export type {
   CodeHighlighterProps,
   CodeHighlighterRef,
