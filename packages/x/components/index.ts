@@ -6,47 +6,31 @@ import Actions, {
   ActionsCopy,
   ActionsFeedback,
   ActionsItem,
-  XActions,
-  XActionsAudio,
-  XActionsCopy,
-  XActionsFeedback,
-  XActionsItem,
 } from "./actions";
-import Bubble, {
-  BubbleDivider,
-  BubbleList,
-  BubbleSystem,
-  XBubble,
-  XBubbleDivider,
-  XBubbleList,
-  XBubbleSystem,
-} from "./bubble";
-import CodeHighlighter, { XCodeHighlighter } from "./code-highlighter";
-import Conversations, {
-  ConversationsCreation,
-  XConversations,
-} from "./conversations";
+import Bubble, { BubbleDivider, BubbleList, BubbleSystem } from "./bubble";
+import CodeHighlighter from "./code-highlighter";
+import Conversations, { ConversationsCreation } from "./conversations";
+import FileCard, { FileCardList } from "./file-card";
 import Sources from "./sources";
-import FileCard, { FileCardList, XFileCard, XFileCardList } from "./file-card";
 import XProvider from "./x-provider";
 
 const components = [
-  XBubble,
-  XBubbleList,
-  XBubbleSystem,
-  XBubbleDivider,
-  XCodeHighlighter,
-  XConversations,
+  Bubble,
+  BubbleList,
+  BubbleSystem,
+  BubbleDivider,
+  CodeHighlighter,
+  Conversations,
   ConversationsCreation,
   XProvider,
-  XActions,
+  Actions,
   Sources,
-  XActionsAudio,
-  XActionsCopy,
-  XActionsFeedback,
-  XActionsItem,
-  XFileCard,
-  XFileCardList,
+  ActionsAudio,
+  ActionsCopy,
+  ActionsFeedback,
+  ActionsItem,
+  FileCard,
+  FileCardList,
 ];
 
 const componentAliases = new Map<string, string[]>([
@@ -90,22 +74,11 @@ export {
   CodeHighlighter,
   Conversations,
   ConversationsCreation,
+  FileCard,
+  FileCardList,
   XProvider,
   version,
-  XActions,
-  XActionsAudio,
-  XActionsCopy,
-  XActionsFeedback,
-  XActionsItem,
-  XBubble,
-  XBubbleDivider,
-  XBubbleList,
-  XBubbleSystem,
-  XCodeHighlighter,
-  XConversations,
   Sources,
-  XFileCard,
-  XFileCardList,
 };
 
 export type {

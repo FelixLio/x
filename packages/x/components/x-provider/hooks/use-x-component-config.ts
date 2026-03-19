@@ -14,9 +14,8 @@ export default function useXComponentConfig(
     const typedConfig = componentConfig as XComponentConfig;
 
     return {
-      style: (typedConfig as any).style,
+      style: typedConfig.style,
       styles: typedConfig.styles ?? {},
-      className: typedConfig.className ?? (typedConfig as any).class,
       classes: typedConfig.classes ?? {},
       shortcutKeys: typedConfig.shortcutKeys ?? {},
     };

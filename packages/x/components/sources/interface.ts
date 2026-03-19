@@ -29,7 +29,7 @@ export interface SourcesProps extends Omit<
   styles?: Partial<Record<SemanticType, CSSProperties>>;
   class?: ClassValue;
   classes?: Partial<Record<SemanticType, string>>;
-  rootClassName?: string;
+  rootClass?: string;
   inline?: boolean;
   items?: SourcesItem[];
   title?: VNodeChild;

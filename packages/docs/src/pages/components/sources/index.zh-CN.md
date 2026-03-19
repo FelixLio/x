@@ -24,6 +24,7 @@ description: 展示引用的数据来源地址。
 | ------------------- | -------------------- | ---------------------------------------------------- | ------- | ---- |
 | classes             | 样式类名             | [Record<SemanticType, string>](#semantic-dom)        | -       | -    |
 | styles              | 样式 style           | [Record<SemanticType, CSSProperties>](#semantic-dom) | -       | -    |
+| rootClass           | 根节点类名           | string                                               | -       | -    |
 | title               | 标题内容             | VNodeChild                                           | -       | -    |
 | items               | 来源内容             | SourcesItem[]                                        | -       | -    |
 | expandIconPosition  | 折叠图标位置         | 'start' \| 'end'                                     | 'start' | -    |

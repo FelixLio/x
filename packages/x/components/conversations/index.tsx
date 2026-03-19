@@ -94,7 +94,7 @@ function isTypingTarget(target: EventTarget | null) {
   return tagName === "input" || tagName === "textarea" || tagName === "select";
 }
 
-export const XConversations = defineComponent({
+const XConversations = defineComponent({
   name: "XConversations",
   inheritAttrs: false,
   props: {
@@ -396,7 +396,6 @@ export const XConversations = defineComponent({
         {...domAttrs.value}
         class={[
           props.prefixCls,
-          contextConfig.value.className,
           props.rootClass,
           contextConfig.value.classes?.root,
           props.classes?.root,

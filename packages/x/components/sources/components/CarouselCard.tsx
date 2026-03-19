@@ -51,7 +51,7 @@ const CarouselCard = defineComponent({
     watch(
       [() => props.activeKey, () => props.items],
       () => {
-        nextTick(() => {
+        void nextTick(() => {
           if (carouselRef.value) {
             const current = Math.max(
               0,

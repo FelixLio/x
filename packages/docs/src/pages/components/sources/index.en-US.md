@@ -23,6 +23,7 @@ description: Show the source address of the referenced data.
 | ------------------- | ---------------------------- | ---------------------------------------------------- | ------- | ------- |
 | classes             | DOM class                    | [Record<SemanticType, string>](#semantic-dom)        | -       | -       |
 | styles              | DOM style                    | [Record<SemanticType, CSSProperties>](#semantic-dom) | -       | -       |
+| rootClass           | Root element class name      | string                                               | -       | -       |
 | title               | Title content                | VNodeChild                                           | -       | -       |
 | items               | Sources content list         | SourcesItem[]                                        | -       | -       |
 | expandIconPosition  | Expand icon position         | 'start' \| 'end'                                     | 'start' | -       |

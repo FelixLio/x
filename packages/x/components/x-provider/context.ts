@@ -1,5 +1,5 @@
 import type { ConfigProviderProps } from "antdv-next";
-import type { ClassValue, ComputedRef, CSSProperties, StyleValue } from "vue";
+import type { ComputedRef, CSSProperties, StyleValue } from "vue";
 
 import { computed, inject } from "vue";
 
@@ -13,7 +13,6 @@ import type { DesignTokenProviderProps } from "../theme/context";
 export interface BaseComponentConfig {
   style?: StyleValue;
   styles?: Record<string, CSSProperties>;
-  className?: ClassValue;
   classes?: Record<string, string>;
 }
 
@@ -22,14 +21,14 @@ export interface XComponentConfig extends BaseComponentConfig {
 }
 
 export interface XComponentsConfig {
-  bubble?: Pick<BubbleProps, "style" | "styles" | "class" | "classes">;
+  bubble?: Pick<BubbleProps, "style" | "styles" | "classes">;
   conversations?: Pick<
     ConversationsProps,
-    "style" | "styles" | "class" | "classes" | "shortcutKeys"
+    "style" | "styles" | "classes" | "shortcutKeys"
   >;
-  actions?: Pick<ActionsProps, "style" | "styles" | "class" | "classes">;
-  sources?: Pick<SourcesProps, "style" | "styles" | "class" | "classes">;
-  fileCard?: Pick<FileCardProps, "style" | "styles" | "class" | "classes">;
+  actions?: Pick<ActionsProps, "style" | "styles" | "classes">;
+  sources?: Pick<SourcesProps, "style" | "styles" | "classes">;
+  fileCard?: Pick<FileCardProps, "style" | "styles" | "classes">;
 }
 
 export interface XProviderProps

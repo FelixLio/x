@@ -1,7 +1,7 @@
-import Bubble, { XBubble } from "./Bubble";
-import BubbleList, { XBubbleList } from "./BubbleList";
-import BubbleDivider, { XBubbleDivider } from "./Divider";
-import BubbleSystem, { XBubbleSystem } from "./System";
+import Bubble from "./Bubble";
+import BubbleList from "./BubbleList";
+import BubbleDivider from "./Divider";
+import BubbleSystem from "./System";
 
 export type {
   BubbleItemType,
@@ -22,14 +22,6 @@ BubbleWithSub.List = BubbleList;
 BubbleWithSub.System = BubbleSystem;
 BubbleWithSub.Divider = BubbleDivider;
 
-export {
-  BubbleDivider,
-  BubbleList,
-  BubbleSystem,
-  XBubble,
-  XBubbleDivider,
-  XBubbleList,
-  XBubbleSystem,
-};
+export { BubbleDivider, BubbleList, BubbleSystem };
 
 export default BubbleWithSub;

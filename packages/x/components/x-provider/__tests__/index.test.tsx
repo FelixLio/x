@@ -11,7 +11,9 @@ describe("XProvider", () => {
         return (
           <XProvider
             bubble={{
-              className: "test-bubble",
+              classes: {
+                root: "test-bubble",
+              },
             }}
           >
             <Bubble content="test" />
@@ -31,7 +33,9 @@ describe("XProvider", () => {
         return (
           <XProvider
             conversations={{
-              className: "test-conversations",
+              classes: {
+                root: "test-conversations",
+              },
             }}
           >
             <Conversations creation={{ onClick }} />
@@ -52,7 +56,9 @@ describe("XProvider", () => {
         return (
           <XProvider
             fileCard={{
-              className: "test-file-card",
+              classes: {
+                root: "test-file-card",
+              },
             }}
           >
             <FileCard name="test.pdf" byte={1024} />

@@ -150,7 +150,6 @@ export const XActions = defineComponent({
         {...domAttrs.value}
         class={[
           props.prefixCls,
-          contextConfig.value.className,
           contextConfig.value.classes?.root,
           props.rootClass,
           props.classes?.root,

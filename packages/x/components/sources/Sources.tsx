@@ -35,7 +35,7 @@ export const XSources = defineComponent({
       type: Object as PropType<SourcesProps["classes"]>,
       default: () => ({}),
     },
-    rootClassName: {
+    rootClass: {
       type: String,
       default: "",
     },
@@ -118,8 +118,7 @@ export const XSources = defineComponent({
 
     const mergedCls = computed(() => [
       props.prefixCls,
-      contextConfig.value.className,
-      props.rootClassName,
+      props.rootClass,
       contextConfig.value.classes?.root,
       props.classes?.root,
       hashId.value,

@@ -356,7 +356,6 @@ export const XBubble = defineComponent({
         class={[
           prefixCls.value,
           `${prefixCls.value}-${placement.value}`,
-          contextConfig.value.className,
           contextConfig.value.classes?.root,
           props.rootClass,
           props.classes?.root,
