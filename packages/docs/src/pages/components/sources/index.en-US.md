@@ -46,3 +46,7 @@ interface SourcesItem {
   description?: VNodeChild;
 }
 ```
+
+## Semantic DOM {#semantic-dom}
+
+<demo src="./demo/semantic.vue" simplify>Sources Semantic DOM</demo>
