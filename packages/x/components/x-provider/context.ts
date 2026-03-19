@@ -6,6 +6,7 @@ import { computed, inject } from "vue";
 import type { ActionsProps } from "../actions";
 import type { BubbleProps } from "../bubble";
 import type { ConversationsProps } from "../conversations";
+import type { SourcesProps } from "../sources";
 import type { FileCardProps } from "../file-card";
 import type { DesignTokenProviderProps } from "../theme/context";
 
@@ -33,6 +34,7 @@ export interface XComponentsConfig {
   actions?: Pick<ActionsProps, "style" | "styles" | "class" | "classes"> & {
     className?: string;
   };
+  sources?: Pick<SourcesProps, "style" | "styles" | "class" | "classes"> & {
   fileCard?: Pick<FileCardProps, "style" | "styles" | "class" | "classes"> & {
     className?: string;
   };
