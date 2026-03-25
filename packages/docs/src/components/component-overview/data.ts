@@ -163,6 +163,70 @@ export const componentOverviewItems: ComponentOverviewItem[] = [
       "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*6ySvTqb7XhkAAAAAAAAAAAAADgCCAQ/original",
   },
   {
+    slug: "sender",
+    path: "/components/sender",
+    title: "Sender",
+    subtitle: {
+      "zh-CN": "输入框",
+    },
+    description: {
+      "zh-CN": "用于聊天的输入框组件。",
+      "en-US": "A input component for chat.",
+    },
+    group: {
+      "zh-CN": "表达",
+      "en-US": "Expression",
+    },
+    groupOrder: 2,
+    cover:
+      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*OwTOS6wqFIsAAAAAAAAAAAAADgCCAQ/original",
+    coverDark:
+      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*cOfrS4fVkOMAAAAAAAAAAAAADgCCAQ/original",
+  },
+  {
+    slug: "think",
+    path: "/components/think",
+    title: "Think",
+    subtitle: {
+      "zh-CN": "思考",
+    },
+    description: {
+      "zh-CN": "用于展示 AI 深度思考过程的可折叠面板。",
+      "en-US": "A collapsible panel for displaying AI deep thinking processes.",
+    },
+    group: {
+      "zh-CN": "反馈",
+      "en-US": "Feedback",
+    },
+    groupOrder: 4,
+    cover:
+      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*rHIYQIL1X-QAAAAAAAAAAAAADgCCAQ/original",
+    coverDark:
+      "https://mdn.alipayobjects.com/huamei_lkxviz/afts/img/OMCvQZVW3eUAAAAAQCAAAAgADtFMAQFr/original",
+  },
+  {
+    slug: "thought-chain",
+    path: "/components/thought-chain",
+    title: "ThoughtChain",
+    subtitle: {
+      "zh-CN": "思维链",
+    },
+    description: {
+      "zh-CN": "用于展示 AI Agent 的思维链路和工具调用过程。",
+      "en-US":
+        "Visualize and track AI Agent's call chain and tool invocations.",
+    },
+    group: {
+      "zh-CN": "反馈",
+      "en-US": "Feedback",
+    },
+    groupOrder: 4,
+    cover:
+      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*GaspS5T6proAAAAAAAAAAAAADgCCAQ/original",
+    coverDark:
+      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*siL-Qpl794sAAAAAAAAAAAAADgCCAQ/original",
+  },
+  {
     slug: "notification",
     path: "/components/notification",
     title: "Notification",
@@ -185,27 +249,6 @@ export const componentOverviewItems: ComponentOverviewItem[] = [
       "https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*YC4ERpGAddoAAAAAAAAAAAAADrJ8AQ/original",
   },
   {
-    slug: "sender",
-    path: "/components/sender",
-    title: "Sender",
-    subtitle: {
-      "zh-CN": "输入框",
-    },
-    description: {
-      "zh-CN": "用于聊天的输入框组件。",
-      "en-US": "A input component for chat.",
-    },
-    group: {
-      "zh-CN": "表达",
-      "en-US": "Expression",
-    },
-    groupOrder: 2,
-    cover:
-      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*OwTOS6wqFIsAAAAAAAAAAAAADgCCAQ/original",
-    coverDark:
-      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*cOfrS4fVkOMAAAAAAAAAAAAADgCCAQ/original",
-  },
-  {
     slug: "x-provider",
     path: "/components/x-provider",
     title: "XProvider",
@@ -225,5 +268,28 @@ export const componentOverviewItems: ComponentOverviewItem[] = [
       "https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*NVKORa7BCVwAAAAAAAAAAAAADrJ8AQ/original",
     coverDark:
       "https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*YC4ERpGAddoAAAAAAAAAAAAADrJ8AQ/originaloriginal",
+  },
+  {
+    slug: "welcome",
+    path: "/components/welcome",
+    title: "Welcome",
+    subtitle: {
+      "zh-CN": "欢迎",
+      "en-US": "Welcome",
+    },
+    description: {
+      "zh-CN": "清晰传达给用户可实现的意图范围和预期功能。",
+      "en-US":
+        "Clearly communicate the capability scope and expected experience to users.",
+    },
+    group: {
+      "zh-CN": "唤醒",
+      "en-US": "Awakening",
+    },
+    groupOrder: 1,
+    cover:
+      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*sSjhQ6q2-Z0AAAAAAAAAAAAADgCCAQ/original",
+    coverDark:
+      "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*-gLqQpan1NAAAAAAAAAAAAAADgCCAQ/original",
   },
 ];

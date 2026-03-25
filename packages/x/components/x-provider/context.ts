@@ -11,6 +11,9 @@ import type { FileCardProps } from "../file-card";
 import type { SenderProps } from "../sender";
 import type { SourcesProps } from "../sources";
 import type { DesignTokenProviderProps } from "../theme/context";
+import type { ThinkProps } from "../think";
+import type { ThoughtChainProps } from "../thought-chain";
+import type { WelcomeProps } from "../welcome";
 
 export interface BaseComponentConfig {
   style?: StyleValue;
@@ -33,6 +36,9 @@ export interface XComponentsConfig {
   sources?: Pick<SourcesProps, "style" | "styles" | "classes">;
   fileCard?: Pick<FileCardProps, "style" | "styles" | "classes">;
   sender?: Pick<SenderProps, "style" | "styles" | "classNames">;
+  think?: Pick<ThinkProps, "style" | "styles" | "classes">;
+  thoughtChain?: Pick<ThoughtChainProps, "style" | "styles" | "classes">;
+  welcome?: Pick<WelcomeProps, "style" | "styles" | "classes">;
 }
 
 export interface XProviderProps

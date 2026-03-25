@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { MenuEmits } from "antdv-next";
+import type { MenuItemType } from "antdv-next";
 
 import { createStyles } from "antdv-style";
 import { computed } from "vue";
@@ -7,7 +8,6 @@ import { useRoute, useRouter } from "vue-router";
 
 import { componentOverviewItems } from "@/components/component-overview/data";
 import { useDocPage } from "@/composables/use-doc-page";
-import { headerLocales } from "@/config/header";
 import { docsRoutes, LOCALE_EN_US, LOCALE_ZH_CN } from "@/router/docs";
 import { useAppStore } from "@/stores/app";
 
@@ -36,12 +36,6 @@ const useStyles = createStyles(({ token }) => ({
     },
     ".antd-doc-layout-sider:hover": {
       overflowY: "auto",
-    },
-    ".antd-doc-layout-sider-title": {
-      margin: "0 0 12px",
-      fontSize: 16,
-      fontWeight: 600,
-      color: token.colorText,
     },
     ".antd-doc-layout-sider .ant-menu": {
       minHeight: "100%",
@@ -138,19 +132,203 @@ function formatSegmentLabel(segment: string) {
     .join(" ");
 }
 
-interface SiderLeafItem {
-  key: string;
-  label: string;
+type LocaleKey = typeof LOCALE_ZH_CN | typeof LOCALE_EN_US;
+
+interface ParsedPageMeta {
+  title?: string;
+  order?: number;
+  groupTitle?: string;
+  groupOrder?: number;
+  hidden?: boolean;
 }
 
-interface SiderGroupItem {
-  key: string;
-  type: "group";
-  label: string;
-  children: SiderLeafItem[];
+const docsRawPages = import.meta.glob("../../pages/**/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+function normalizeSourcePath(path: string) {
+  return path.replace(/^(\.\.\/)+/, "");
 }
 
-type SiderItem = SiderLeafItem | SiderGroupItem;
+function toOptionalBoolean(value?: string) {
+  if (!value) return undefined;
+  const normalized = value
+    .trim()
+    .replace(/^['"]|['"]$/g, "")
+    .toLowerCase();
+  if (normalized === "true") return true;
+  if (normalized === "false") return false;
+  return undefined;
+}
+
+function parseFrontmatterMeta(markdown: string): ParsedPageMeta {
+  const frontmatterMatch = markdown.match(/^---\n([\s\S]*?)\n---/);
+  if (!frontmatterMatch) return {};
+
+  const frontmatter = frontmatterMatch[1];
+  if (!frontmatter) return {};
+
+  const title = toOptionalText(frontmatter.match(/^title:\s*(.+)$/m)?.[1]);
+  const order = toOptionalNumber(frontmatter.match(/^order:\s*(.+)$/m)?.[1]);
+  const hidden = toOptionalBoolean(frontmatter.match(/^hidden:\s*(.+)$/m)?.[1]);
+
+  const groupBlock = frontmatter.match(/^group:\s*\n((?:[ \t].*\n?)*)/m)?.[1];
+  const groupTitle = toOptionalText(
+    groupBlock?.match(/^[ \t]+title:\s*(.+)$/m)?.[1],
+  );
+  const groupOrder = toOptionalNumber(
+    groupBlock?.match(/^[ \t]+order:\s*(.+)$/m)?.[1],
+  );
+
+  return {
+    title,
+    order,
+    groupTitle,
+    groupOrder,
+    hidden,
+  };
+}
+
+const pageMetaBySource = new Map<string, ParsedPageMeta>(
+  Object.entries(docsRawPages).map(([source, markdown]) => [
+    normalizeSourcePath(source),
+    parseFrontmatterMeta(markdown),
+  ]),
+);
+const componentOverviewMetaBySlug = new Map(
+  componentOverviewItems.map(item => [item.slug, item]),
+);
+
+function getFallbackPageMeta(
+  section: string,
+  slug: string,
+  localeKey: LocaleKey,
+): Partial<ParsedPageMeta> {
+  if (section !== "/components") return {};
+
+  const meta = componentOverviewMetaBySlug.get(slug);
+  if (!meta) return {};
+
+  return {
+    title: meta.title,
+    groupTitle: meta.group[localeKey],
+    groupOrder: meta.groupOrder,
+  };
+}
+
+function sortSiderEntries(
+  left: { order: number; label: string },
+  right: { order: number; label: string },
+) {
+  if (left.order !== right.order) return left.order - right.order;
+  return left.label.localeCompare(right.label);
+}
+
+function createGroupedSiderItems(
+  items: Array<{
+    key: string;
+    label: string;
+    order: number;
+    hidden: boolean;
+    isSectionIndex: boolean;
+    groupTitle?: string;
+    groupOrder: number;
+  }>,
+) {
+  const visibleItems = items.filter(item => !item.hidden);
+  const overviewItem = visibleItems.find(item => item.isSectionIndex);
+  const contentItems = visibleItems.filter(item => !item.isSectionIndex);
+
+  const ungroupedItems = contentItems
+    .filter(item => !item.groupTitle)
+    .sort(sortSiderEntries)
+    .map(({ key, label }) => ({ key, label }));
+
+  const groups = new Map<
+    string,
+    {
+      key: string;
+      label: string;
+      order: number;
+      children: Array<{ key: string; label: string; order: number }>;
+    }
+  >();
+
+  contentItems
+    .filter(item => item.groupTitle)
+    .forEach(item => {
+      const groupLabel = item.groupTitle!;
+      const groupKey = `${item.groupOrder}-${groupLabel}`;
+
+      if (!groups.has(groupKey)) {
+        groups.set(groupKey, {
+          key: groupKey,
+          label: groupLabel,
+          order: item.groupOrder,
+          children: [],
+        });
+      }
+
+      groups.get(groupKey)!.children.push({
+        key: item.key,
+        label: item.label,
+        order: item.order,
+      });
+    });
+
+  const groupedItems: MenuItemType[] = Array.from(groups.values())
+    .sort(sortSiderEntries)
+    .map(group => ({
+      key: group.key,
+      type: "group",
+      label: group.label,
+      children: group.children
+        .sort(sortSiderEntries)
+        .map(({ key, label }) => ({ key, label })),
+    }));
+
+  return [
+    ...(overviewItem
+      ? [{ key: overviewItem.key, label: overviewItem.label }]
+      : []),
+    ...ungroupedItems,
+    ...groupedItems,
+  ] satisfies MenuItemType[];
+}
+
+interface ParsedPageMeta {
+  title?: string;
+  order?: number;
+  groupTitle?: string;
+  groupOrder?: number;
+  hidden?: boolean;
+}
+
+const markdownRawPages = import.meta.glob("../../pages/markdown/**/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+function toOptionalNumber(value?: string) {
+  if (!value) return undefined;
+  const parsed = Number(value.trim().replace(/^['"]|['"]$/g, ""));
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function toOptionalText(value?: string) {
+  if (!value) return undefined;
+  return value.trim().replace(/^['"]|['"]$/g, "");
+}
+
+const markdownMetaBySource = new Map<string, ParsedPageMeta>(
+  Object.entries(markdownRawPages).map(([source, markdown]) => [
+    normalizeSourcePath(source),
+    parseFrontmatterMeta(markdown),
+  ]),
+);
 
 const normalizedCurrentPath = computed(() => normalizePath(route.path));
 const currentPathWithoutLocale = computed(() =>
@@ -163,20 +341,12 @@ const currentSectionKey = computed(() => {
   return `/${segments[0]}`;
 });
 
-const sectionTitle = computed(() => {
-  const locale = appStore.locale === LOCALE_EN_US ? LOCALE_EN_US : LOCALE_ZH_CN;
-  const section = currentSectionKey.value;
-  if (!section) return "";
-  return (
-    headerLocales?.[section]?.[locale] || formatSegmentLabel(section.slice(1))
-  );
-});
-
-const siderItems = computed<SiderItem[]>(() => {
+const siderItems = computed<MenuItemType[]>(() => {
   const section = currentSectionKey.value;
   if (!section) return [];
 
   const locale = appStore.locale;
+  const localeKey = locale === LOCALE_EN_US ? LOCALE_EN_US : LOCALE_ZH_CN;
   const routesInSection = docsRoutes
     .filter(item => {
       if (item.meta?.locale !== locale) return false;
@@ -198,76 +368,28 @@ const siderItems = computed<SiderItem[]>(() => {
     const segments = withoutLocale.split("/").filter(Boolean);
     const lastSegment = segments.at(-1) || "";
     const isSectionIndex = withoutLocale === section;
+    const source = normalizeSourcePath(String(item.meta?.source || ""));
+    const pageMeta = pageMetaBySource.get(source);
+    const fallbackMeta = getFallbackPageMeta(section, lastSegment, localeKey);
 
     return {
       key: normalizePath(item.path),
-      pathWithoutLocale: withoutLocale,
-      slug: lastSegment,
       isSectionIndex,
-      label: isSectionIndex
-        ? appStore.locale === LOCALE_ZH_CN
-          ? "概览"
-          : "Overview"
-        : formatSegmentLabel(lastSegment),
+      hidden: pageMeta?.hidden ?? false,
+      order: pageMeta?.order ?? fallbackMeta.order ?? Number.MAX_SAFE_INTEGER,
+      groupTitle: pageMeta?.groupTitle ?? fallbackMeta.groupTitle,
+      groupOrder:
+        pageMeta?.groupOrder ??
+        fallbackMeta.groupOrder ??
+        Number.MAX_SAFE_INTEGER,
+      label:
+        pageMeta?.title ||
+        fallbackMeta.title ||
+        formatSegmentLabel(lastSegment),
     };
   });
 
-  if (section !== "/components")
-    return baseItems.map(({ key, label }) => ({ key, label }));
-
-  const localeKey =
-    appStore.locale === LOCALE_EN_US ? LOCALE_EN_US : LOCALE_ZH_CN;
-  const fallbackGroupLabel =
-    localeKey === LOCALE_ZH_CN ? "未分类" : "Ungrouped";
-  const overviewItem = baseItems.find(item => item.isSectionIndex);
-
-  const groups = new Map<
-    string,
-    { key: string; label: string; order: number; children: SiderLeafItem[] }
-  >();
-  baseItems
-    .filter(item => !item.isSectionIndex)
-    .forEach(item => {
-      const meta = componentOverviewItems.find(info => info.slug === item.slug);
-      const groupLabel = meta?.group?.[localeKey] ?? fallbackGroupLabel;
-      const groupOrder = meta?.groupOrder ?? Number.MAX_SAFE_INTEGER;
-      const groupKey = `${groupOrder}-${groupLabel}`;
-
-      if (!groups.has(groupKey)) {
-        groups.set(groupKey, {
-          key: groupKey,
-          label: groupLabel,
-          order: groupOrder,
-          children: [],
-        });
-      }
-
-      groups.get(groupKey)!.children.push({
-        key: item.key,
-        label: meta?.title ?? item.label,
-      });
-    });
-
-  const groupedItems: SiderGroupItem[] = Array.from(groups.values())
-    .sort((left, right) => {
-      if (left.order !== right.order) return left.order - right.order;
-      return left.label.localeCompare(right.label);
-    })
-    .map(group => ({
-      key: group.key,
-      type: "group",
-      label: group.label,
-      children: group.children.sort((left, right) =>
-        left.label.localeCompare(right.label),
-      ),
-    }));
-
-  return [
-    ...(overviewItem
-      ? [{ key: overviewItem.key, label: overviewItem.label }]
-      : []),
-    ...groupedItems,
-  ];
+  return createGroupedSiderItems(baseItems);
 });
 
 const selectedSiderKeys = computed(() => [normalizedCurrentPath.value]);
@@ -284,9 +406,6 @@ const handleSiderMenuClick: MenuEmits["click"] = info => {
 
     <main class="antd-doc-layout-main">
       <aside v-if="siderItems.length" class="antd-doc-layout-sider">
-        <h2 class="antd-doc-layout-sider-title">
-          {{ sectionTitle }}
-        </h2>
         <a-menu
           class="ant-doc-main-sider-menu"
           mode="inline"

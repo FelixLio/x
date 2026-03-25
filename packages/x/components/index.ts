@@ -15,6 +15,9 @@ import FileCard, { FileCardList } from "./file-card";
 import Notification, { XNotification } from "./notification";
 import Sender, { SenderHeader, SenderSwitch } from "./sender";
 import Sources from "./sources";
+import Think from "./think";
+import ThoughtChain, { ThoughtChainItem } from "./thought-chain";
+import Welcome from "./welcome";
 import XProvider from "./x-provider";
 
 const components = [
@@ -28,6 +31,7 @@ const components = [
   XProvider,
   Actions,
   Sources,
+  Welcome,
   ActionsAudio,
   ActionsCopy,
   ActionsFeedback,
@@ -38,6 +42,9 @@ const components = [
   Sender,
   SenderHeader,
   SenderSwitch,
+  Think,
+  ThoughtChain,
+  ThoughtChainItem,
 ];
 
 const componentAliases = new Map<string, string[]>([
@@ -56,6 +63,9 @@ const componentAliases = new Map<string, string[]>([
   ["XSender", ["ASender"]],
   ["XSenderHeader", ["ASenderHeader"]],
   ["XSenderSwitch", ["ASenderSwitch"]],
+  ["XThink", ["AThink"]],
+  ["XThoughtChain", ["AThoughtChain"]],
+  ["XThoughtChainItem", ["AThoughtChainItem"]],
 ]);
 
 export default {
@@ -96,6 +106,10 @@ export {
   XProvider,
   version,
   Sources,
+  Think,
+  ThoughtChain,
+  ThoughtChainItem,
+  Welcome,
 };
 
 export type {
@@ -118,6 +132,14 @@ export type {
 } from "./bubble";
 
 export type { FileCardListProps, FileCardProps } from "./file-card";
+export type { ThinkProps, ThinkRef } from "./think";
+export type {
+  ThoughtChainItemProps,
+  ThoughtChainItemStatus,
+  ThoughtChainItemType,
+  ThoughtChainProps,
+  ThoughtChainRef,
+} from "./thought-chain";
 
 export type {
   ConversationItemType,
@@ -129,6 +151,7 @@ export type {
 } from "./conversations";
 
 export type { SourcesProps } from "./sources";
+export type { WelcomeProps, WelcomeRef } from "./welcome";
 export type {
   CodeHighlighterProps,
   CodeHighlighterRef,
@@ -137,8 +160,8 @@ export type {
 
 export type { SenderProps, SenderRef } from "./sender";
 export type { XProviderProps } from "./x-provider";
-
 export type { AttachmentsProps, AttachmentsRef } from "./attachments";
+
 export type {
   UseNotificationType,
   XNotificationOpenArgs,
