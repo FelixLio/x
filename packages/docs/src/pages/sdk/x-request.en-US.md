@@ -1,11 +1,13 @@
 ---
+category: Components
 group:
   title: Utilities
   order: 2
 title: XRequest
+order: 3
 subtitle: Request
 description: Universal streaming request utility for AI chat and SSE scenarios.
-order: 3
+packageName: x-sdk
 ---
 
 ## When To Use
@@ -13,43 +15,16 @@ order: 3
 - You need to send streaming requests to model services (SSE / chunked response).
 - You need unified timeout, abort, retry, and incremental update callbacks.
 
-## Basic Example Code
+## Code Demo
 
-```ts
-import { XRequest } from "@antdv-next/x-sdk";
-
-const request = XRequest("/api/chat", {
-  params: { message: "Hello" },
-  callbacks: {
-    onUpdate: chunk => {
-      console.log("chunk", chunk);
-    },
-    onSuccess: chunks => {
-      console.log("done", chunks);
-    },
-    onError: error => {
-      console.error(error);
-    },
-  },
-});
-```
-
-## Manual Trigger
-
-```ts
-import { XRequest } from "@antdv-next/x-sdk";
-
-const request = XRequest("/api/chat", {
-  manual: true,
-  callbacks: {
-    onUpdate: chunk => console.log(chunk),
-    onSuccess: chunks => console.log(chunks),
-    onError: error => console.error(error),
-  },
-});
-
-request.run({ message: "Continue please" });
-```
+<!-- prettier-ignore -->
+<demo src="./demo/x-request-basic.vue">Basic Request</demo>
+<demo src="./demo/x-request-manual.vue">Manual Trigger</demo>
+<demo src="./demo/x-request-custom-params-headers.vue">Custom Parameters and Headers</demo>
+<demo src="./demo/x-request-custom-transformer.vue">Custom Transformer</demo>
+<demo src="./demo/x-request-stream-separator.vue">Stream Separator Configuration</demo>
+<demo src="./demo/x-request-timeout.vue">Request Timeout Configuration</demo>
+<demo src="./demo/x-request-stream-timeout.vue">Stream Timeout Configuration</demo>
 
 ## API
 
@@ -99,3 +74,81 @@ type XRequestFunction<
 | `abort`        | Abort request                    | `() => void`               |
 | `run`          | Execute manually (`manual=true`) | `(params?: Input) => void` |
 | `isRequesting` | Current requesting state         | `boolean`                  |
+
+### setXRequestGlobalOptions
+
+```ts
+type setXRequestGlobalOptions<Input, Output> = (
+  options: XRequestGlobalOptions<Input, Output>,
+) => void;
+```
+
+### XRequestGlobalOptions
+
+```ts
+type XRequestGlobalOptions<Input, Output> = Pick<
+  XRequestOptions<Input, Output>,
+  | "headers"
+  | "timeout"
+  | "streamTimeout"
+  | "middlewares"
+  | "fetch"
+  | "transformStream"
+  | "manual"
+>;
+```
+
+### XFetchMiddlewares
+
+```ts
+interface XFetchMiddlewares {
+  onRequest?: (
+    ...ags: Parameters<typeof fetch>
+  ) => Promise<Parameters<typeof fetch>>;
+  onResponse?: (response: Response) => Promise<Response>;
+}
+```
+
+## FAQ
+
+### When using transformStream in XRequest, it causes stream locking issues on the second input request. How to solve this?
+
+```ts
+onError TypeError: Failed to execute 'getReader' on 'ReadableStream': ReadableStreamDefaultReader constructor can only accept readable streams that are not yet locked to a reader
+```
+
+The Web Streams API stipulates that a stream can only be locked by one reader at the same time. Reuse will cause an error. Therefore, when using TransformStream, you need to pay attention to the following points:
+
+1. Ensure that the transformStream function returns a new ReadableStream object, not the same object.
+2. Ensure that the transformStream function does not perform multiple read operations on response.body.
+
+**Recommended Writing**
+
+```vue
+<script setup lang="ts">
+import { XRequest } from "@antdv-next/x-sdk";
+
+// Recommended: transformStream returns a new instance with a function
+const request = XRequest(url, {
+  manual: true,
+  transformStream: () =>
+    new TransformStream({
+      transform(chunk, controller) {
+        // Your custom processing logic
+        controller.enqueue({ data: chunk });
+      },
+    }),
+  // Other configurations...
+});
+</script>
+```
+
+```vue
+<script setup lang="ts">
+// Do not persist in Provider/useState
+const request = XRequest(url, {
+  manual: true,
+  transformStream: new TransformStream({ ... }),
+});
+</script>
+```
