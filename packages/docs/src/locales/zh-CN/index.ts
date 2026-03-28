@@ -24,7 +24,7 @@ export default {
     design: "设计语言",
     mainBanner: {
       slogan: "AI 体验新秩序",
-      desc: "基于 Ant Design X 官方提出的 RICH 设计范式，Antdv Next X 打造卓越的 AI 界面解决方案，引领智能新体验。",
+      desc: "基于 RICH 设计范式，Antdv Next X 打造卓越的 AI 界面解决方案，引领智能新体验。",
       start: "开始使用",
       design: "设计语言",
     },
@@ -86,7 +86,7 @@ export default {
       designGuide: "RICH 设计指南",
       helpDesc: "点击问题可直接发起请求",
       question1: "Antdv Next X 全新升级了什么？",
-      question2: "Antdv Next X 遵循 Ant Design X 官方提出的 RICH 设计规范。",
+      question2: "Antdv Next X 遵循 RICH 设计规范。",
       question3: "Antdv Next X 组件资产有哪些？",
       question4: "快来了解全新 AI 时代的设计范式！",
       empathy: "AI 理解用户诉求并解决",

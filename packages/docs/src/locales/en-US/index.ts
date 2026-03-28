@@ -24,7 +24,7 @@ export default {
     design: "Get Design",
     mainBanner: {
       slogan: "New AI Experience",
-      desc: "Following the RICH design paradigm from Ant Design X, Antdv Next X creates high-quality AI interface solutions for next-generation intelligent experiences.",
+      desc: "Following the RICH design paradigm, Antdv Next X creates high-quality AI interface solutions for next-generation intelligent experiences.",
       start: "Get Started",
       design: "Get Design",
     },
@@ -89,8 +89,7 @@ export default {
       designGuide: "RICH Design Guide",
       helpDesc: "Click a question to send it immediately",
       question1: "What are the new upgrades in X?",
-      question2:
-        "Antdv Next X follows the RICH design guide from Ant Design X.",
+      question2: "Antdv Next X follows the RICH design guide.",
       question3: "What are the component assets in X?",
       question4: "Discover new design for the AI!",
       empathy: "AI that understands and addresses user needs",
