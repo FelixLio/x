@@ -13,14 +13,19 @@ const files = globSync([
   "./components/**/*.tsx",
   "./components/**/*.vue",
   ...TEST_FILE_PATTERNS,
-]).map(file => `./${file}`);
+])
+  .sort()
+  .map(file => `./${file}`);
+
+const entries = Object.fromEntries(
+  files.map(file => [
+    file.replace("./components/", "").replace(/\.(?:ts|tsx|vue)$/, ""),
+    file,
+  ]),
+);
 
 export default defineConfig({
   base: "./",
-  // has worker format es
-  // worker: {
-  //   format: 'es',
-  // },
   plugins: [
     vueResolveTypes(),
     vue(),
@@ -50,7 +55,7 @@ export default defineConfig({
       },
     },
     lib: {
-      entry: files,
+      entry: entries,
       formats: ["es"],
     },
   },
