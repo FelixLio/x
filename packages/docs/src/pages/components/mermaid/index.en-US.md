@@ -36,6 +36,14 @@ group:
 | classes              | Semantic class overrides                                | `Partial<Record<'root' \| 'header' \| 'graph' \| 'code', string>>`                                     | -                                                              |
 | styles               | Semantic style overrides                                | `Partial<Record<'root' \| 'header' \| 'graph' \| 'code', CSSProperties>>`                              | -                                                              |
 
+### Slots
+
+| Slot Name | Description        | Type               |
+| --------- | ------------------ | ------------------ |
+| `header`  | Custom header area | `() => VNodeChild` |
+
+The `header` slot takes precedence over the `header` prop. Passing `header={null}` hides the default header.
+
 ### Events
 
 | Event             | Description                         | Payload                             |
@@ -52,28 +60,3 @@ group:
 ## Semantic DOM
 
 <demo src="./demo/semantic.vue" simplify>Mermaid Semantic DOM</demo>
-
-## Migration
-
-### React API to Vue API
-
-| Old (React)                 | New (Vue)                                    | Notes                                              |
-| --------------------------- | -------------------------------------------- | -------------------------------------------------- |
-| `<Mermaid>{code}</Mermaid>` | `<Mermaid :content="code" />`                | `children` is replaced by `content`.               |
-| `onRenderTypeChange`        | `@render-type-change` / `v-model:renderType` | Supports both event and two-way binding.           |
-| `className` / `classNames`  | `class` / `classes`                          | Aligns with current Vue component conventions.     |
-| `highlightProps`            | `codeHighlighterProps`                       | Passed to built-in `CodeHighlighter` in code mode. |
-
-### Quick Example
-
-```vue
-<script setup lang="ts">
-import { Mermaid } from "@antdv-next/x";
-
-const code = `graph TD\nA-->B`;
-</script>
-
-<template>
-  <Mermaid :content="code" v-model:renderType="mode" />
-</template>
-```

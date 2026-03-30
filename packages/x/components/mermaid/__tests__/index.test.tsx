@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { h, nextTick } from "vue";
+import { nextTick } from "vue";
 
 import Mermaid from "../Mermaid";
 
@@ -99,7 +99,7 @@ describe("Mermaid", () => {
           customActions: [
             {
               key: "custom",
-              actionRender: () => h("span", { class: "custom-action" }, "C"),
+              actionRender: () => <span class="custom-action">C</span>,
             },
           ],
         },
@@ -112,6 +112,23 @@ describe("Mermaid", () => {
     expect(wrapper.find(".anticon-zoom-in").exists()).toBe(false);
     expect(wrapper.find(".anticon-zoom-out").exists()).toBe(false);
     expect(wrapper.find(".anticon-download").exists()).toBe(false);
+  });
+
+  it("supports header slot and prefers it over header prop", async () => {
+    const wrapper = mount(Mermaid, {
+      props: {
+        content,
+        header: <div class="prop-header">Prop Header</div>,
+      },
+      slots: {
+        header: () => <div class="slot-header">Slot Header</div>,
+      },
+    });
+
+    await flushPromises();
+
+    expect(wrapper.find(".slot-header").exists()).toBe(true);
+    expect(wrapper.find(".prop-header").exists()).toBe(false);
   });
 
   it("clamps zoom scale between 0.5 and 3", async () => {

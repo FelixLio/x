@@ -37,6 +37,14 @@ group:
 | classes              | 语义化类名覆写                              | `Partial<Record<'root' \| 'header' \| 'graph' \| 'code', string>>`                                     | -                                                              |
 | styles               | 语义化样式覆写                              | `Partial<Record<'root' \| 'header' \| 'graph' \| 'code', CSSProperties>>`                              | -                                                              |
 
+### 插槽
+
+| 插槽名   | 说明         | 类型               |
+| -------- | ------------ | ------------------ |
+| `header` | 自定义头部区 | `() => VNodeChild` |
+
+`header` 插槽优先级高于 `header` 属性；传入 `header={null}` 时可隐藏默认头部。
+
 ### 事件
 
 | 事件              | 说明                 | 参数                                |
@@ -53,28 +61,3 @@ group:
 ## 语义化 DOM
 
 <demo src="./demo/semantic.vue" simplify>Mermaid 语义结构</demo>
-
-## 迁移说明
-
-### React API 到 Vue API 对照
-
-| 旧版（React）               | 新版（Vue）                                  | 说明                                      |
-| --------------------------- | -------------------------------------------- | ----------------------------------------- |
-| `<Mermaid>{code}</Mermaid>` | `<Mermaid :content="code" />`                | 不再使用 `children`，统一改为 `content`。 |
-| `onRenderTypeChange`        | `@render-type-change` / `v-model:renderType` | 同时支持事件与双向绑定。                  |
-| `className` / `classNames`  | `class` / `classes`                          | 对齐当前 Vue 组件命名约定。               |
-| `highlightProps`            | `codeHighlighterProps`                       | 用于透传代码模式下高亮组件参数。          |
-
-### 快速示例
-
-```vue
-<script setup lang="ts">
-import { Mermaid } from "@antdv-next/x";
-
-const code = `graph TD\nA-->B`;
-</script>
-
-<template>
-  <Mermaid :content="code" v-model:renderType="mode" />
-</template>
-```
