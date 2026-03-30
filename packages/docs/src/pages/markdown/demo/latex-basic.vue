@@ -3,7 +3,7 @@ import { Bubble } from "@antdv-next/x";
 import { XMarkdown } from "@antdv-next/x-markdown";
 import Latex from "@antdv-next/x-markdown/plugins/Latex";
 import { Button, Flex } from "antdv-next";
-import { computed, h, onBeforeUnmount, ref, watch } from "vue";
+import { computed, onBeforeUnmount, ref, watch } from "vue";
 
 import { useDarkMode } from "@/composables/use-dark-mode";
 
@@ -312,13 +312,6 @@ watch(index, () => {
 
 onBeforeUnmount(clearTimer);
 
-const renderMarkdown = (content: string) =>
-  h(XMarkdown, {
-    content,
-    config: markdownConfig,
-    paragraphTag: "div",
-  });
-
 const rerender = () => {
   clearTimer();
   index.value = 0;
@@ -337,11 +330,15 @@ const rerender = () => {
       <Button @click="rerender">Re-Render</Button>
     </Flex>
 
-    <Bubble
-      :content="text.slice(0, index)"
-      :content-render="renderMarkdown"
-      variant="outlined"
-    />
+    <Bubble :content="text.slice(0, index)" variant="outlined">
+      <template #contentRender="{ content }">
+        <XMarkdown
+          :content="content"
+          :config="markdownConfig"
+          paragraph-tag="div"
+        />
+      </template>
+    </Bubble>
   </Flex>
 </template>
 

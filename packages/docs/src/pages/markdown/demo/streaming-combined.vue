@@ -105,23 +105,6 @@ const loadingComponents: Record<string, Component> = {
   "loading-image": LoadingImage,
 };
 
-const renderMarkdown = (content: string) =>
-  h(XMarkdown, {
-    className: markdownClass.value,
-    content,
-    paragraphTag: "div",
-    streaming: {
-      hasNextChunk: isStreaming.value && enableCache.value,
-      enableAnimation: enableAnimation.value,
-      tail: tailEnabled.value ? { content: tailContent.value || "▋" } : false,
-      incompleteMarkdownComponentMap: {
-        link: "loading-link",
-        image: "loading-image",
-      },
-    },
-    components: loadingComponents,
-  });
-
 const runStream = () => {
   clearTimer();
   index.value = 0;
@@ -219,10 +202,25 @@ const runStream = () => {
       </Flex>
 
       <Flex style="flex: 1; min-height: 0; overflow: auto">
-        <Bubble
-          :content="text.slice(0, index)"
-          :content-render="renderMarkdown"
-        />
+        <Bubble :content="text.slice(0, index)">
+          <template #contentRender="{ content }">
+            <XMarkdown
+              :class-name="markdownClass"
+              :content="content"
+              paragraph-tag="div"
+              :streaming="{
+                hasNextChunk: isStreaming && enableCache,
+                enableAnimation,
+                tail: tailEnabled ? { content: tailContent || '▋' } : false,
+                incompleteMarkdownComponentMap: {
+                  link: 'loading-link',
+                  image: 'loading-image',
+                },
+              }"
+              :components="loadingComponents"
+            />
+          </template>
+        </Bubble>
       </Flex>
     </Flex>
   </div>

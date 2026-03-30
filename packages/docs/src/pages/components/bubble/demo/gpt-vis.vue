@@ -3,7 +3,7 @@ import { RedoOutlined } from "@antdv-next/icons";
 import { Bubble } from "@antdv-next/x";
 import { Button, Space } from "antdv-next";
 import MarkdownIt from "markdown-it";
-import { computed, h, onBeforeUnmount, ref } from "vue";
+import { computed, onBeforeUnmount, ref } from "vue";
 
 const text = `
 **GPT-Vis**, Components for GPTs, generative AI, and LLM projects.
@@ -85,39 +85,12 @@ function rerender() {
   }, 20);
 }
 
-function contentRender(value: string) {
+function renderMarkdownHtml(value: string) {
   const normalized = value.replace(
     /<custom-line[^>]*>[\s\S]*?<\/custom-line>/g,
     "**Chart rendered below**",
   );
-  const html = md.render(normalized);
-
-  return h("div", { style: { whiteSpace: "normal" } }, [
-    h("div", { innerHTML: html }),
-    chartPoints.value
-      ? h(
-          "svg",
-          {
-            viewBox: "0 0 860 240",
-            style: {
-              width: "100%",
-              maxWidth: "860px",
-              border: "1px solid var(--ant-color-border-secondary)",
-              borderRadius: "8px",
-              padding: "8px",
-            },
-          },
-          [
-            h("polyline", {
-              fill: "none",
-              stroke: "var(--ant-color-primary)",
-              "stroke-width": "3",
-              points: chartPoints.value,
-            }),
-          ],
-        )
-      : null,
-  ]);
+  return md.render(normalized);
 }
 
 onBeforeUnmount(() => {
@@ -138,11 +111,31 @@ onBeforeUnmount(() => {
       </Button>
     </Space>
 
-    <Bubble
-      :content="content"
-      :content-render="contentRender"
-      variant="outlined"
-    />
+    <Bubble :content="content" variant="outlined">
+      <template #contentRender="{ content: value }">
+        <div style="white-space: normal">
+          <div v-html="renderMarkdownHtml(value)" />
+          <svg
+            v-if="chartPoints"
+            viewBox="0 0 860 240"
+            style="
+              width: 100%;
+              max-width: 860px;
+              border: 1px solid var(--ant-color-border-secondary);
+              border-radius: 8px;
+              padding: 8px;
+            "
+          >
+            <polyline
+              fill="none"
+              stroke="var(--ant-color-primary)"
+              stroke-width="3"
+              :points="chartPoints"
+            />
+          </svg>
+        </div>
+      </template>
+    </Bubble>
   </Space>
 </template>
 

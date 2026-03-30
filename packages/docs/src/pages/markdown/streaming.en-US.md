@@ -7,7 +7,8 @@ Handle **LLM streamed Markdown** output: syntax completion and caching, animatio
 
 ## Code Examples
 
-<demo src="./demo/format.vue">Syntax Processing</demo> <demo src="./demo/animation.vue">Rendering Controls</demo>
+<demo src="./demo/streaming-format.vue">Syntax Processing</demo>
+<demo src="./demo/streaming-animation.vue">Rendering Controls</demo>
 
 ## API
 

@@ -173,13 +173,6 @@ watch(
 
 onBeforeUnmount(clearTimer);
 
-const renderMarkdown = (content: string) =>
-  h(XMarkdown, {
-    content,
-    components,
-    paragraphTag: "div",
-  });
-
 const rerender = () => {
   clearTimer();
   index.value = 0;
@@ -201,9 +194,16 @@ const rerender = () => {
     <Bubble
       :content="text.slice(0, index)"
       :styles="{ content: { width: '700px' } }"
-      :content-render="renderMarkdown"
       variant="outlined"
-    />
+    >
+      <template #contentRender="{ content }">
+        <XMarkdown
+          :content="content"
+          :components="components"
+          paragraph-tag="div"
+        />
+      </template>
+    </Bubble>
   </Flex>
 </template>
 

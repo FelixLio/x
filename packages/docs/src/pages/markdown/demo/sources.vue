@@ -112,16 +112,6 @@ watch(index, () => {
 
 onBeforeUnmount(clearTimer);
 
-const renderMarkdown = (content: string) =>
-  h(XMarkdown, {
-    content,
-    components,
-    paragraphTag: "div",
-    streaming: {
-      hasNextChunk: index.value < text.length,
-    },
-  });
-
 const rerender = () => {
   clearTimer();
   index.value = 0;
@@ -139,11 +129,16 @@ const rerender = () => {
       <Button @click="rerender">Re-Render</Button>
     </Flex>
 
-    <Bubble
-      :content="text.slice(0, index)"
-      :content-render="renderMarkdown"
-      variant="outlined"
-    />
+    <Bubble :content="text.slice(0, index)" variant="outlined">
+      <template #contentRender="{ content }">
+        <XMarkdown
+          :content="content"
+          :components="components"
+          paragraph-tag="div"
+          :streaming="{ hasNextChunk: index < text.length }"
+        />
+      </template>
+    </Bubble>
   </Flex>
 </template>
 

@@ -3,7 +3,7 @@ import { RedoOutlined } from "@antdv-next/icons";
 import { Bubble } from "@antdv-next/x";
 import { Button, Space, Typography } from "antdv-next";
 import MarkdownIt from "markdown-it";
-import { computed, h, ref } from "vue";
+import { computed, ref } from "vue";
 
 const source = `
 > Render as markdown content to show rich text!
@@ -17,13 +17,7 @@ const md = new MarkdownIt({ html: false, linkify: true, typographer: true });
 const content = computed(() => source.slice(0, index.value));
 
 function renderMarkdown(value: string) {
-  return h("div", {
-    style: {
-      whiteSpace: "normal",
-      lineHeight: 1.7,
-    },
-    innerHTML: md.render(value),
-  });
+  return md.render(value);
 }
 
 function rerender() {
@@ -44,7 +38,14 @@ function rerender() {
       </Button>
     </Space>
     <Typography>
-      <Bubble :content="content" :content-render="renderMarkdown" />
+      <Bubble :content="content">
+        <template #contentRender="{ content: value }">
+          <div
+            style="white-space: normal; line-height: 1.7"
+            v-html="renderMarkdown(value)"
+          />
+        </template>
+      </Bubble>
     </Typography>
   </Space>
 </template>

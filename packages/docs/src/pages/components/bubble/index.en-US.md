@@ -35,25 +35,48 @@ Use this component for chat, Q&A, and message stream UIs.
 
 ### Bubble
 
-| Property                     | Description                         | Type                                                                                                           | Default                  |
-| ---------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `content`                    | Bubble content                      | `string \| number \| VNode \| object`                                                                          | -                        |
-| `placement`                  | Bubble placement                    | `'start' \| 'end'`                                                                                             | `'start'`                |
-| `variant`                    | Visual variant                      | `'filled' \| 'outlined' \| 'shadow' \| 'borderless'`                                                           | `'filled'`               |
-| `shape`                      | Bubble shape                        | `'default' \| 'round' \| 'corner'`                                                                             | `'default'`              |
-| `loading`                    | Loading state                       | `boolean`                                                                                                      | `false`                  |
-| `typing`                     | Typing animation config             | `boolean \| BubbleAnimationOption \| ((content, info) => ...)`                                                 | `false`                  |
-| `streaming`                  | Streaming flag                      | `boolean`                                                                                                      | `false`                  |
-| `editable`                   | Editable mode                       | `boolean \| EditableBubbleOption`                                                                              | `false`                  |
-| `contentRender`              | Custom content render               | `(content, info) => VNodeChild`                                                                                | -                        |
-| `classes`                    | Semantic class names                | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', string>>`        | -                        |
-| `styles`                     | Semantic styles                     | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', CSSProperties>>` | -                        |
-| `header/footer/avatar/extra` | Slot props (supports function form) | `BubbleSlot`                                                                                                   | -                        |
-| `footerPlacement`            | Footer render position              | `'outer-start' \| 'outer-end' \| 'inner-start' \| 'inner-end'`                                                 | derived from `placement` |
-| `onTyping`                   | Typing callback                     | `(renderedContent, currentContent) => void`                                                                    | -                        |
-| `onTypingComplete`           | Typing complete callback            | `(content) => void`                                                                                            | -                        |
-| `onEditConfirm`              | Edit confirm callback               | `(content) => void`                                                                                            | -                        |
-| `onEditCancel`               | Edit cancel callback                | `() => void`                                                                                                   | -                        |
+#### Props
+
+Common props ref：[Common props](/docs/vue/common-props)
+
+| Property          | Description             | Type                                                                                                           | Default                  |
+| ----------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `content`         | Bubble content          | `string \| number \| VNode \| object`                                                                          | -                        |
+| `placement`       | Bubble placement        | `'start' \| 'end'`                                                                                             | `'start'`                |
+| `variant`         | Visual variant          | `'filled' \| 'outlined' \| 'shadow' \| 'borderless'`                                                           | `'filled'`               |
+| `shape`           | Bubble shape            | `'default' \| 'round' \| 'corner'`                                                                             | `'default'`              |
+| `loading`         | Loading state           | `boolean`                                                                                                      | `false`                  |
+| `typing`          | Typing animation config | `boolean \| BubbleAnimationOption \| ((content, info) => ...)`                                                 | `false`                  |
+| `streaming`       | Streaming flag          | `boolean`                                                                                                      | `false`                  |
+| `editable`        | Editable mode           | `boolean \| EditableBubbleOption`                                                                              | `false`                  |
+| `contentRender`   | Custom content render   | `(content, info) => VNodeChild`                                                                                | -                        |
+| `loadingRender`   | Custom loading render   | `(content, info) => VNodeChild`                                                                                | -                        |
+| `classes`         | Semantic class names    | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', string>>`        | -                        |
+| `styles`          | Semantic styles         | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', CSSProperties>>` | -                        |
+| `footerPlacement` | Footer render position  | `'outer-start' \| 'outer-end' \| 'inner-start' \| 'inner-end'`                                                 | derived from `placement` |
+
+#### Events
+
+| Event            | Description              | Type                                        |
+| ---------------- | ------------------------ | ------------------------------------------- |
+| `typing`         | Typing callback          | `(renderedContent, currentContent) => void` |
+| `typingComplete` | Typing complete callback | `(content) => void`                         |
+| `editConfirm`    | Edit confirm callback    | `(content) => void`                         |
+| `editCancel`     | Edit cancel callback     | `() => void`                                |
+
+#### Slots
+
+| Slot            | Description                | Type                                |
+| --------------- | -------------------------- | ----------------------------------- |
+| `contentRender` | Custom content render slot | `({ content, info }) => VNodeChild` |
+| `loadingRender` | Custom loading render slot | `({ content, info }) => VNodeChild` |
+| `header`        | Bubble header content      | `(content, info) => VNodeChild`     |
+| `footer`        | Bubble footer content      | `(content, info) => VNodeChild`     |
+| `avatar`        | Avatar area                | `(content, info) => VNodeChild`     |
+| `extra`         | Extra content area         | `(content, info) => VNodeChild`     |
+
+Content render priority: `contentRender` slot > `contentRender` prop > `content` prop.  
+Loading render priority: `loadingRender` slot > `loadingRender` prop > default Loading.
 
 Prefer `BubbleList`, `BubbleSystem`, and `BubbleDivider` exports. Legacy `Bubble.List`, `Bubble.System`, and `Bubble.Divider` syntax remains compatible.
 

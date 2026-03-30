@@ -235,6 +235,8 @@ export const XBubbleList = defineComponent({
                 role,
                 status,
                 extraInfo,
+                contentRender,
+                loadingRender,
                 styles,
                 classes,
                 rootClass,
@@ -284,8 +286,20 @@ export const XBubbleList = defineComponent({
 
               if (role === "system") return <SystemBubble {...commonProps} />;
 
+              const bubbleSlots: Record<string, any> = {};
+              if (contentRender)
+                bubbleSlots.contentRender = ({ content, info }: any) =>
+                  contentRender(content, info);
+              if (loadingRender)
+                bubbleSlots.loadingRender = ({ content, info }: any) =>
+                  loadingRender(content, info);
+
               return (
-                <Bubble {...commonProps} info={{ key, status, extraInfo }} />
+                <Bubble
+                  {...commonProps}
+                  info={{ key, status, extraInfo }}
+                  v-slots={bubbleSlots}
+                />
               );
             })}
           </div>

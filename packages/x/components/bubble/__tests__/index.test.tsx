@@ -56,6 +56,184 @@ describe("Bubble", () => {
     expect(wrapper.text()).toContain("Header: Test");
   });
 
+  it("supports avatar/header/footer/extra named slots", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "SlotContent",
+        info: { key: "slot-key", status: "success" as any },
+      },
+      slots: {
+        avatar: ({ content, info }: any) => (
+          <div class="avatar-slot">{`${content}-${info.key}`}</div>
+        ),
+        header: ({ content, info }: any) => (
+          <div class="header-slot">{`${content}-${info.status}`}</div>
+        ),
+        footer: ({ content }: any) => (
+          <div class="footer-slot">{`footer-${content}`}</div>
+        ),
+        extra: ({ info }: any) => (
+          <div class="extra-slot">{`extra-${info.key}`}</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".avatar-slot").exists()).toBe(true);
+    expect(wrapper.find(".header-slot").exists()).toBe(true);
+    expect(wrapper.find(".footer-slot").exists()).toBe(true);
+    expect(wrapper.find(".extra-slot").exists()).toBe(true);
+    expect(wrapper.text()).toContain("SlotContent-slot-key");
+    expect(wrapper.text()).toContain("SlotContent-success");
+    expect(wrapper.text()).toContain("footer-SlotContent");
+    expect(wrapper.text()).toContain("extra-slot-key");
+  });
+
+  it("prefers named slots over avatar/header/footer/extra props", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "Test",
+        avatar: h("div", { class: "avatar-prop" }, "avatar-prop"),
+        header: h("div", { class: "header-prop" }, "header-prop"),
+        footer: h("div", { class: "footer-prop" }, "footer-prop"),
+        extra: h("div", { class: "extra-prop" }, "extra-prop"),
+      },
+      slots: {
+        avatar: () => <div class="avatar-slot-priority">avatar-slot</div>,
+        header: () => <div class="header-slot-priority">header-slot</div>,
+        footer: () => <div class="footer-slot-priority">footer-slot</div>,
+        extra: () => <div class="extra-slot-priority">extra-slot</div>,
+      },
+    });
+
+    expect(wrapper.find(".avatar-slot-priority").exists()).toBe(true);
+    expect(wrapper.find(".header-slot-priority").exists()).toBe(true);
+    expect(wrapper.find(".footer-slot-priority").exists()).toBe(true);
+    expect(wrapper.find(".extra-slot-priority").exists()).toBe(true);
+
+    expect(wrapper.find(".avatar-prop").exists()).toBe(false);
+    expect(wrapper.find(".header-prop").exists()).toBe(false);
+    expect(wrapper.find(".footer-prop").exists()).toBe(false);
+    expect(wrapper.find(".extra-prop").exists()).toBe(false);
+  });
+
+  it("supports contentRender slot", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "SlotContent",
+        info: { key: "content-key", status: "success" as any },
+      },
+      slots: {
+        contentRender: ({ content, info }: any) => (
+          <div class="content-render-slot">{`${content}-${info.key}-${info.status}`}</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".content-render-slot").exists()).toBe(true);
+    expect(wrapper.text()).toContain("SlotContent-content-key-success");
+  });
+
+  it("supports contentRender prop", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "PropContent",
+        info: { key: "prop-key", status: "success" as any },
+        contentRender: (content, info) => (
+          <div class="content-render-prop">{`${content}-${info.key}-${info.status}`}</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".content-render-prop").exists()).toBe(true);
+    expect(wrapper.text()).toContain("PropContent-prop-key-success");
+  });
+
+  it("prefers contentRender slot over contentRender prop", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "PropContent",
+        contentRender: content => (
+          <div class="content-render-prop">{`render-${content}`}</div>
+        ),
+      },
+      slots: {
+        contentRender: () => (
+          <div class="content-render-slot-priority">slot-render</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".content-render-slot-priority").exists()).toBe(true);
+    expect(wrapper.find(".content-render-prop").exists()).toBe(false);
+    expect(wrapper.text()).toContain("slot-render");
+  });
+
+  it("renders original content when contentRender is absent", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "PlainContent",
+      },
+    });
+
+    expect(wrapper.text()).toContain("PlainContent");
+  });
+
+  it("supports loadingRender slot", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "Loading content",
+        loading: true,
+      },
+      slots: {
+        loadingRender: ({ content, info }: any) => (
+          <div class="loading-render-slot">{`loading-${content}-${String(info?.status)}`}</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".loading-render-slot").exists()).toBe(true);
+    expect(wrapper.find(".antd-bubble-dot").exists()).toBe(false);
+    expect(wrapper.text()).toContain("loading-Loading content-undefined");
+  });
+
+  it("supports loadingRender prop", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "Loading content",
+        loading: true,
+        loadingRender: content => (
+          <div class="loading-render-prop">{`loading-${content}`}</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".loading-render-prop").exists()).toBe(true);
+    expect(wrapper.find(".antd-bubble-dot").exists()).toBe(false);
+    expect(wrapper.text()).toContain("loading-Loading content");
+  });
+
+  it("prefers loadingRender slot over loadingRender prop", () => {
+    const wrapper = mount(Bubble, {
+      props: {
+        content: "Loading content",
+        loading: true,
+        loadingRender: content => (
+          <div class="loading-render-prop">{`loading-${content}`}</div>
+        ),
+      },
+      slots: {
+        loadingRender: () => (
+          <div class="loading-render-slot-priority">slot-loading</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".loading-render-slot-priority").exists()).toBe(true);
+    expect(wrapper.find(".loading-render-prop").exists()).toBe(false);
+    expect(wrapper.find(".antd-bubble-dot").exists()).toBe(false);
+    expect(wrapper.text()).toContain("slot-loading");
+  });
+
   it("supports footer placement", () => {
     const wrapper = mount(Bubble, {
       props: {
@@ -68,7 +246,7 @@ describe("Bubble", () => {
     expect(wrapper.find(".antd-bubble-footer-start").exists()).toBe(true);
   });
 
-  it("shows loading state and custom loading render", () => {
+  it("shows loading state and custom loading render slot", () => {
     const wrapper = mount(Bubble, {
       props: {
         content: "Test",
@@ -85,8 +263,9 @@ describe("Bubble", () => {
       props: {
         content: "Test",
         loading: true,
-        loadingRender: () =>
-          h("div", { class: "custom-loading" }, "Loading..."),
+      },
+      slots: {
+        loadingRender: () => <div class="custom-loading">Loading...</div>,
       },
     });
 
@@ -133,7 +312,7 @@ describe("Bubble", () => {
     expect(wrapper.find(".antd-bubble-end").exists()).toBe(true);
   });
 
-  it("supports contentRender with object content", () => {
+  it("supports contentRender slot with object content", () => {
     const complexContent = {
       type: "message",
       text: "Complex",
@@ -142,12 +321,11 @@ describe("Bubble", () => {
     const wrapper = mount(Bubble, {
       props: {
         content: complexContent as any,
-        contentRender: (content: any) =>
-          h(
-            "div",
-            { class: "complex-render" },
-            `${content.type}: ${content.text}`,
-          ),
+      },
+      slots: {
+        contentRender: ({ content }: any) => (
+          <div class="complex-render">{`${content.type}: ${content.text}`}</div>
+        ),
       },
     });
 

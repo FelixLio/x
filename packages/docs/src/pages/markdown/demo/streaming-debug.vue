@@ -2,7 +2,7 @@
 import { Bubble } from "@antdv-next/x";
 import { XMarkdown } from "@antdv-next/x-markdown";
 import { Button, Flex, Space } from "antdv-next";
-import { computed, h, onBeforeUnmount, ref, watch } from "vue";
+import { computed, onBeforeUnmount, ref, watch } from "vue";
 
 import { useDarkMode } from "@/composables/use-dark-mode";
 
@@ -116,16 +116,6 @@ const handleReRender = () => {
   index.value = 0;
   hasNextChunk.value = true;
 };
-
-const renderMarkdown = (content: string) =>
-  h(XMarkdown, {
-    content,
-    debug: true,
-    streaming: {
-      enableAnimation: true,
-      hasNextChunk: hasNextChunk.value,
-    },
-  });
 </script>
 
 <template>
@@ -162,8 +152,15 @@ const renderMarkdown = (content: string) =>
         }"
         variant="borderless"
         :content="text.slice(0, index)"
-        :content-render="renderMarkdown"
-      />
+      >
+        <template #contentRender="{ content }">
+          <XMarkdown
+            :content="content"
+            :debug="true"
+            :streaming="{ enableAnimation: true, hasNextChunk }"
+          />
+        </template>
+      </Bubble>
     </Flex>
   </div>
 </template>

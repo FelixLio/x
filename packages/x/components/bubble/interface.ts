@@ -78,7 +78,9 @@ export interface BubbleProps<
   classes?: Partial<Record<SemanticType, string>>;
   placement?: Placement;
   loading?: boolean;
-  loadingRender?: () => VNodeChild;
+  loadingRender?:
+    | (() => VNodeChild)
+    | ((content: ContentType, info: Info) => VNodeChild);
   content: ContentType;
   contentRender?: (content: ContentType, info: Info) => VNodeChild;
   editable?: boolean | EditableBubbleOption;

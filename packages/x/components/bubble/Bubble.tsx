@@ -28,6 +28,14 @@ function renderBubbleSlot(
   return typeof slot === "function" ? slot(content, info) : slot;
 }
 
+function hasRenderableNode(node: any): boolean {
+  if (Array.isArray(node))
+    return node.some(
+      item => item !== null && item !== undefined && item !== false,
+    );
+  return node !== null && node !== undefined && node !== false;
+}
+
 export const XBubble = defineComponent({
   name: "XBubble",
   inheritAttrs: false,
@@ -145,7 +153,7 @@ export const XBubble = defineComponent({
       default: () => ({}),
     },
   },
-  setup(props, { expose }) {
+  setup(props, { expose, slots }) {
     const attrs = useAttrs();
     const contextConfig = useXComponentConfig("bubble");
     const rootRef = ref<HTMLDivElement>();
@@ -163,6 +171,14 @@ export const XBubble = defineComponent({
     });
 
     const memoedContent = computed(() => {
+      if (slots.contentRender) {
+        const slotNode = slots.contentRender({
+          content: props.content,
+          info: props.info,
+        });
+        if (hasRenderableNode(slotNode)) return slotNode;
+      }
+
       return props.contentRender
         ? props.contentRender(props.content as never, props.info)
         : props.content;
@@ -226,8 +242,17 @@ export const XBubble = defineComponent({
       };
     };
 
+    const renderSlotNode = (
+      name: "avatar" | "header" | "footer" | "extra",
+      propSlot: BubbleSlot<any> | undefined,
+    ) => {
+      const slot = slots[name];
+      if (slot) return slot({ content: props.content, info: props.info });
+      return renderBubbleSlot(propSlot, props.content, props.info);
+    };
+
     const renderHeader = () => {
-      const node = renderBubbleSlot(props.header, props.content, props.info);
+      const node = renderSlotNode("header", props.header);
       if (!node) return null;
       return (
         <div class={getSlotClassName("header")} style={getSlotStyle("header")}>
@@ -237,7 +262,7 @@ export const XBubble = defineComponent({
     };
 
     const renderFooter = () => {
-      const node = renderBubbleSlot(props.footer, props.content, props.info);
+      const node = renderSlotNode("footer", props.footer);
       if (!node) return null;
       return (
         <div
@@ -280,11 +305,8 @@ export const XBubble = defineComponent({
         );
       }
 
-      if (
-        usingInnerAnimation.value &&
-        typeof memoedContent.value === "string"
-      ) {
-        return (
+      const defaultMainContent =
+        usingInnerAnimation.value && typeof memoedContent.value === "string" ? (
           <TypingContent
             prefixCls={props.prefixCls}
             streaming={props.streaming}
@@ -293,19 +315,27 @@ export const XBubble = defineComponent({
             onTyping={props.onTyping}
             onTypingComplete={props.onTypingComplete}
           />
+        ) : (
+          memoedContent.value
         );
-      }
 
-      return memoedContent.value;
+      return defaultMainContent;
     };
 
     const renderContent = () => {
       if (props.loading) {
-        return props.loadingRender ? (
-          props.loadingRender()
-        ) : (
-          <Loading prefixCls={props.prefixCls} />
-        );
+        if (slots.loadingRender) {
+          const slotNode = slots.loadingRender({
+            content: props.content,
+            info: props.info,
+          });
+          if (hasRenderableNode(slotNode)) return slotNode;
+        }
+
+        if (props.loadingRender)
+          return props.loadingRender(props.content as never, props.info);
+
+        return <Loading prefixCls={props.prefixCls} />;
       }
 
       return (
@@ -349,53 +379,59 @@ export const XBubble = defineComponent({
 
     const { prefixCls, placement, variant, shape } = toRefs(props);
 
-    return () => (
-      <div
-        ref={rootRef}
-        {...domAttrs.value}
-        class={[
-          prefixCls.value,
-          `${prefixCls.value}-${placement.value}`,
-          contextConfig.value.classes?.root,
-          props.rootClass,
-          props.classes?.root,
-          hashId.value,
-          cssVarCls.value,
-          attrs.class,
-          props.class,
-          {
-            [`${prefixCls.value}-loading`]: props.loading,
-            [`${prefixCls.value}-${props.info.status}`]: props.info.status,
-          },
-        ]}
-        style={[
-          contextConfig.value.style,
-          contextConfig.value.styles?.root,
-          props.styles?.root,
-          attrs.style as StyleValue,
-          props.style,
-        ]}
-      >
-        {renderBubbleSlot(props.avatar, props.content, props.info) ? (
-          <div
-            class={getSlotClassName("avatar")}
-            style={getSlotStyle("avatar")}
-          >
-            {renderBubbleSlot(props.avatar, props.content, props.info)}
-          </div>
-        ) : null}
+    return () => {
+      const avatarNode = renderSlotNode("avatar", props.avatar);
+      const extraNode = renderSlotNode("extra", props.extra);
 
-        {renderContent()}
+      return (
+        <div
+          ref={rootRef}
+          {...domAttrs.value}
+          class={[
+            prefixCls.value,
+            `${prefixCls.value}-${placement.value}`,
+            contextConfig.value.classes?.root,
+            props.rootClass,
+            props.classes?.root,
+            hashId.value,
+            cssVarCls.value,
+            attrs.class,
+            props.class,
+            {
+              [`${prefixCls.value}-loading`]: props.loading,
+              [`${prefixCls.value}-${props.info.status}`]: props.info.status,
+            },
+          ]}
+          style={[
+            contextConfig.value.style,
+            contextConfig.value.styles?.root,
+            props.styles?.root,
+            attrs.style as StyleValue,
+            props.style,
+          ]}
+        >
+          {avatarNode ? (
+            <div
+              class={getSlotClassName("avatar")}
+              style={getSlotStyle("avatar")}
+            >
+              {avatarNode}
+            </div>
+          ) : null}
 
-        {!isEditing.value &&
-        !props.loading &&
-        renderBubbleSlot(props.extra, props.content, props.info) ? (
-          <div class={getSlotClassName("extra")} style={getSlotStyle("extra")}>
-            {renderBubbleSlot(props.extra, props.content, props.info)}
-          </div>
-        ) : null}
-      </div>
-    );
+          {renderContent()}
+
+          {!isEditing.value && !props.loading && extraNode ? (
+            <div
+              class={getSlotClassName("extra")}
+              style={getSlotStyle("extra")}
+            >
+              {extraNode}
+            </div>
+          ) : null}
+        </div>
+      );
+    };
   },
 });
 

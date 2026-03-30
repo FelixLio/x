@@ -11,7 +11,7 @@ import {
   Switch,
   Typography,
 } from "antdv-next";
-import { computed, h, onBeforeUnmount, ref, watch } from "vue";
+import { computed, onBeforeUnmount, ref, watch } from "vue";
 
 import { useDarkMode } from "@/composables/use-dark-mode";
 
@@ -109,18 +109,6 @@ const runStream = () => {
   index.value = 0;
   hasNextChunk.value = true;
 };
-
-const renderMarkdown = (content: string) =>
-  h(XMarkdown, {
-    content,
-    debug: enableDebug.value,
-    streaming: {
-      enableAnimation: enableAnimation.value,
-      tail: enableTail.value ? { content: tailContent.value || "▋" } : false,
-      hasNextChunk: hasNextChunk.value,
-      animationConfig: { fadeDuration: 400 },
-    },
-  });
 </script>
 
 <template>
@@ -219,8 +207,20 @@ const renderMarkdown = (content: string) =>
         }"
         variant="borderless"
         :content="text.slice(0, index)"
-        :content-render="renderMarkdown"
-      />
+      >
+        <template #contentRender="{ content }">
+          <XMarkdown
+            :content="content"
+            :debug="enableDebug"
+            :streaming="{
+              enableAnimation,
+              tail: enableTail ? { content: tailContent || '▋' } : false,
+              hasNextChunk,
+              animationConfig: { fadeDuration: 400 },
+            }"
+          />
+        </template>
+      </Bubble>
     </Flex>
   </div>
 </template>

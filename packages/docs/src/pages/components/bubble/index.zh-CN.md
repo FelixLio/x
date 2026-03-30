@@ -36,25 +36,48 @@ description: 用于聊天消息展示的气泡组件。
 
 ### Bubble
 
-| 属性                         | 说明                 | 类型                                                                                                           | 默认值           |
-| ---------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `content`                    | 气泡内容             | `string \| number \| VNode \| object`                                                                          | -                |
-| `placement`                  | 气泡位置             | `'start' \| 'end'`                                                                                             | `'start'`        |
-| `variant`                    | 气泡样式变体         | `'filled' \| 'outlined' \| 'shadow' \| 'borderless'`                                                           | `'filled'`       |
-| `shape`                      | 气泡形状             | `'default' \| 'round' \| 'corner'`                                                                             | `'default'`      |
-| `loading`                    | 加载状态             | `boolean`                                                                                                      | `false`          |
-| `typing`                     | 打字动画配置         | `boolean \| BubbleAnimationOption \| ((content, info) => ...)`                                                 | `false`          |
-| `streaming`                  | 流式传输标记         | `boolean`                                                                                                      | `false`          |
-| `editable`                   | 是否可编辑           | `boolean \| EditableBubbleOption`                                                                              | `false`          |
-| `contentRender`              | 自定义内容渲染       | `(content, info) => VNodeChild`                                                                                | -                |
-| `classes`                    | 语义化结构 className | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', string>>`        | -                |
-| `styles`                     | 语义化结构 style     | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', CSSProperties>>` | -                |
-| `header/footer/avatar/extra` | 插槽属性（支持函数） | `BubbleSlot`                                                                                                   | -                |
-| `footerPlacement`            | 底部插槽位置         | `'outer-start' \| 'outer-end' \| 'inner-start' \| 'inner-end'`                                                 | 跟随 `placement` |
-| `onTyping`                   | 动画过程回调         | `(renderedContent, currentContent) => void`                                                                    | -                |
-| `onTypingComplete`           | 动画结束回调         | `(content) => void`                                                                                            | -                |
-| `onEditConfirm`              | 编辑确认回调         | `(content) => void`                                                                                            | -                |
-| `onEditCancel`               | 编辑取消回调         | `() => void`                                                                                                   | -                |
+#### 属性
+
+通用属性参考：[通用属性](/docs/vue/common-props)
+
+| 属性              | 说明                 | 类型                                                                                                           | 默认值           |
+| ----------------- | -------------------- | -------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `content`         | 气泡内容             | `string \| number \| VNode \| object`                                                                          | -                |
+| `placement`       | 气泡位置             | `'start' \| 'end'`                                                                                             | `'start'`        |
+| `variant`         | 气泡样式变体         | `'filled' \| 'outlined' \| 'shadow' \| 'borderless'`                                                           | `'filled'`       |
+| `shape`           | 气泡形状             | `'default' \| 'round' \| 'corner'`                                                                             | `'default'`      |
+| `loading`         | 加载状态             | `boolean`                                                                                                      | `false`          |
+| `typing`          | 打字动画配置         | `boolean \| BubbleAnimationOption \| ((content, info) => ...)`                                                 | `false`          |
+| `streaming`       | 流式传输标记         | `boolean`                                                                                                      | `false`          |
+| `editable`        | 是否可编辑           | `boolean \| EditableBubbleOption`                                                                              | `false`          |
+| `contentRender`   | 自定义内容渲染       | `(content, info) => VNodeChild`                                                                                | -                |
+| `loadingRender`   | 自定义加载渲染       | `(content, info) => VNodeChild`                                                                                | -                |
+| `classes`         | 语义化结构 className | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', string>>`        | -                |
+| `styles`          | 语义化结构 style     | `Partial<Record<'root' \| 'body' \| 'avatar' \| 'header' \| 'content' \| 'footer' \| 'extra', CSSProperties>>` | -                |
+| `footerPlacement` | 底部插槽位置         | `'outer-start' \| 'outer-end' \| 'inner-start' \| 'inner-end'`                                                 | 跟随 `placement` |
+
+#### 事件
+
+| 事件             | 说明         | 类型                                        |
+| ---------------- | ------------ | ------------------------------------------- |
+| `typing`         | 动画过程回调 | `(renderedContent, currentContent) => void` |
+| `typingComplete` | 动画结束回调 | `(content) => void`                         |
+| `editConfirm`    | 编辑确认回调 | `(content) => void`                         |
+| `editCancel`     | 编辑取消回调 | `() => void`                                |
+
+#### 插槽
+
+| 插槽            | 说明               | 类型                                |
+| --------------- | ------------------ | ----------------------------------- |
+| `contentRender` | 自定义内容渲染插槽 | `({ content, info }) => VNodeChild` |
+| `loadingRender` | 自定义加载渲染插槽 | `({ content, info }) => VNodeChild` |
+| `header`        | 气泡头部内容       | `(content, info) => VNodeChild`     |
+| `footer`        | 气泡尾部内容       | `(content, info) => VNodeChild`     |
+| `avatar`        | 头像区域           | `(content, info) => VNodeChild`     |
+| `extra`         | 额外内容区域       | `(content, info) => VNodeChild`     |
+
+内容渲染优先级：`contentRender` 插槽 > `contentRender` 属性 > `content` 属性。  
+加载渲染优先级：`loadingRender` 插槽 > `loadingRender` 属性 > 默认 Loading。
 
 > 推荐优先使用 `BubbleList`、`BubbleSystem`、`BubbleDivider` 导出。`Bubble.List`、`Bubble.System`、`Bubble.Divider` 旧写法仍兼容。
 

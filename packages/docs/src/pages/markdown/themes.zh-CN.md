@@ -22,8 +22,8 @@ import "@antdv-next/x-markdown/themes/light.css";
 ## 代码示例
 
 <!-- prettier-ignore -->
-<demo src="./demo/switch.vue">主题切换</demo>
-<demo src="./demo/custom.vue">自定义主题</demo>
+<demo src="./demo/themes-switch.vue">主题切换</demo>
+<demo src="./demo/themes-custom.vue">自定义主题</demo>
 
 ## 自定义主题（最小步骤）
 

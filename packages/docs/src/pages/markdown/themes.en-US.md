@@ -22,8 +22,8 @@ import "@antdv-next/x-markdown/themes/light.css";
 ## Code Examples
 
 <!-- prettier-ignore -->
-<demo src="./demo/switch.vue">Theme Switch</demo>
-<demo src="./demo/custom.vue">Custom Theme</demo>
+<demo src="./demo/themes-switch.vue">Theme Switch</demo>
+<demo src="./demo/themes-custom.vue">Custom Theme</demo>
 
 ## Custom Theme (Minimal Steps)
 

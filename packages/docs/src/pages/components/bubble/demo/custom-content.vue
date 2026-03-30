@@ -23,25 +23,6 @@ function updateAction() {
   };
 }
 
-function contentRender(value: any) {
-  return h(
-    Space,
-    { align: "center", size: 10 },
-    {
-      default: () => [
-        h(Image, { width: 52, src: value.imageUrl, preview: false }),
-        h(
-          Typography.Text,
-          { strong: true },
-          {
-            default: () => value.text,
-          },
-        ),
-      ],
-    },
-  );
-}
-
 function footerRender(value: any) {
   return h(
     Button,
@@ -58,11 +39,16 @@ function footerRender(value: any) {
 </script>
 
 <template>
-  <Bubble
-    :content="content"
-    :content-render="contentRender"
-    :footer="footerRender"
-  />
+  <Bubble :content="content" :footer="footerRender">
+    <template #contentRender="{ content: value }">
+      <Space align="center" :size="10">
+        <Image :width="50" :src="value.imageUrl" :preview="false" />
+        <Typography.Text strong>
+          {{ value.text }}
+        </Typography.Text>
+      </Space>
+    </template>
+  </Bubble>
 </template>
 
 <docs lang="zh-CN">

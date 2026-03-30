@@ -7,7 +7,8 @@ order: 4
 
 ## 代码示例
 
-<demo src="./demo/format.vue">语法处理</demo> <demo src="./demo/animation.vue">渲染控制</demo>
+<demo src="./demo/streaming-format.vue">语法处理</demo>
+<demo src="./demo/streaming-animation.vue">渲染控制</demo>
 
 ## API
 
