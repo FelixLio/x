@@ -18,6 +18,7 @@ description: 用于在输入场景中提供快捷指令建议的组件。
 <demo src="./demo/basic.vue">基本用法</demo>
 <demo src="./demo/block.vue">整行宽度</demo>
 <demo src="./demo/trigger.vue">自定义触发</demo>
+<demo src="./demo/render-slot.vue">自定义建议项渲染</demo>
 
 ## API
 
@@ -47,6 +48,16 @@ type RenderChildrenProps<T = any> = {
 ```
 
 调用 `onTrigger(false)` 会关闭建议面板。
+
+### 具名插槽
+
+| 插槽名        | 说明               | 类型                                   |
+| ------------- | ------------------ | -------------------------------------- |
+| `labelRender` | 建议项标题渲染插槽 | `({ item, originNode }) => VNodeChild` |
+| `iconRender`  | 建议项图标渲染插槽 | `({ item, originNode }) => VNodeChild` |
+| `extraRender` | 建议项扩展渲染插槽 | `({ item, originNode }) => VNodeChild` |
+
+三者都会收到当前建议项 `item` 和默认渲染节点 `originNode`；未提供时会回退到 `item.label`、`item.icon`、`item.extra`。
 
 ### SuggestionItem
 

@@ -1,7 +1,7 @@
 import { mount, VueWrapper } from "@vue/test-utils";
 import { ConfigProvider } from "antdv-next";
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
-import { h, nextTick } from "vue";
+import { nextTick } from "vue";
 
 import type { SuggestionItem } from "../interface";
 
@@ -38,18 +38,19 @@ const items: SuggestionItem[] = [
 
 function createSlot() {
   return {
-    default: ({ onTrigger, onKeyDown }: any) =>
-      h("input", {
-        class: "trigger-input",
-        onKeydown: (event: KeyboardEvent) => {
+    default: ({ onTrigger, onKeyDown }: any) => (
+      <input
+        class="trigger-input"
+        onKeydown={(event: KeyboardEvent) => {
           if (event.key === "@") {
             onTrigger("@");
           } else if (event.key === "Delete") {
             onTrigger(false);
           }
           return onKeyDown(event);
-        },
-      }),
+        }}
+      />
+    ),
   };
 }
 
@@ -226,5 +227,80 @@ describe("Suggestion", () => {
     expect(document.querySelector(".custom-content")).toBeTruthy();
     expect(document.querySelector(".custom-popup")).toBeTruthy();
     expect(document.querySelector(".antd-suggestion-block")).toBeTruthy();
+  });
+
+  it("supports labelRender, iconRender and extraRender slots", async () => {
+    track(
+      mount(Suggestion, {
+        attachTo: document.body,
+        props: {
+          open: true,
+          items: [
+            {
+              label: "Write a report",
+              value: "report",
+              icon: "default-icon",
+              extra: "default-extra",
+            },
+          ],
+        },
+        slots: {
+          ...createSlot(),
+          labelRender: ({ item, originNode }: any) => (
+            <span class="custom-label">{`${originNode}-${item.value}`}</span>
+          ),
+          iconRender: ({ item }: any) => (
+            <span class="custom-icon">{`icon-${item.value}`}</span>
+          ),
+          extraRender: ({ item }: any) => (
+            <span class="custom-extra">{`extra-${item.value}`}</span>
+          ),
+        },
+      }),
+    );
+
+    await flush();
+
+    expect(document.querySelector(".custom-label")?.textContent).toBe(
+      "Write a report-report",
+    );
+    expect(document.querySelector(".custom-icon")?.textContent).toBe(
+      "icon-report",
+    );
+    expect(document.querySelector(".custom-extra")?.textContent).toBe(
+      "extra-report",
+    );
+    expect(document.body.textContent).not.toContain("default-icon");
+    expect(document.body.textContent).not.toContain("default-extra");
+  });
+
+  it("treats empty slot output as explicit override", async () => {
+    track(
+      mount(Suggestion, {
+        attachTo: document.body,
+        props: {
+          open: true,
+          items: [
+            {
+              label: "Write a report",
+              value: "report",
+              icon: "default-icon",
+              extra: "default-extra",
+            },
+          ],
+        },
+        slots: {
+          ...createSlot(),
+          iconRender: () => null,
+          extraRender: () => null,
+        },
+      }),
+    );
+
+    await flush();
+
+    expect(document.body.textContent).toContain("Write a report");
+    expect(document.body.textContent).not.toContain("default-icon");
+    expect(document.body.textContent).not.toContain("default-extra");
   });
 });

@@ -18,6 +18,7 @@ description: A suggestion component that provides quick command choices in input
 <demo src="./demo/basic.vue">Basic</demo>
 <demo src="./demo/block.vue">Block</demo>
 <demo src="./demo/trigger.vue">Custom Trigger</demo>
+<demo src="./demo/render-slot.vue">Custom Item Render</demo>
 
 ## API
 
@@ -47,6 +48,16 @@ type RenderChildrenProps<T = any> = {
 ```
 
 Calling `onTrigger(false)` closes the popup.
+
+### Named Slots
+
+| Slot Name     | Description           | Type                                   |
+| ------------- | --------------------- | -------------------------------------- |
+| `labelRender` | Suggestion label slot | `({ item, originNode }) => VNodeChild` |
+| `iconRender`  | Suggestion icon slot  | `({ item, originNode }) => VNodeChild` |
+| `extraRender` | Suggestion extra slot | `({ item, originNode }) => VNodeChild` |
+
+Each slot receives the current suggestion `item` and its default rendered node as `originNode`. When a slot is not provided, Suggestion falls back to `item.label`, `item.icon`, and `item.extra`.
 
 ### SuggestionItem
 

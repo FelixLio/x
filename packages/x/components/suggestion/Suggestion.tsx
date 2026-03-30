@@ -7,12 +7,22 @@ import { computed, defineComponent, ref, useAttrs, watch } from "vue";
 import type {
   RenderChildrenProps,
   SuggestionItem,
+  SuggestionItemRenderInfo,
   SuggestionProps,
 } from "./interface";
 
 import useXComponentConfig from "../_utils/hooks/use-x-component-config";
 import useStyle from "./style";
 import useActive from "./useActive";
+
+const hasRenderableNode = (node: unknown): boolean => {
+  if (Array.isArray(node))
+    return node.some(
+      item => item !== null && item !== undefined && item !== false,
+    );
+
+  return node !== null && node !== undefined && node !== false;
+};
 
 const XSuggestion = defineComponent({
   name: "XSuggestion",
@@ -175,6 +185,16 @@ const XSuggestion = defineComponent({
       return rest;
     });
 
+    const renderItemNode = (
+      slotName: "labelRender" | "iconRender" | "extraRender",
+      info: SuggestionItemRenderInfo,
+    ) => {
+      const slot = slots[slotName];
+      if (slot) return slot(info);
+
+      return info.originNode;
+    };
+
     return () => {
       const childNode = slots.default?.({
         onTrigger,
@@ -192,17 +212,27 @@ const XSuggestion = defineComponent({
           placement={isRtl.value ? "topRight" : "topLeft"}
           optionRender={option => {
             const item = option as SuggestionItem;
+            const labelNode = renderItemNode("labelRender", {
+              item,
+              originNode: item.label,
+            });
+            const iconNode = renderItemNode("iconRender", {
+              item,
+              originNode: item.icon,
+            });
+            const extraNode = renderItemNode("extraRender", {
+              item,
+              originNode: item.extra,
+            });
 
             return (
               <Flex class={`${prefixCls.value}-item`}>
-                {item.icon && (
-                  <div class={`${prefixCls.value}-item-icon`}>{item.icon}</div>
+                {hasRenderableNode(iconNode) && (
+                  <div class={`${prefixCls.value}-item-icon`}>{iconNode}</div>
                 )}
-                {item.label}
-                {item.extra && (
-                  <div class={`${prefixCls.value}-item-extra`}>
-                    {item.extra}
-                  </div>
+                {labelNode}
+                {hasRenderableNode(extraNode) && (
+                  <div class={`${prefixCls.value}-item-extra`}>{extraNode}</div>
                 )}
               </Flex>
             );

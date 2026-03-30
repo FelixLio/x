@@ -17,6 +17,11 @@ export interface RenderChildrenProps<T = any> {
   open: boolean;
 }
 
+export interface SuggestionItemRenderInfo {
+  item: SuggestionItem;
+  originNode: VNodeChild;
+}
+
 export interface SuggestionProps<T = any> extends Omit<
   CascaderProps<SuggestionItem>,
   | "onChange"
