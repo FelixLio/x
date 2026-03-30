@@ -92,6 +92,11 @@ export default defineComponent({
 
     return () => {
       const cls = switchCls.value;
+      const iconNode = slots.icon?.() ?? props.icon;
+      const checkedChildrenNode =
+        slots.checkedChildren?.() ?? props.checkedChildren;
+      const unCheckedChildrenNode =
+        slots.unCheckedChildren?.() ?? props.unCheckedChildren;
 
       return (
         <div
@@ -138,16 +143,14 @@ export default defineComponent({
                 ? ("primary" as ButtonProps["color"])
                 : ("default" as ButtonProps["color"])
             }
-            icon={props.icon as any}
+            icon={iconNode as any}
             onClick={() => {
               const newValue = !mergedChecked.value;
               innerChecked.value = newValue;
               props.onChange?.(newValue);
             }}
           >
-            {mergedChecked.value
-              ? props.checkedChildren
-              : props.unCheckedChildren}
+            {mergedChecked.value ? checkedChildrenNode : unCheckedChildrenNode}
             {slots.default?.()}
           </Button>
         </div>

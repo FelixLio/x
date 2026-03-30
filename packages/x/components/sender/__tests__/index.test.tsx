@@ -1,6 +1,5 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
-import { h } from "vue";
 
 import Sender from "..";
 
@@ -130,7 +129,7 @@ describe("Sender", () => {
 
   it("should render with prefix", () => {
     const wrapper = mount(Sender, {
-      props: { prefix: h("span", { class: "my-prefix" }, "P") },
+      props: { prefix: <span class="my-prefix">P</span> },
     });
     expect(wrapper.find(".antd-sender-prefix").exists()).toBe(true);
     expect(wrapper.find(".my-prefix").exists()).toBe(true);
@@ -138,10 +137,37 @@ describe("Sender", () => {
 
   it("should render with footer", () => {
     const wrapper = mount(Sender, {
-      props: { footer: h("span", { class: "my-footer" }, "F") },
+      props: { footer: <span class="my-footer">F</span> },
     });
     expect(wrapper.find(".antd-sender-footer").exists()).toBe(true);
     expect(wrapper.find(".my-footer").exists()).toBe(true);
+  });
+
+  it("should support prefix, header, suffix and footer slots", () => {
+    const wrapper = mount(Sender, {
+      props: {
+        prefix: <span class="prop-prefix">prop-prefix</span>,
+      },
+      slots: {
+        prefix: () => <span class="slot-prefix">slot-prefix</span>,
+        header: () => <div class="slot-header">slot-header</div>,
+        footer: () => <div class="slot-footer">slot-footer</div>,
+        suffix: ({ components, defaultNode }: any) => (
+          <div class="slot-suffix">
+            <span class="slot-default-node">{defaultNode}</span>
+            <components.ClearButton class="slot-clear-btn" />
+          </div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".slot-prefix").exists()).toBe(true);
+    expect(wrapper.find(".prop-prefix").exists()).toBe(false);
+    expect(wrapper.find(".slot-header").exists()).toBe(true);
+    expect(wrapper.find(".slot-footer").exists()).toBe(true);
+    expect(wrapper.find(".slot-suffix").exists()).toBe(true);
+    expect(wrapper.find(".slot-default-node").exists()).toBe(true);
+    expect(wrapper.find(".slot-clear-btn").exists()).toBe(true);
   });
 
   it("should expose ref methods", () => {
@@ -165,7 +191,7 @@ describe("Sender.Header", () => {
     const wrapper = mount(Sender, {
       props: {
         prefixCls: "custom-sender",
-        header: () => h(Sender.Header, { open: true, title: "Header Title" }),
+        header: () => <Sender.Header open title="Header Title" />,
       },
     });
     expect(wrapper.find(".custom-sender-header").exists()).toBe(true);
@@ -176,6 +202,18 @@ describe("Sender.Header", () => {
       props: { open: true, title: "Header Title" },
     });
     expect(wrapper.text()).toContain("Header Title");
+  });
+
+  it("should support title slot", () => {
+    const wrapper = mount(Sender.Header, {
+      props: { open: true, title: "Prop Title" },
+      slots: {
+        title: () => <span class="header-slot-title">Slot Title</span>,
+      },
+    });
+    expect(wrapper.find(".header-slot-title").exists()).toBe(true);
+    expect(wrapper.text()).toContain("Slot Title");
+    expect(wrapper.text()).not.toContain("Prop Title");
   });
 
   it("should not render content when closed", () => {
@@ -207,7 +245,7 @@ describe("Sender.Header", () => {
     const wrapper = mount(Sender.Header, {
       props: { open: true },
       slots: {
-        default: () => h("div", { class: "custom-content" }, "Content"),
+        default: () => <div class="custom-content">Content</div>,
       },
     });
     expect(wrapper.find(".custom-content").exists()).toBe(true);
@@ -253,10 +291,47 @@ describe("Sender.Switch", () => {
   it("should render icon", () => {
     const wrapper = mount(Sender.Switch, {
       props: {
-        icon: h("span", { class: "my-icon" }, "I"),
+        icon: <span class="my-icon">I</span>,
       },
     });
     expect(wrapper.find(".my-icon").exists()).toBe(true);
+  });
+
+  it("should support icon and checked state slots", () => {
+    const wrapper = mount(Sender.Switch, {
+      props: {
+        value: true,
+        icon: <span class="prop-icon">P</span>,
+        checkedChildren: "Prop Checked",
+        unCheckedChildren: "Prop Unchecked",
+      },
+      slots: {
+        icon: () => <span class="slot-icon">S</span>,
+        checkedChildren: () => (
+          <span class="slot-checked-children">Slot Checked</span>
+        ),
+        unCheckedChildren: () => (
+          <span class="slot-unchecked-children">Slot Unchecked</span>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".slot-icon").exists()).toBe(true);
+    expect(wrapper.find(".prop-icon").exists()).toBe(false);
+    expect(wrapper.find(".slot-checked-children").exists()).toBe(true);
+    expect(wrapper.text()).not.toContain("Prop Checked");
+  });
+
+  it("should support uncheckedChildren slot", () => {
+    const wrapper = mount(Sender.Switch, {
+      slots: {
+        unCheckedChildren: () => (
+          <span class="slot-unchecked-children">Slot Unchecked</span>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".slot-unchecked-children").exists()).toBe(true);
   });
 
   it("should apply checked class", () => {

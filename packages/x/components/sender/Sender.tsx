@@ -128,7 +128,7 @@ export default defineComponent({
       default: undefined,
     },
   },
-  setup(props, { expose }) {
+  setup(props, { expose, slots }) {
     const attrs = useAttrs();
     const configCtx = useConfig();
     const contextConfig = useXComponentConfig("sender");
@@ -242,8 +242,16 @@ export default defineComponent({
     // Render helpers
     const renderNode = (
       node: BaseNode | NodeRender | undefined,
+      slotName: "prefix" | "suffix" | "header" | "footer",
       defaultNode: any,
     ) => {
+      if (slots[slotName]) {
+        return slots[slotName]?.({
+          defaultNode,
+          components: sharedRenderComponents,
+        });
+      }
+
       if (typeof node === "function") {
         return (node as NodeRender)(defaultNode, {
           components: sharedRenderComponents as any,
@@ -264,10 +272,11 @@ export default defineComponent({
         </div>
       );
 
-      const suffixNode = renderNode(props.suffix, actionNode) ?? actionNode;
-      const prefixNode = renderNode(props.prefix, actionNode);
-      const headerNode = renderNode(props.header, actionNode);
-      const footerNode = renderNode(props.footer, actionNode);
+      const suffixNode =
+        renderNode(props.suffix, "suffix", actionNode) ?? actionNode;
+      const prefixNode = renderNode(props.prefix, "prefix", actionNode);
+      const headerNode = renderNode(props.header, "header", actionNode);
+      const footerNode = renderNode(props.footer, "footer", actionNode);
 
       return (
         <div

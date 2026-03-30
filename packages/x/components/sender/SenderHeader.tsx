@@ -73,7 +73,9 @@ export default defineComponent({
               class={[`${headerCls}-header`, props.classNames.header]}
               style={props.styles.header}
             >
-              <div class={`${headerCls}-title`}>{props.title}</div>
+              <div class={`${headerCls}-title`}>
+                {slots.title?.() ?? props.title}
+              </div>
               {props.closable && (
                 <div class={`${headerCls}-close`}>
                   <Button

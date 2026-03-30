@@ -19,9 +19,12 @@ description: 用于聊天的输入框组件。
 <demo src="./demo/speech.vue">语音输入</demo>
 <demo src="./demo/speech-custom.vue">自定义语音输入</demo>
 <demo src="./demo/suffix.vue">自定义后缀</demo>
+<demo src="./demo/layout-slots.vue">区域插槽</demo>
 <demo src="./demo/disable-ctrl.vue">发送控制</demo>
 <demo src="./demo/disable-ctrl-slot.vue">词槽发送控制</demo>
 <demo src="./demo/header.vue">展开面板</demo>
+<demo src="./demo/header-title-slot.vue">头部标题插槽</demo>
+<demo src="./demo/switch-slots.vue">开关插槽</demo>
 <demo src="./demo/slot-with-suggestion.vue">快捷指令</demo>
 <demo src="./demo/header-fixed.vue">引用</demo>
 <demo src="./demo/footer.vue">自定义底部内容</demo>
@@ -76,6 +79,24 @@ type ActionsComponents = {
 };
 ```
 
+### Slots
+
+| 插槽名   | 说明                 | 类型                                         |
+| -------- | -------------------- | -------------------------------------------- |
+| `header` | 自定义头部面板       | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+| `prefix` | 自定义输入框前缀区域 | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+| `suffix` | 自定义输入框后缀区域 | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+| `footer` | 自定义底部区域       | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+
+插槽渲染优先级：对应插槽 > 对应 prop。
+
+```typescript
+type SenderLayoutSlotInfo = {
+  defaultNode: VNodeChild;
+  components: ActionsComponents;
+};
+```
+
 ### Sender Ref
 
 | 属性          | 说明                       | 类型                                                              |
@@ -104,6 +125,15 @@ interface SenderFocusOptions extends FocusOptions {
 | styles       | 语义化定义样式     | `Partial<Record<'header' \| 'content', CSSProperties>>` | -       |
 | onOpenChange | 展开状态改变的回调 | `(open: boolean) => void`                               | -       |
 
+#### Sender.Header Slots
+
+| 插槽名    | 说明         | 类型               |
+| --------- | ------------ | ------------------ |
+| `title`   | 自定义标题   | `() => VNodeChild` |
+| `default` | 自定义内容区 | `() => VNodeChild` |
+
+插槽渲染优先级：对应插槽 > 对应 prop。
+
 ### Sender.Switch
 
 | 属性              | 说明             | 类型                         | 默认值  |
@@ -117,3 +147,14 @@ interface SenderFocusOptions extends FocusOptions {
 | value             | 开关的值         | `boolean`                    | -       |
 | onChange          | 变化时的回调函数 | `(checked: boolean) => void` | -       |
 | rootClass         | 根元素样式类     | `string`                     | -       |
+
+#### Sender.Switch Slots
+
+| 插槽名              | 说明             | 类型               |
+| ------------------- | ---------------- | ------------------ |
+| `icon`              | 自定义图标       | `() => VNodeChild` |
+| `checkedChildren`   | 自定义选中内容   | `() => VNodeChild` |
+| `unCheckedChildren` | 自定义未选中内容 | `() => VNodeChild` |
+| `default`           | 追加内容         | `() => VNodeChild` |
+
+插槽渲染优先级：`icon` / `checkedChildren` / `unCheckedChildren` 对应插槽 > 对应 prop。

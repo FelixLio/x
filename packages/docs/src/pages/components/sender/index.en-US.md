@@ -19,9 +19,12 @@ description: A chat input component for sending messages.
 <demo src="./demo/speech.vue">Speech Input</demo>
 <demo src="./demo/speech-custom.vue">Custom Speech</demo>
 <demo src="./demo/suffix.vue">Custom Suffix</demo>
+<demo src="./demo/layout-slots.vue">Layout Slots</demo>
 <demo src="./demo/disable-ctrl.vue">Disable Control</demo>
 <demo src="./demo/disable-ctrl-slot.vue">Disable Control with Slots</demo>
 <demo src="./demo/header.vue">Header Panel</demo>
+<demo src="./demo/header-title-slot.vue">Header Title Slot</demo>
+<demo src="./demo/switch-slots.vue">Switch Slots</demo>
 <demo src="./demo/slot-with-suggestion.vue">Quick Commands</demo>
 <demo src="./demo/header-fixed.vue">Reference</demo>
 <demo src="./demo/footer.vue">Custom Footer</demo>
@@ -60,6 +63,33 @@ description: A chat input component for sending messages.
 | onFocus      | Focus callback                | `(event: FocusEvent) => void`                       | -                      |
 | onBlur       | Blur callback                 | `(event: FocusEvent) => void`                       | -                      |
 
+```typescript
+type ActionsComponents = {
+  SendButton: DefineComponent<ButtonProps>;
+  ClearButton: DefineComponent<ButtonProps>;
+  LoadingButton: DefineComponent<ButtonProps>;
+  SpeechButton: DefineComponent<ButtonProps>;
+};
+```
+
+### Slots
+
+| Slot Name | Description              | Type                                         |
+| --------- | ------------------------ | -------------------------------------------- |
+| `header`  | Custom header panel      | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+| `prefix`  | Custom input prefix area | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+| `suffix`  | Custom input suffix area | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+| `footer`  | Custom footer area       | `(info: SenderLayoutSlotInfo) => VNodeChild` |
+
+Render priority: corresponding slot > corresponding prop.
+
+```typescript
+type SenderLayoutSlotInfo = {
+  defaultNode: VNodeChild;
+  components: ActionsComponents;
+};
+```
+
 ### Sender Ref
 
 | Property      | Description                         | Type                                                              |
@@ -88,6 +118,15 @@ interface SenderFocusOptions extends FocusOptions {
 | styles       | Semantic styles                  | `Partial<Record<'header' \| 'content', CSSProperties>>` | -       |
 | onOpenChange | Callback when open state changes | `(open: boolean) => void`                               | -       |
 
+#### Sender.Header Slots
+
+| Slot Name | Description          | Type               |
+| --------- | -------------------- | ------------------ |
+| `title`   | Custom title content | `() => VNodeChild` |
+| `default` | Custom content area  | `() => VNodeChild` |
+
+Render priority: corresponding slot > corresponding prop.
+
 ### Sender.Switch
 
 | Property          | Description                 | Type                         | Default |
@@ -101,3 +140,14 @@ interface SenderFocusOptions extends FocusOptions {
 | value             | Checked value               | `boolean`                    | -       |
 | onChange          | Callback when value changes | `(checked: boolean) => void` | -       |
 | rootClass         | Root element class          | `string`                     | -       |
+
+#### Sender.Switch Slots
+
+| Slot Name           | Description                 | Type               |
+| ------------------- | --------------------------- | ------------------ |
+| `icon`              | Custom icon content         | `() => VNodeChild` |
+| `checkedChildren`   | Custom checked content      | `() => VNodeChild` |
+| `unCheckedChildren` | Custom unchecked content    | `() => VNodeChild` |
+| `default`           | Additional trailing content | `() => VNodeChild` |
+
+Render priority: `icon` / `checkedChildren` / `unCheckedChildren` corresponding slot > corresponding prop.
