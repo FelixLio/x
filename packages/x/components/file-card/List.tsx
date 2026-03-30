@@ -18,6 +18,7 @@ import { computed, defineComponent, ref, TransitionGroup, watch } from "vue";
 
 import type {
   FileCardProps,
+  FileCardSlotInfo,
   SemanticType as CardSemanticType,
 } from "./FileCard";
 
@@ -39,6 +40,11 @@ export interface FileCardListProps {
   onRemove?: (item: FileCardProps) => void;
   extension?: VNodeChild;
   overflow?: "scrollX" | "scrollY" | "wrap";
+}
+
+export interface FileCardListSlotInfo extends FileCardSlotInfo {
+  item: FileCardProps;
+  index: number;
 }
 
 export const XFileCardList = defineComponent({
@@ -99,7 +105,7 @@ export const XFileCardList = defineComponent({
       default: undefined,
     },
   },
-  setup(props, { attrs }) {
+  setup(props, { attrs, slots }) {
     const configCtx = useConfig();
     const [hashId, cssVarCls] = useFileCardStyle(
       computed(() => props.prefixCls),
@@ -237,8 +243,34 @@ export const XFileCardList = defineComponent({
           onScroll={checkPing}
         >
           <TransitionGroup name={`${compCls.value}-motion`}>
-            {list.value.map(item => {
+            {list.value.map((item, itemIndex) => {
               const { __key, ...fileItem } = item;
+              const cardSlots = {
+                description: slots.description
+                  ? (slotInfo: FileCardSlotInfo) =>
+                      slots.description?.({
+                        ...slotInfo,
+                        item: fileItem,
+                        index: itemIndex,
+                      } as FileCardListSlotInfo)
+                  : undefined,
+                mask: slots.mask
+                  ? (slotInfo: FileCardSlotInfo) =>
+                      slots.mask?.({
+                        ...slotInfo,
+                        item: fileItem,
+                        index: itemIndex,
+                      } as FileCardListSlotInfo)
+                  : undefined,
+                iconRender: slots.iconRender
+                  ? (slotInfo: FileCardSlotInfo) =>
+                      slots.iconRender?.({
+                        ...slotInfo,
+                        item: fileItem,
+                        index: itemIndex,
+                      } as FileCardListSlotInfo)
+                  : undefined,
+              };
               return (
                 <div key={__key} class={`${compCls.value}-item`}>
                   <FileCard
@@ -254,6 +286,7 @@ export const XFileCardList = defineComponent({
                       ...(splitStyles.value.other as any),
                       ...fileItem.styles,
                     }}
+                    v-slots={cardSlots}
                   />
                   {(
                     typeof props.removable === "function"
@@ -291,7 +324,9 @@ export const XFileCardList = defineComponent({
             </>
           ) : null}
 
-          {props.extension}
+          {slots.extension?.({
+            items: list.value.map(({ __key, ...item }) => item),
+          }) ?? props.extension}
         </div>
       </div>
     );

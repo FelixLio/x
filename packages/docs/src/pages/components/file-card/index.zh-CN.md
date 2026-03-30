@@ -20,6 +20,7 @@ description: 用卡片的形式展示文件。
 <demo src="./demo/list.vue">文件列表</demo>
 <demo src="./demo/overflow.vue">超出样式</demo>
 <demo src="./demo/custom-description.vue">自定义描述</demo>
+<demo src="./demo/render-slot.vue">插槽渲染</demo>
 
 ## API
 
@@ -43,6 +44,16 @@ description: 用卡片的形式展示文件。
 | `onClick`     | 点击事件回调，接收文件信息和点击事件                                                                                             | `(info, event) => void`                                                                                                                                          | -           |
 | `classes`     | 语义化 class                                                                                                                     | `Partial<Record<'root' \| 'file' \| 'icon' \| 'name' \| 'description', string>>`                                                                                 | -           |
 | `styles`      | 语义化 style                                                                                                                     | `Partial<Record<'root' \| 'file' \| 'icon' \| 'name' \| 'description', CSSProperties>>`                                                                          | -           |
+
+### FileCard Slots
+
+| 插槽名        | 说明         | 类型                                   |
+| ------------- | ------------ | -------------------------------------- |
+| `description` | 描述内容插槽 | `({ info, originNode }) => VNodeChild` |
+| `mask`        | 遮罩内容插槽 | `({ info, originNode }) => VNodeChild` |
+| `iconRender`  | 图标渲染插槽 | `({ info, originNode }) => VNodeChild` |
+
+插槽优先级高于同名属性内容；`originNode` 为属性或默认逻辑计算后的原始节点。
 
 ### PresetIcons
 
@@ -75,6 +86,17 @@ type PresetIcons =
 | `overflow`  | 超出展示方式 | `'scrollX' \| 'scrollY' \| 'wrap'`                                                                | `'wrap'`    |
 | `classes`   | 语义化 class | `Partial<Record<'root' \| 'card' \| 'file' \| 'icon' \| 'name' \| 'description', string>>`        | -           |
 | `styles`    | 语义化 style | `Partial<Record<'root' \| 'card' \| 'file' \| 'icon' \| 'name' \| 'description', CSSProperties>>` | -           |
+
+### FileCardList Slots
+
+| 插槽名        | 说明               | 类型                                                |
+| ------------- | ------------------ | --------------------------------------------------- |
+| `description` | 列表中卡片描述插槽 | `({ item, index, info, originNode }) => VNodeChild` |
+| `mask`        | 列表中卡片遮罩插槽 | `({ item, index, info, originNode }) => VNodeChild` |
+| `iconRender`  | 列表中卡片图标插槽 | `({ item, index, info, originNode }) => VNodeChild` |
+| `extension`   | 列表扩展区插槽     | `({ items }) => VNodeChild`                         |
+
+列表会将 `FileCard` 的插槽透传到每个子卡片，并额外补充当前 `item` 与 `index`。
 
 > 推荐优先使用 `FileCardList` 导出。`FileCard.List` 旧写法仍兼容。
 

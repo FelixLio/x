@@ -64,6 +64,11 @@ export type CardInfo = {
 
 export type ExtendNode = false | VNodeChild | ((info: CardInfo) => VNodeChild);
 
+export interface FileCardSlotInfo {
+  info: CardInfo;
+  originNode: VNodeChild;
+}
+
 export type FileCardSpinProps = SpinProps & {
   showText?: boolean;
   icon?: VNodeChild;
@@ -286,7 +291,7 @@ export const XFileCard = defineComponent({
       default: undefined,
     },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const attrs = useAttrs();
     const configCtx = useConfig();
     const contextConfig = useXComponentConfig("fileCard");
@@ -424,6 +429,9 @@ export const XFileCard = defineComponent({
           iconColor={iconInfo.value.color}
           onClick={props.onClick}
           mask={props.mask}
+          descriptionRenderSlot={slots.description}
+          maskRenderSlot={slots.mask}
+          iconRenderSlot={slots.iconRender}
           classes={mergedClasses.value}
           styles={mergedStyles.value}
         />

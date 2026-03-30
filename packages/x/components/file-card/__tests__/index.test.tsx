@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vite-plus/test";
-import { h, nextTick } from "vue";
+import { nextTick } from "vue";
 
 import FileCard from "../index";
 
@@ -159,7 +159,7 @@ describe("FileCard", () => {
     const wrapper = mount(FileCard, {
       props: {
         name: "test.txt",
-        mask: h("div", { class: "custom-mask" }, "Mask"),
+        mask: <div class="custom-mask">Mask</div>,
       },
     });
 
@@ -170,11 +170,38 @@ describe("FileCard", () => {
     const wrapper = mount(FileCard, {
       props: {
         name: "test.txt",
-        icon: h("span", { class: "custom-icon" }, "ICON"),
+        icon: <span class="custom-icon">ICON</span>,
       },
     });
 
     expect(wrapper.find(".custom-icon").exists()).toBe(true);
+  });
+
+  it("supports description, mask and iconRender slots", () => {
+    const wrapper = mount(FileCard, {
+      props: {
+        name: "test.txt",
+        byte: 1024,
+        mask: "default-mask",
+        icon: <span class="default-icon">ICON</span>,
+      },
+      slots: {
+        description: ({ info, originNode }: any) => (
+          <span class="slot-description">{`${originNode}-${info.name}`}</span>
+        ),
+        mask: ({ info }: any) => (
+          <span class="slot-mask">{`mask-${info.name}`}</span>
+        ),
+        iconRender: ({ info }: any) => (
+          <span class="slot-icon">{`icon-${info.name}`}</span>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".slot-description").text()).toBe("1 KB-test.txt");
+    expect(wrapper.find(".slot-mask").text()).toBe("mask-test.txt");
+    expect(wrapper.find(".slot-icon").text()).toBe("icon-test.txt");
+    expect(wrapper.text()).not.toContain("default-mask");
   });
 
   it("supports custom prefixCls", () => {
@@ -261,5 +288,36 @@ describe("FileCard.List", () => {
     const imageCard = wrapper.find(".antd-file-card-image");
     expect(imageCard.attributes("style")).toContain("width: 230px;");
     expect(imageCard.attributes("style")).toContain("height: 230px;");
+  });
+
+  it("supports FileCard slots and extension slot in list", () => {
+    const wrapper = mount(FileCard.List, {
+      props: {
+        items: [
+          { name: "file1.txt", byte: 1024 },
+          { name: "file2.txt", byte: 2048 },
+        ],
+        extension: <div class="default-extension">Default extension</div>,
+      },
+      slots: {
+        description: ({ item, index }: any) => (
+          <span
+            class={`slot-description-${index}`}
+          >{`${item.name}-${index}`}</span>
+        ),
+        iconRender: ({ item, index }: any) => (
+          <span class={`slot-icon-${index}`}>{`${item.name}-${index}`}</span>
+        ),
+        extension: ({ items }: any) => (
+          <div class="slot-extension">{`count-${items.length}`}</div>
+        ),
+      },
+    });
+
+    expect(wrapper.find(".slot-description-0").text()).toBe("file1.txt-0");
+    expect(wrapper.find(".slot-description-1").text()).toBe("file2.txt-1");
+    expect(wrapper.find(".slot-icon-0").text()).toBe("file1.txt-0");
+    expect(wrapper.find(".slot-extension").text()).toBe("count-2");
+    expect(wrapper.text()).not.toContain("Default extension");
   });
 });

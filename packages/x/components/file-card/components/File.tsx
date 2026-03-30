@@ -2,7 +2,12 @@ import type { CSSProperties, PropType, VNodeChild } from "vue";
 
 import { computed, defineComponent } from "vue";
 
-import type { CardInfo, ExtendNode, SemanticType } from "../FileCard";
+import type {
+  CardInfo,
+  ExtendNode,
+  FileCardSlotInfo,
+  SemanticType,
+} from "../FileCard";
 
 import { getSize } from "../utils";
 
@@ -22,6 +27,9 @@ export interface FileProps {
   iconColor?: string;
   onClick?: (info: CardInfo, event: MouseEvent) => void;
   mask?: ExtendNode;
+  descriptionRenderSlot?: (info: FileCardSlotInfo) => VNodeChild;
+  maskRenderSlot?: (info: FileCardSlotInfo) => VNodeChild;
+  iconRenderSlot?: (info: FileCardSlotInfo) => VNodeChild;
 }
 
 const File = defineComponent({
@@ -101,6 +109,18 @@ const File = defineComponent({
       ] as PropType<ExtendNode>,
       default: undefined,
     },
+    descriptionRenderSlot: {
+      type: Function as PropType<FileProps["descriptionRenderSlot"]>,
+      default: undefined,
+    },
+    maskRenderSlot: {
+      type: Function as PropType<FileProps["maskRenderSlot"]>,
+      default: undefined,
+    },
+    iconRenderSlot: {
+      type: Function as PropType<FileProps["iconRenderSlot"]>,
+      default: undefined,
+    },
   },
   setup(props) {
     const compCls = computed(() => `${props.prefixCls}-file`);
@@ -133,6 +153,34 @@ const File = defineComponent({
       return props.mask;
     });
 
+    const iconNode = computed(() => props.icon);
+
+    const renderWithSlot = (
+      slotRender: ((info: FileCardSlotInfo) => VNodeChild) | undefined,
+      originNode: VNodeChild,
+    ) => {
+      if (slotRender) {
+        return slotRender({
+          info: getCardInfo(),
+          originNode,
+        });
+      }
+
+      return originNode;
+    };
+
+    const hasDescription = computed(
+      () =>
+        !!props.descriptionRenderSlot ||
+        (descNode.value !== null && descNode.value !== undefined),
+    );
+
+    const hasMask = computed(
+      () =>
+        !!props.maskRenderSlot ||
+        (maskNode.value !== null && maskNode.value !== undefined),
+    );
+
     const handleClick = (event: MouseEvent) => {
       if (!props.onClick) return;
       props.onClick(getCardInfo(), event);
@@ -158,7 +206,7 @@ const File = defineComponent({
             ...props.styles.icon,
           }}
         >
-          {props.icon}
+          {renderWithSlot(props.iconRenderSlot, iconNode.value)}
         </div>
         <div class={`${compCls.value}-content`}>
           <div
@@ -170,7 +218,7 @@ const File = defineComponent({
             </span>
             <span class={`${compCls.value}-name-suffix`}>{props.ext}</span>
           </div>
-          {descNode.value !== null && descNode.value !== undefined ? (
+          {hasDescription.value ? (
             <div
               class={[
                 `${compCls.value}-description`,
@@ -178,13 +226,15 @@ const File = defineComponent({
               ]}
               style={props.styles.description}
             >
-              {descNode.value}
+              {renderWithSlot(props.descriptionRenderSlot, descNode.value)}
             </div>
           ) : null}
         </div>
-        {maskNode.value !== null && maskNode.value !== undefined ? (
+        {hasMask.value ? (
           <div class={`${compCls.value}-mask`}>
-            <div class={`${compCls.value}-mask-info`}>{maskNode.value}</div>
+            <div class={`${compCls.value}-mask-info`}>
+              {renderWithSlot(props.maskRenderSlot, maskNode.value)}
+            </div>
           </div>
         ) : null}
       </div>

@@ -19,6 +19,7 @@ description: Display files in the form of cards.
 <demo src="./demo/list.vue">List</demo>
 <demo src="./demo/overflow.vue">Overflow</demo>
 <demo src="./demo/custom-description.vue">Custom Description</demo>
+<demo src="./demo/render-slot.vue">Slot Render</demo>
 
 ## API
 
@@ -42,6 +43,16 @@ description: Display files in the form of cards.
 | `onClick`     | Click event callback, receives file information and click event                                                                                                                        | `(info, event) => void`                                                                                                                                          | -           |
 | `classes`     | Semantic class names                                                                                                                                                                   | `Partial<Record<'root' \| 'file' \| 'icon' \| 'name' \| 'description', string>>`                                                                                 | -           |
 | `styles`      | Semantic styles                                                                                                                                                                        | `Partial<Record<'root' \| 'file' \| 'icon' \| 'name' \| 'description', CSSProperties>>`                                                                          | -           |
+
+### FileCard Slots
+
+| Slot Name     | Description      | Type                                   |
+| ------------- | ---------------- | -------------------------------------- |
+| `description` | Description slot | `({ info, originNode }) => VNodeChild` |
+| `mask`        | Mask slot        | `({ info, originNode }) => VNodeChild` |
+| `iconRender`  | Icon render slot | `({ info, originNode }) => VNodeChild` |
+
+Slots take precedence over prop-driven content. `originNode` is the node resolved from props or default rendering.
 
 ### PresetIcons
 
@@ -74,6 +85,17 @@ type PresetIcons =
 | `overflow`  | Overflow display style | `'scrollX' \| 'scrollY' \| 'wrap'`                                                                | `'wrap'`    |
 | `classes`   | Semantic class names   | `Partial<Record<'root' \| 'card' \| 'file' \| 'icon' \| 'name' \| 'description', string>>`        | -           |
 | `styles`    | Semantic styles        | `Partial<Record<'root' \| 'card' \| 'file' \| 'icon' \| 'name' \| 'description', CSSProperties>>` | -           |
+
+### FileCardList Slots
+
+| Slot Name     | Description           | Type                                                |
+| ------------- | --------------------- | --------------------------------------------------- |
+| `description` | Card description slot | `({ item, index, info, originNode }) => VNodeChild` |
+| `mask`        | Card mask slot        | `({ item, index, info, originNode }) => VNodeChild` |
+| `iconRender`  | Card icon render slot | `({ item, index, info, originNode }) => VNodeChild` |
+| `extension`   | List extension slot   | `({ items }) => VNodeChild`                         |
+
+`FileCardList` forwards `FileCard` slots to each rendered card and adds the current `item` and `index`.
 
 Prefer the `FileCardList` export. Legacy `FileCard.List` syntax remains compatible.
 
