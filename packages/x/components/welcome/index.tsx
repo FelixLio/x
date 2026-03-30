@@ -13,6 +13,12 @@ function isImageUrl(icon: VNodeChild): icon is string {
   return typeof icon === "string" && /^https?:\/\//.test(icon);
 }
 
+function hasContent(value: VNodeChild | VNodeChild[] | null | undefined) {
+  return Array.isArray(value)
+    ? value.length > 0
+    : value !== null && value !== undefined;
+}
+
 export const XWelcome = defineComponent({
   name: "XWelcome",
   inheritAttrs: false,
@@ -62,7 +68,7 @@ export const XWelcome = defineComponent({
       default: undefined,
     },
   },
-  setup(props, { expose }) {
+  setup(props, { expose, slots }) {
     const configCtx = useConfig();
     const attrs = useAttrs();
     const contextConfig = useXComponentConfig("welcome");
@@ -98,8 +104,11 @@ export const XWelcome = defineComponent({
     ]);
 
     const iconNode = computed(() => {
-      if (!props.icon) return null;
-      const imageSrc = isImageUrl(props.icon) ? props.icon : undefined;
+      const iconContent = slots.icon?.() ?? props.icon;
+
+      if (!hasContent(iconContent)) return null;
+      const imageSrc =
+        !slots.icon && isImageUrl(iconContent) ? iconContent : undefined;
 
       return (
         <div
@@ -110,13 +119,15 @@ export const XWelcome = defineComponent({
           ]}
           style={[contextConfig.value.styles?.icon, props.styles?.icon]}
         >
-          {imageSrc ? <img src={imageSrc} alt="icon" /> : props.icon}
+          {imageSrc ? <img src={imageSrc} alt="icon" /> : iconContent}
         </div>
       );
     });
 
     const titleNode = computed(() => {
-      if (!props.title) return null;
+      const titleContent = slots.title?.() ?? props.title;
+
+      if (!hasContent(titleContent)) return null;
 
       return (
         <Typography.Title
@@ -128,13 +139,15 @@ export const XWelcome = defineComponent({
           ]}
           style={[contextConfig.value.styles?.title, props.styles?.title]}
         >
-          {props.title}
+          {titleContent}
         </Typography.Title>
       );
     });
 
     const extraNode = computed(() => {
-      if (!props.extra) return null;
+      const extraContent = slots.extra?.() ?? props.extra;
+
+      if (!hasContent(extraContent)) return null;
 
       return (
         <div
@@ -145,8 +158,30 @@ export const XWelcome = defineComponent({
           ]}
           style={[contextConfig.value.styles?.extra, props.styles?.extra]}
         >
-          {props.extra}
+          {extraContent}
         </div>
+      );
+    });
+
+    const descriptionNode = computed(() => {
+      const descriptionContent = slots.description?.() ?? props.description;
+
+      if (!hasContent(descriptionContent)) return null;
+
+      return (
+        <Typography.Text
+          class={[
+            `${props.prefixCls}-description`,
+            contextConfig.value.classes?.description,
+            props.classes?.description,
+          ]}
+          style={[
+            contextConfig.value.styles?.description,
+            props.styles?.description,
+          ]}
+        >
+          {descriptionContent}
+        </Typography.Text>
       );
     });
 
@@ -173,21 +208,7 @@ export const XWelcome = defineComponent({
           ) : (
             titleNode.value
           )}
-          {props.description ? (
-            <Typography.Text
-              class={[
-                `${props.prefixCls}-description`,
-                contextConfig.value.classes?.description,
-                props.classes?.description,
-              ]}
-              style={[
-                contextConfig.value.styles?.description,
-                props.styles?.description,
-              ]}
-            >
-              {props.description}
-            </Typography.Text>
-          ) : null}
+          {descriptionNode.value}
         </div>
       </div>
     );

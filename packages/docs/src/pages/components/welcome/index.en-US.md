@@ -17,6 +17,7 @@ description: Display a welcome message, capability summary, and extra actions.
 <demo src="./demo/basic.vue">Basic</demo>
 <demo src="./demo/variant.vue">Variants</demo>
 <demo src="./demo/background.vue">Background</demo>
+<demo src="./demo/slot.vue">Slots</demo>
 
 ## API
 
@@ -32,6 +33,17 @@ description: Display a welcome message, capability summary, and extra actions.
 | `rootClass`   | Root class name                                                  | `string`                                                                                  | -          |
 | `classes`     | Semantic class names                                             | `Partial<Record<'root' \| 'title' \| 'description' \| 'icon' \| 'extra', string>>`        | -          |
 | `styles`      | Semantic inline styles                                           | `Partial<Record<'root' \| 'title' \| 'description' \| 'icon' \| 'extra', CSSProperties>>` | -          |
+
+### Slots
+
+| Slot Name     | Description                  | Type               |
+| ------------- | ---------------------------- | ------------------ |
+| `icon`        | Custom leading icon content  | `() => VNodeChild` |
+| `title`       | Custom title content         | `() => VNodeChild` |
+| `description` | Custom description content   | `() => VNodeChild` |
+| `extra`       | Custom extra actions content | `() => VNodeChild` |
+
+Render priority: corresponding slot > corresponding prop.
 
 ## Semantic DOM {#semantic-dom}
 

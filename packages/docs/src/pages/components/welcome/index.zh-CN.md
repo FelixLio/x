@@ -17,6 +17,7 @@ description: 用于展示欢迎语、能力说明和附加操作。
 <demo src="./demo/basic.vue">基础用法</demo>
 <demo src="./demo/variant.vue">变体</demo>
 <demo src="./demo/background.vue">背景定制</demo>
+<demo src="./demo/slot.vue">插槽内容</demo>
 
 ## API
 
@@ -32,6 +33,17 @@ description: 用于展示欢迎语、能力说明和附加操作。
 | `rootClass`   | 根节点类名                               | `string`                                                                                  | -          |
 | `classes`     | 语义化 class                             | `Partial<Record<'root' \| 'title' \| 'description' \| 'icon' \| 'extra', string>>`        | -          |
 | `styles`      | 语义化 style                             | `Partial<Record<'root' \| 'title' \| 'description' \| 'icon' \| 'extra', CSSProperties>>` | -          |
+
+### Slots
+
+| 插槽名        | 说明             | 类型               |
+| ------------- | ---------------- | ------------------ |
+| `icon`        | 自定义左侧图标   | `() => VNodeChild` |
+| `title`       | 自定义标题内容   | `() => VNodeChild` |
+| `description` | 自定义描述内容   | `() => VNodeChild` |
+| `extra`       | 自定义附加操作区 | `() => VNodeChild` |
+
+插槽渲染优先级：对应插槽 > 对应 prop。
 
 ## 语义化 DOM {#semantic-dom}
 
