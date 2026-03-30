@@ -12,6 +12,7 @@ Used to show deep thinking process.
 <demo src="./demo/basic.vue">Basic</demo>
 <demo src="./demo/status.vue">Status</demo>
 <demo src="./demo/expand.vue">Expand</demo>
+<demo src="./demo/slot.vue">Slots</demo>
 
 ## API
 
@@ -32,11 +33,16 @@ Used to show deep thinking process.
 
 ### Think Slots
 
-| Slot      | Description                   |
-| --------- | ----------------------------- |
-| `default` | Thinking content              |
-| `title`   | Custom title (overrides prop) |
-| `icon`    | Custom icon (overrides prop)  |
+| Slot      | Description                   | Type               |
+| --------- | ----------------------------- | ------------------ |
+| `default` | Thinking content              | `() => VNodeChild` |
+| `title`   | Custom title (overrides prop) | `() => VNodeChild` |
+| `icon`    | Custom icon (overrides prop)  | `() => VNodeChild` |
+
+Slot priority:
+`icon` slot > `loading` prop (custom node or default loading icon) > `icon` prop > default ThinkIcon
+
+`title` slot > `title` prop
 
 ## Semantic DOM
 

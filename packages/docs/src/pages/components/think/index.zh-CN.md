@@ -13,6 +13,7 @@ description: 展示大模型深度思考过程。
 <demo src="./demo/basic.vue">基础用法</demo>
 <demo src="./demo/status.vue">设置状态</demo>
 <demo src="./demo/expand.vue">是否展开</demo>
+<demo src="./demo/slot.vue">插槽用法</demo>
 
 ## API
 
@@ -33,11 +34,16 @@ description: 展示大模型深度思考过程。
 
 ### Think 插槽
 
-| 插槽      | 说明                          |
-| --------- | ----------------------------- |
-| `default` | 思考内容                      |
-| `title`   | 自定义标题（优先级高于 prop） |
-| `icon`    | 自定义图标（优先级高于 prop） |
+| 插槽      | 说明                          | 类型               |
+| --------- | ----------------------------- | ------------------ |
+| `default` | 思考内容                      | `() => VNodeChild` |
+| `title`   | 自定义标题（优先级高于 prop） | `() => VNodeChild` |
+| `icon`    | 自定义图标（优先级高于 prop） | `() => VNodeChild` |
+
+插槽优先级：
+`icon` 插槽 > `loading` 属性（自定义节点或默认 loading 图标）> `icon` 属性 > 默认 ThinkIcon
+
+`title` 插槽 > `title` 属性
 
 ## 语义化 DOM
 
