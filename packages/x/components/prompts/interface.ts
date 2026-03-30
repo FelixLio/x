@@ -38,6 +38,17 @@ export interface PromptsClickInfo {
   data: PromptDataItem;
 }
 
+export interface PromptsTitleSlotInfo {
+  originNode: VNodeChild;
+}
+
+export interface PromptsItemSlotInfo {
+  item: PromptDataItem;
+  originNode: VNodeChild;
+  index: number;
+  nested: boolean;
+}
+
 export interface PromptsRef {
   nativeElement: HTMLDivElement;
 }

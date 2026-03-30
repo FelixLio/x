@@ -18,6 +18,7 @@ description: Display a predefined set of questions or suggestions relevant to th
 <demo src="./demo/wrap.vue">Wrap</demo>
 <demo src="./demo/nest.vue">Nest Usage</demo>
 <demo src="./demo/fade-in.vue">Fade In Effect</demo>
+<demo src="./demo/render-slot.vue">Slot Render</demo>
 
 ## API
 
@@ -66,6 +67,17 @@ type SemanticType =
   | "subList"
   | "subItem";
 ```
+
+### Slots
+
+| Slot Name     | Description             | Type                                                  |
+| ------------- | ----------------------- | ----------------------------------------------------- |
+| `title`       | Top title slot          | `({ originNode }) => VNodeChild`                      |
+| `labelRender` | Prompt label slot       | `({ item, originNode, index, nested }) => VNodeChild` |
+| `description` | Prompt description slot | `({ item, originNode, index, nested }) => VNodeChild` |
+| `iconRender`  | Prompt icon slot        | `({ item, originNode, index, nested }) => VNodeChild` |
+
+Slots take precedence over prop content and apply to both root items and nested child items.
 
 ## Semantic DOM
 

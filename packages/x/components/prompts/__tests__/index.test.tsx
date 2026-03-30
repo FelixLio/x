@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from "@vue/test-utils";
 import { afterEach, describe, expect, it } from "vite-plus/test";
-import { h, nextTick } from "vue";
+import { nextTick } from "vue";
 
 import Prompts from "../index";
 
@@ -20,13 +20,13 @@ const items = [
     key: "1",
     label: "Label 1",
     description: "Description 1",
-    icon: h("span", { class: "prompt-icon-1" }, "Icon 1"),
+    icon: <span class="prompt-icon-1">Icon 1</span>,
   },
   {
     key: "2",
     label: "Label 2",
     description: "Description 2",
-    icon: h("span", { class: "prompt-icon-2" }, "Icon 2"),
+    icon: <span class="prompt-icon-2">Icon 2</span>,
     disabled: true,
   },
 ];
@@ -226,5 +226,38 @@ describe("Prompts", () => {
     expect(wrapper.classes().some(cls => cls.includes("ant-x-fade-left"))).toBe(
       true,
     );
+  });
+
+  it("supports title, labelRender, description and iconRender slots", () => {
+    const wrapper = track(
+      mount(Prompts, {
+        props: {
+          title: "Prompt Title",
+          items,
+        },
+        slots: {
+          title: ({ originNode }: any) => (
+            <span class="slot-title">{`${originNode}-slot`}</span>
+          ),
+          labelRender: ({ item, index }: any) => (
+            <span
+              class={`slot-label-${index}`}
+            >{`${item.label}-${index}`}</span>
+          ),
+          description: ({ item, nested }: any) => (
+            <span class="slot-desc">{`${item.description}-${nested}`}</span>
+          ),
+          iconRender: ({ item, index }: any) => (
+            <span class={`slot-icon-${index}`}>{item.key}</span>
+          ),
+        },
+      }),
+    );
+
+    expect(wrapper.find(".slot-title").text()).toBe("Prompt Title-slot");
+    expect(wrapper.find(".slot-label-0").text()).toBe("Label 1-0");
+    expect(wrapper.find(".slot-desc").text()).toBe("Description 1-false");
+    expect(wrapper.find(".slot-icon-0").text()).toBe("1");
+    expect(wrapper.find(".prompt-icon-1").exists()).toBe(false);
   });
 });

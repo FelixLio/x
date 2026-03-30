@@ -16,6 +16,8 @@ import type {
   PromptsItemType,
   PromptsProps,
   PromptsRef,
+  PromptsItemSlotInfo,
+  PromptsTitleSlotInfo,
   SemanticType,
 } from "./interface";
 
@@ -40,6 +42,15 @@ function getItemDomAttrs(item: PromptDataItem) {
   delete domAttrs.children;
 
   return domAttrs;
+}
+
+function hasRenderableNode(node: unknown): boolean {
+  if (Array.isArray(node))
+    return node.some(
+      item => item !== null && item !== undefined && item !== false,
+    );
+
+  return node !== null && node !== undefined && node !== false;
 }
 
 export const XPrompts = defineComponent({
@@ -100,7 +111,7 @@ export const XPrompts = defineComponent({
     },
   },
   emits: ["itemClick"],
-  setup(props, { expose, emit }) {
+  setup(props, { expose, emit, slots }) {
     const configCtx = useConfig();
     const attrs = useAttrs();
     const contextConfig = useXComponentConfig("prompts");
@@ -123,7 +134,7 @@ export const XPrompts = defineComponent({
       const mn = motionName.value;
       // 第一帧：加 prepare class（触发初始状态）
       motionClass.value = `${mn} ${mn}-enter ${mn}-appear ${mn}-appear-prepare ${mn}-enter-prepare`;
-      nextTick(() => {
+      void nextTick(() => {
         // 强制 reflow，让浏览器识别初始状态
         rootRef.value?.getBoundingClientRect();
         // 第二帧：切换到 active class（触发过渡动画）
@@ -172,6 +183,36 @@ export const XPrompts = defineComponent({
       emit("itemClick", info);
     };
 
+    const renderTitle = () => {
+      if (slots.title) {
+        return slots.title({
+          originNode: props.title,
+        } as PromptsTitleSlotInfo);
+      }
+
+      return props.title;
+    };
+
+    const renderItemNode = (
+      slotName: "labelRender" | "description" | "iconRender",
+      item: PromptDataItem,
+      index: number,
+      nested: boolean,
+      originNode: PromptsItemSlotInfo["originNode"],
+    ) => {
+      const slot = slots[slotName];
+      if (slot) {
+        return slot({
+          item,
+          originNode,
+          index,
+          nested,
+        } as PromptsItemSlotInfo);
+      }
+
+      return originNode;
+    };
+
     const renderItems = (items?: PromptDataItem[], nested = false) => {
       if (!items?.length) return null;
 
@@ -189,6 +230,27 @@ export const XPrompts = defineComponent({
         >
           {items.map((item, index) => {
             const itemHasChildren = hasChildren(item);
+            const iconNode = renderItemNode(
+              "iconRender",
+              item,
+              index,
+              nested,
+              item.icon,
+            );
+            const labelNode = renderItemNode(
+              "labelRender",
+              item,
+              index,
+              nested,
+              item.label,
+            );
+            const descriptionNode = renderItemNode(
+              "description",
+              item,
+              index,
+              nested,
+              item.description,
+            );
 
             return (
               <div
@@ -211,8 +273,8 @@ export const XPrompts = defineComponent({
                 ]}
                 onClick={() => triggerItemClick(item, itemHasChildren)}
               >
-                {item.icon && (
-                  <div class={`${props.prefixCls}-icon`}>{item.icon}</div>
+                {hasRenderableNode(iconNode) && (
+                  <div class={`${props.prefixCls}-icon`}>{iconNode}</div>
                 )}
                 <div
                   class={[
@@ -221,12 +283,12 @@ export const XPrompts = defineComponent({
                   ]}
                   style={mergedStyles.value.itemContent}
                 >
-                  {item.label && (
-                    <div class={`${props.prefixCls}-label`}>{item.label}</div>
+                  {hasRenderableNode(labelNode) && (
+                    <div class={`${props.prefixCls}-label`}>{labelNode}</div>
                   )}
-                  {item.description && (
+                  {hasRenderableNode(descriptionNode) && (
                     <div class={`${props.prefixCls}-desc`}>
-                      {item.description}
+                      {descriptionNode}
                     </div>
                   )}
                   {itemHasChildren && (
@@ -268,12 +330,12 @@ export const XPrompts = defineComponent({
           props.style,
         ]}
       >
-        {props.title && (
+        {hasRenderableNode(renderTitle()) && (
           <div
             class={[`${props.prefixCls}-title`, mergedClasses.value.title]}
             style={mergedStyles.value.title}
           >
-            {props.title}
+            {renderTitle()}
           </div>
         )}
         {renderItems(props.items)}
