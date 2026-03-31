@@ -104,12 +104,10 @@ export default function useActive(
         break;
       case "Enter":
         event.preventDefault();
-        event.stopPropagation();
         return false;
       case "Escape":
         onCancel();
         event.preventDefault();
-        event.stopPropagation();
         break;
       default:
         break;
