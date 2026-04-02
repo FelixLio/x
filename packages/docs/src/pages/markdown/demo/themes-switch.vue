@@ -64,9 +64,9 @@ See [x-markdown theme docs](/markdown/themes).
 </template>
 
 <docs lang="zh-CN">
-主题切换示例：对齐 antdx 的 segmented 交互与主题容器样式。
+主题切换示例，展示分段切换交互与主题容器样式。
 </docs>
 
 <docs lang="en-US">
-Theme switch demo aligned with antdx segmented interaction and themed container styling.
+Theme switch demo showing segmented controls and themed container styling.
 </docs>

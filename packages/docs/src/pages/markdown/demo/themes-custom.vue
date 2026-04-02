@@ -96,9 +96,9 @@ const containerStyle = computed(() => ({
 </template>
 
 <docs lang="zh-CN">
-自定义主题示例：对齐 antdx 的变量覆盖方式，展示最小定制步骤。
+自定义主题示例，展示通过变量覆盖实现最小定制。
 </docs>
 
 <docs lang="en-US">
-Custom theme demo aligned with antdx variable overrides and minimal customization steps.
+Custom theme demo showing minimal customization through variable overrides.
 </docs>

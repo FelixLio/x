@@ -343,9 +343,9 @@ const rerender = () => {
 </template>
 
 <docs lang="zh-CN">
-LaTeX 示例：严格对齐 antdx 的 Latex 基础 demo，实现同款公式语法与流式渲染结构。
+LaTeX 示例，展示公式语法支持与流式渲染结构。
 </docs>
 
 <docs lang="en-US">
-LaTeX demo strictly aligned with antdx Latex basic demo, including syntax coverage and streaming structure.
+LaTeX demo covering formula syntax support and streaming rendering structure.
 </docs>

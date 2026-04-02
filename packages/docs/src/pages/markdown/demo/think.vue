@@ -142,9 +142,9 @@ const rerender = () => {
 </template>
 
 <docs lang="zh-CN">
-Think 示例：对齐 antdx，展示流式过程中思考块的展开/收起交互。
+Think 示例，展示流式过程中思考块的展开与收起交互。
 </docs>
 
 <docs lang="en-US">
-Think demo aligned with antdx: show expandable/collapsible thought blocks during streaming output.
+Think demo showing expandable and collapsible thought blocks during streaming output.
 </docs>

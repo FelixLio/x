@@ -143,9 +143,9 @@ const rerender = () => {
 </template>
 
 <docs lang="zh-CN">
-Sources 示例：对齐 antdx，在 Markdown 内将脚注标记映射为 Sources 内联组件。
+Sources 示例，在 Markdown 内将脚注标记映射为 Sources 内联组件。
 </docs>
 
 <docs lang="en-US">
-Sources demo aligned with antdx: map Markdown footnote markers to inline Sources components.
+Sources demo mapping Markdown footnote markers to inline Sources components.
 </docs>

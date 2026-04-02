@@ -206,9 +206,9 @@ const rerender = () => {
 </template>
 
 <docs lang="zh-CN">
-CodeHighlighter 示例：对齐 antdx，流式输出代码并使用组件替换默认代码块渲染。
+CodeHighlighter 示例，流式输出代码并使用组件替换默认代码块渲染。
 </docs>
 
 <docs lang="en-US">
-CodeHighlighter demo aligned with antdx: stream content and replace default code rendering with the component.
+CodeHighlighter demo streaming code content and replacing default code block rendering with the component.
 </docs>

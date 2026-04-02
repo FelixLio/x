@@ -18,9 +18,9 @@ const transformed = computed(() =>
 </template>
 
 <docs lang="zh-CN">
-Marked 风格插件示例：对齐 antdx 的 emoji 扩展场景，演示预处理后渲染。
+Marked 风格插件示例，演示预处理后的内容渲染。
 </docs>
 
 <docs lang="en-US">
-Marked-style plugin demo aligned with antdx emoji-extension scenario, rendering transformed content.
+Marked-style plugin demo rendering transformed content after preprocessing.
 </docs>

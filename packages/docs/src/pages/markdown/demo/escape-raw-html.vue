@@ -84,9 +84,9 @@ Raw HTML (when not escaped, is rendered as DOM):
 </template>
 
 <docs lang="zh-CN">
-安全示例：对齐 antdx 交互，动态切换 HTML 转义和链接新开页。
+安全示例，动态切换 HTML 转义和链接新开页。
 </docs>
 
 <docs lang="en-US">
-Security demo aligned with antdx: toggle raw-HTML escaping and new-tab link behavior.
+Security demo toggling raw-HTML escaping and new-tab link behavior.
 </docs>

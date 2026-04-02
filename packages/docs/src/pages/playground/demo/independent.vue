@@ -1177,9 +1177,9 @@ const senderPrefix = () =>
 </template>
 
 <docs lang="zh-CN">
-独立式多会话 playground：对齐 antdx `playground/independent` 的交互结构，并迁移为基于 `@antdv-next/x` 与 `@antdv-next/x-sdk` 的 Vue 实现。
+独立式多会话 playground，基于 `@antdv-next/x` 与 `@antdv-next/x-sdk` 的 Vue 实现。
 </docs>
 
 <docs lang="en-US">
-Standalone multi-conversation playground aligned with the antdx `playground/independent` page, rebuilt in Vue with `@antdv-next/x` and `@antdv-next/x-sdk`.
+Standalone multi-conversation playground built in Vue with `@antdv-next/x` and `@antdv-next/x-sdk`.
 </docs>

@@ -107,9 +107,9 @@ const components = {
 </style>
 
 <docs lang="zh-CN">
-自定义插件示例：对齐 antdx 的脚注扩展思路，将语法标记映射为交互组件。
+自定义插件示例，将语法标记映射为交互组件。
 </docs>
 
 <docs lang="en-US">
-Custom plugin demo aligned with antdx footnote extension idea: map syntax markers to interactive components.
+Custom plugin demo mapping syntax markers to interactive components.
 </docs>

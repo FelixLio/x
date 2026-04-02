@@ -564,9 +564,9 @@ function handleCreateConversation() {
 </template>
 
 <docs lang="zh-CN">
-更现代的多会话聊天样板：对齐 antdx ultramodern 的布局与交互，并适配到 `@antdv-next/x`。
+更现代的多会话聊天样板，基于 `@antdv-next/x` 构建。
 </docs>
 
 <docs lang="en-US">
-Ultramodern multi-conversation chat sample aligned with antdx ultramodern layout and interactions, adapted to `@antdv-next/x`.
+Ultramodern multi-conversation chat sample built with `@antdv-next/x`.
 </docs>
