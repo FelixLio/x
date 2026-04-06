@@ -1,6 +1,6 @@
 {
   "name": "@antdv-next/x",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "files": [
     "dist",
     "global.d.ts"
