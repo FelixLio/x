@@ -1,6 +1,11 @@
 {
   "name": "antdv-next-x-workspace",
   "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antdv-next/x.git"
+  },
   "type": "module",
   "scripts": {
     "docs:dev": "vp dev packages/docs",
@@ -62,6 +67,9 @@
     "vue-i18n": "catalog:prod",
     "vue-router": "catalog:prod",
     "vue-tsc": "catalog:dev"
+  },
+  "engines": {
+    "node": ">=22.18.0"
   },
   "packageManager": "pnpm@10.32.1"
 }
