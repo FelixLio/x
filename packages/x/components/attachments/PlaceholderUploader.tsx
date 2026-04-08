@@ -14,8 +14,18 @@ export interface PlaceholderConfig {
 
 export type PlaceholderType = PlaceholderConfig | VNodeChild;
 
+export interface PlaceholderSlotInfo {
+  type: "inline" | "drop";
+  originNode?: VNodeChild;
+}
+
+export interface PlaceholderFieldSlotInfo extends PlaceholderSlotInfo {
+  originNode?: VNodeChild;
+}
+
 export interface PlaceholderProps {
   prefixCls: string;
+  type: "inline" | "drop";
   placeholder?: PlaceholderType;
   upload?: UploadProps;
   class?: ClassValue;
@@ -28,6 +38,10 @@ const PlaceholderUploader = defineComponent({
   props: {
     prefixCls: {
       type: String,
+      required: true,
+    },
+    type: {
+      type: String as PropType<PlaceholderProps["type"]>,
       required: true,
     },
     placeholder: {
@@ -81,6 +95,38 @@ const PlaceholderUploader = defineComponent({
       return props.placeholder as PlaceholderConfig;
     });
 
+    const renderConfigNode = () => {
+      const iconOriginNode = placeholderConfig.value.icon;
+      const titleOriginNode = placeholderConfig.value.title;
+      const descriptionOriginNode = placeholderConfig.value.description;
+
+      const iconNode =
+        slots.placeholderIcon?.({
+          type: props.type,
+          originNode: iconOriginNode,
+        }) ?? iconOriginNode;
+      const titleNode =
+        slots.placeholderTitle?.({
+          type: props.type,
+          originNode: titleOriginNode,
+        }) ?? titleOriginNode;
+      const descriptionNode =
+        slots.placeholderDescription?.({
+          type: props.type,
+          originNode: descriptionOriginNode,
+        }) ?? descriptionOriginNode;
+
+      return (
+        <div class={`${placeholderCls.value}-inner`}>
+          <span class={`${placeholderCls.value}-icon`}>{iconNode}</span>
+          <span class={`${placeholderCls.value}-title`}>{titleNode}</span>
+          <span class={`${placeholderCls.value}-description`}>
+            {descriptionNode}
+          </span>
+        </div>
+      );
+    };
+
     const onDragEnter = () => {
       dragIn.value = true;
     };
@@ -97,21 +143,14 @@ const PlaceholderUploader = defineComponent({
     };
 
     return () => {
-      const node = isConfig.value ? (
-        <div class={`${placeholderCls.value}-inner`}>
-          <span class={`${placeholderCls.value}-icon`}>
-            {placeholderConfig.value.icon}
-          </span>
-          <span class={`${placeholderCls.value}-title`}>
-            {placeholderConfig.value.title}
-          </span>
-          <span class={`${placeholderCls.value}-description`}>
-            {placeholderConfig.value.description}
-          </span>
-        </div>
-      ) : (
-        slots.default?.() || props.placeholder
-      );
+      const originNode = isConfig.value
+        ? renderConfigNode()
+        : slots.default?.() || props.placeholder;
+      const node =
+        slots.placeholder?.({
+          type: props.type,
+          originNode,
+        }) ?? originNode;
 
       return (
         <div

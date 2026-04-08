@@ -1,25 +1,67 @@
 <template>
-  <App>
-    <Flex :style="{ minHeight: '250px' }" align="flex-end">
-      <Sender
+  <a-app>
+    <a-flex :style="{ minHeight: '250px' }" align="flex-end">
+      <ax-sender
         ref="senderRef"
-        :header="senderHeader"
-        :prefix="prefixRender"
         :value="text"
         :on-change="onTextChange"
         :on-submit="onSubmit"
-      />
-    </Flex>
-  </App>
+      >
+        <template #header>
+          <ax-sender-header
+            title="Attachments"
+            :open="open"
+            :on-open-change="
+              (val: boolean) => {
+                open = val;
+              }
+            "
+            :styles="{
+              content: {
+                padding: 0,
+              },
+            }"
+          >
+            <ax-attachments
+              :before-upload="() => false"
+              :items="items"
+              :on-change="onChange"
+              :placeholder="placeholder"
+              :get-drop-container="() => senderRef?.nativeElement"
+            >
+              <template #placeholder-icon>
+                <CloudUploadOutlined />
+              </template>
+            </ax-attachments>
+          </ax-sender-header>
+        </template>
+
+        <template #prefix>
+          <a-badge :dot="items.length > 0 && !open">
+            <a-button
+              @click="
+                () => {
+                  open = !open;
+                }
+              "
+            >
+              <template #icon>
+                <LinkOutlined />
+              </template>
+            </a-button>
+          </a-badge>
+        </template>
+      </ax-sender>
+    </a-flex>
+  </a-app>
 </template>
 
 <script setup lang="ts">
 import type { SenderRef } from "@antdv-next/x";
 
 import { CloudUploadOutlined, LinkOutlined } from "@antdv-next/icons";
-import { Attachments, Sender } from "@antdv-next/x";
-import { App, Badge, Button, Flex, Typography } from "antdv-next";
-import { h, onBeforeUnmount, ref } from "vue";
+import { App } from "antdv-next";
+import { onBeforeUnmount, ref } from "vue";
 
 interface Attachment {
   uid: string;
@@ -79,73 +121,16 @@ const placeholder = (type: "inline" | "drop") =>
         title: "Drop file here",
       }
     : {
-        icon: h(CloudUploadOutlined),
         title: "Upload files",
         description: "Click or drag files to this area to upload",
       };
-
-const senderHeader = () =>
-  h(
-    Sender.Header,
-    {
-      title: "Attachments",
-      open: open.value,
-      onOpenChange: (val: boolean) => {
-        open.value = val;
-      },
-      styles: {
-        content: {
-          padding: 0,
-        },
-      },
-    },
-    {
-      default: () =>
-        h(Attachments, {
-          beforeUpload: () => false,
-          items: items.value,
-          onChange,
-          placeholder,
-          getDropContainer: () => senderRef.value?.nativeElement,
-        }),
-    },
-  );
-
-const prefixRender = () =>
-  h(
-    Badge,
-    {
-      dot: items.value.length > 0 && !open.value,
-    },
-    {
-      default: () =>
-        h(Button, {
-          onClick: () => {
-            open.value = !open.value;
-          },
-          icon: h(LinkOutlined),
-        }),
-    },
-  );
 
 const onTextChange = (value: string) => {
   text.value = value;
 };
 
 const submitDescription = () =>
-  h(Typography, null, {
-    default: () =>
-      h("ul", [
-        h("li", `You said: ${text.value}`),
-        h("li", [
-          `Attachments count: ${items.value.length}`,
-          h(
-            "ul",
-            items.value.map(item => h("li", { key: item.uid }, item.name)),
-          ),
-        ]),
-      ]),
-  });
+  `You said: ${text.value || "(empty)"}\nAttachments count: ${items.value.length}\n${items.value.map(item => `- ${item.name}`).join("\n")}`;
 
 const onSubmit = () => {
   notification.info({
@@ -157,3 +142,11 @@ const onSubmit = () => {
   text.value = "";
 };
 </script>
+
+<docs lang="zh-CN">
+配合 Sender.Header 使用，在对话中插入附件。
+</docs>
+
+<docs lang="en-US">
+Work with Sender.Header to insert file into the conversation.
+</docs>

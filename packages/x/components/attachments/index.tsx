@@ -21,6 +21,8 @@ import { AttachmentContextKey } from "./context";
 import DropArea from "./DropArea";
 import FileList from "./FileList";
 import PlaceholderUploader, {
+  type PlaceholderFieldSlotInfo,
+  type PlaceholderSlotInfo,
   type PlaceholderType,
 } from "./PlaceholderUploader";
 import SilentUploader from "./SilentUploader";
@@ -71,6 +73,13 @@ export interface AttachmentsProps<T = any> {
   customRequest?: UploadProps["customRequest"];
   withCredentials?: boolean;
   openFileDialogOnClick?: boolean;
+}
+
+export interface AttachmentsSlots {
+  placeholder?: (info: PlaceholderSlotInfo) => VNodeChild;
+  placeholderIcon?: (info: PlaceholderFieldSlotInfo) => VNodeChild;
+  placeholderTitle?: (info: PlaceholderFieldSlotInfo) => VNodeChild;
+  placeholderDescription?: (info: PlaceholderFieldSlotInfo) => VNodeChild;
 }
 
 export interface AttachmentsRef {
@@ -334,12 +343,20 @@ const XAttachments = defineComponent({
 
       return (
         <PlaceholderUploader
+          type={type}
           placeholder={placeholderContent}
           upload={uploadProps.value}
           prefixCls={props.prefixCls}
           class={mergedClasses.value.placeholder}
           style={[mergedStyles.value.placeholder, options?.style]}
-        />
+        >
+          {{
+            placeholder: slots.placeholder,
+            placeholderIcon: slots.placeholderIcon,
+            placeholderTitle: slots.placeholderTitle,
+            placeholderDescription: slots.placeholderDescription,
+          }}
+        </PlaceholderUploader>
       );
     };
 
@@ -427,3 +444,10 @@ const XAttachments = defineComponent({
 });
 
 export default XAttachments as DefineComponent<AttachmentsProps>;
+
+export type {
+  PlaceholderConfig,
+  PlaceholderFieldSlotInfo,
+  PlaceholderSlotInfo,
+  PlaceholderType,
+} from "./PlaceholderUploader";

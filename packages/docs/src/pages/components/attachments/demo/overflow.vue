@@ -1,7 +1,7 @@
 <template>
-  <Flex vertical gap="middle">
-    <Flex gap="middle" align="center">
-      <Segmented
+  <a-flex vertical gap="middle">
+    <a-flex gap="middle" align="center">
+      <a-segmented
         v-model:value="overflow"
         :options="[
           { value: 'wrap', label: 'Wrap' },
@@ -10,34 +10,36 @@
         ]"
         :style="{ marginInlineEnd: 'auto' }"
       />
-      <Switch
+      <a-switch
         v-model:checked="hasData"
         checked-children="Data"
         un-checked-children="Data"
       />
-      <Switch
+      <a-switch
         v-model:checked="disabled"
         checked-children="Disabled"
         un-checked-children="Disabled"
       />
-    </Flex>
+    </a-flex>
 
-    <Attachments
+    <ax-attachments
       :overflow="overflow"
       :items="items"
       @change="onChange"
       :before-upload="() => false"
       :placeholder="placeholder"
       :disabled="disabled"
-    />
-  </Flex>
+    >
+      <template #placeholder-icon>
+        <CloudUploadOutlined />
+      </template>
+    </ax-attachments>
+  </a-flex>
 </template>
 
 <script setup lang="ts">
 import { CloudUploadOutlined } from "@antdv-next/icons";
-import { Attachments } from "@antdv-next/x";
-import { Flex, Segmented, Switch } from "antdv-next";
-import { computed, h, ref } from "vue";
+import { computed, ref } from "vue";
 
 interface Attachment {
   uid: string;
@@ -62,7 +64,6 @@ const presetFiles: Attachment[] = Array.from({ length: 30 }).map(
 );
 
 const placeholder = {
-  icon: h(CloudUploadOutlined),
   title: "Click or Drop files here",
   description: "Support file type: image, video, audio, document, etc.",
 };
@@ -82,3 +83,11 @@ const onChange = ({ fileList }: { fileList: Attachment[] }) => {
   items.value = fileList;
 };
 </script>
+
+<docs lang="zh-CN">
+控制附件超出区域长度时的展示方式。
+</docs>
+
+<docs lang="en-US">
+Controls the layout of attachments when they exceed the area.
+</docs>

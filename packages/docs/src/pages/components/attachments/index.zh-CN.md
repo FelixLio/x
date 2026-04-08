@@ -46,6 +46,18 @@ description: 用于展示一组附件信息集合。
 
 > Upload 相关能力透传：`action`、`method`、`customRequest`、`withCredentials`。
 
+### 插槽
+
+| 插槽                      | 说明                 | 类型                                   |
+| ------------------------- | -------------------- | -------------------------------------- |
+| `placeholder`             | 自定义整个占位区域   | `({ type, originNode }) => VNodeChild` |
+| `placeholder-icon`        | 自定义占位区图标     | `({ type, originNode }) => VNodeChild` |
+| `placeholder-title`       | 自定义占位区标题     | `({ type, originNode }) => VNodeChild` |
+| `placeholder-description` | 自定义占位区描述文案 | `({ type, originNode }) => VNodeChild` |
+
+占位区渲染优先级：`placeholder` 插槽 > `placeholder` 属性。
+字段渲染优先级：同名字段插槽 > `placeholder` 配置对象中的对应字段。
+
 ```ts
 interface PlaceholderConfig {
   icon?: VNodeChild;

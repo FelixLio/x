@@ -1,6 +1,6 @@
 <template>
-  <App>
-    <Flex
+  <a-app>
+    <a-flex
       vertical
       gap="middle"
       :style="{
@@ -9,7 +9,7 @@
       }"
     >
       <div :style="sharedBorderStyle">
-        <Attachments
+        <ax-attachments
           :before-upload="() => false"
           :items="items"
           @change="onChange"
@@ -18,41 +18,80 @@
       </div>
 
       <div :style="sharedBorderStyle">
-        <Attachments
+        <ax-attachments
           :before-upload="() => false"
           :items="items"
           @change="onChange"
           :placeholder="getPlaceholderFn(customPlaceholderNode)"
-        />
+        >
+          <template #placeholder="{ type }">
+            <a-result
+              v-if="type === 'inline'"
+              title="Custom Placeholder Node"
+              :style="{ padding: 0 }"
+            >
+              <template #icon>
+                <CloudUploadOutlined />
+              </template>
+              <template #extra>
+                <a-button type="primary">Do Upload</a-button>
+              </template>
+            </a-result>
+            <template v-else>Drop file here</template>
+          </template>
+        </ax-attachments>
       </div>
 
-      <Flex gap="middle">
-        <Button
+      <div :style="sharedBorderStyle">
+        <ax-attachments
+          :before-upload="() => false"
+          :items="items"
+          @change="onChange"
+          :placeholder="getPlaceholderFn(defaultInlinePlaceholder)"
+        >
+          <template #placeholder-icon="{ originNode }">
+            <CloudUploadOutlined style="color: #1677ff" />
+            <template v-if="!originNode" />
+          </template>
+          <template #placeholder-title="{ type, originNode }">
+            {{ type === "drop" ? "Drop file here" : originNode }}
+          </template>
+          <template #placeholder-description="{ type, originNode }">
+            {{
+              type === "drop"
+                ? "Release the mouse to start selecting files."
+                : originNode
+            }}
+          </template>
+        </ax-attachments>
+      </div>
+
+      <a-flex gap="middle">
+        <a-button
           :style="{ flex: '1 1 50%' }"
           :disabled="!!items.length"
           type="primary"
           @click="fillFiles"
         >
           Fill Files
-        </Button>
-        <Button
+        </a-button>
+        <a-button
           :style="{ flex: '1 1 50%' }"
           :disabled="!items.length"
           @click="resetFiles"
         >
           Reset Files
-        </Button>
-      </Flex>
-    </Flex>
-  </App>
+        </a-button>
+      </a-flex>
+    </a-flex>
+  </a-app>
 </template>
 
 <script setup lang="ts">
 import type { VNodeChild } from "vue";
 
 import { CloudUploadOutlined } from "@antdv-next/icons";
-import { Attachments } from "@antdv-next/x";
-import { App, Button, Flex, Result, theme } from "antdv-next";
+import { Button, Result, theme } from "antdv-next";
 import { h, ref } from "vue";
 
 const { token } = theme.useToken();
@@ -185,3 +224,11 @@ const resetFiles = () => {
   items.value = [];
 };
 </script>
+
+<docs lang="zh-CN">
+修改占位信息。
+</docs>
+
+<docs lang="en-US">
+Modify placeholder information.
+</docs>

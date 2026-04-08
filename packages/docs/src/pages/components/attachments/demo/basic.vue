@@ -1,30 +1,46 @@
 <template>
-  <App>
+  <a-app>
     <div ref="containerRef">
-      <Flex vertical gap="middle" align="flex-start">
-        <Sender :prefix="prefixRender" />
+      <a-flex vertical gap="middle" align="flex-start">
+        <ax-sender>
+          <template #prefix>
+            <ax-attachments
+              :before-upload="() => false"
+              :on-change="onChange"
+              :get-drop-container="getDropContainer"
+              :placeholder="placeholder"
+            >
+              <template #placeholder-icon>
+                <CloudUploadOutlined />
+              </template>
+              <a-button type="text">
+                <template #icon>
+                  <LinkOutlined />
+                </template>
+              </a-button>
+            </ax-attachments>
+          </template>
+        </ax-sender>
 
-        <Switch
+        <a-switch
           v-model:checked="fullScreenDrop"
           checked-children="Full screen drop"
           un-checked-children="Full screen drop"
         />
-      </Flex>
+      </a-flex>
     </div>
-  </App>
+  </a-app>
 </template>
 
 <script setup lang="ts">
 import { CloudUploadOutlined, LinkOutlined } from "@antdv-next/icons";
-import { Attachments, Sender } from "@antdv-next/x";
-import { App, Button, Flex, Switch, message } from "antdv-next";
-import { h, ref } from "vue";
+import { message } from "antdv-next";
+import { ref } from "vue";
 
 const fullScreenDrop = ref(false);
 const containerRef = ref<HTMLDivElement>();
 
 const placeholder = {
-  icon: h(CloudUploadOutlined),
   title: "Drag & Drop files here",
   description: "Support file type: image, video, audio, document, etc.",
 };
@@ -37,18 +53,12 @@ const onChange = ({ file }: { file?: { name?: string } }) => {
     message.info(`Mock upload: ${file.name}`);
   }
 };
-
-const prefixRender = () =>
-  h(
-    Attachments,
-    {
-      beforeUpload: () => false,
-      onChange,
-      getDropContainer,
-      placeholder,
-    },
-    {
-      default: () => h(Button, { type: "text", icon: h(LinkOutlined) }),
-    },
-  );
 </script>
+
+<docs lang="zh-CN">
+基础用法，可以通过 `getDropContainer` 支持拖拽上传。
+</docs>
+
+<docs lang="en-US">
+Basic usage. You can use `getDropContainer` to support drag and drop upload.
+</docs>

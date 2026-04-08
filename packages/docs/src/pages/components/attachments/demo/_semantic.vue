@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { CloudUploadOutlined } from "@antdv-next/icons";
-import { Attachments } from "@antdv-next/x";
-import { Divider, Flex } from "antdv-next";
-import { computed, h } from "vue";
+import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
 import { useLocale } from "@/composables/use-locale";
@@ -77,7 +75,7 @@ const withItemSemantics = computed(() => [
 </script>
 
 <template>
-  <Flex vertical>
+  <a-flex vertical>
     <SemanticPreview
       component-name="Attachments"
       :semantics="[
@@ -86,28 +84,31 @@ const withItemSemantics = computed(() => [
       ]"
     >
       <template #default="{ classes }">
-        <Attachments
+        <ax-attachments
           :classes="classes"
           :placeholder="{
-            icon: h(CloudUploadOutlined),
             title: 'Upload File',
             description: 'Drag or click to upload file.',
           }"
-        />
+        >
+          <template #placeholder-icon>
+            <CloudUploadOutlined />
+          </template>
+        </ax-attachments>
       </template>
     </SemanticPreview>
 
-    <Divider :style="{ margin: 0, padding: 0 }" />
+    <a-divider :style="{ margin: 0, padding: 0 }" />
 
     <SemanticPreview
       component-name="Attachments"
       :semantics="withItemSemantics"
     >
       <template #default="{ classes }">
-        <Attachments :items="items" :classes="classes" />
+        <ax-attachments :items="items" :classes="classes" />
       </template>
     </SemanticPreview>
-  </Flex>
+  </a-flex>
 </template>
 
 <docs lang="zh-CN">

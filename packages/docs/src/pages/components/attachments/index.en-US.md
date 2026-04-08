@@ -45,6 +45,18 @@ description: Display the collection of attachment information.
 
 > Forwarded Upload-related props: `action`, `method`, `customRequest`, `withCredentials`.
 
+### Slots
+
+| Slot                      | Description                           | Type                                   |
+| ------------------------- | ------------------------------------- | -------------------------------------- |
+| `placeholder`             | Customize the entire placeholder area | `({ type, originNode }) => VNodeChild` |
+| `placeholder-icon`        | Customize the placeholder icon        | `({ type, originNode }) => VNodeChild` |
+| `placeholder-title`       | Customize the placeholder title       | `({ type, originNode }) => VNodeChild` |
+| `placeholder-description` | Customize the placeholder description | `({ type, originNode }) => VNodeChild` |
+
+Placeholder render priority: `placeholder` slot > `placeholder` prop.
+Field render priority: same-name field slot > matching field in `placeholder` config object.
+
 ```ts
 interface PlaceholderConfig {
   icon?: VNodeChild;

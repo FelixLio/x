@@ -1,16 +1,75 @@
 <template>
-  <App>
-    <Flex :style="{ minHeight: '250px' }" align="flex-end">
-      <Sender
+  <a-app>
+    <a-flex :style="{ minHeight: '250px' }" align="flex-end">
+      <ax-sender
         ref="senderRef"
-        :header="senderHeader"
-        :prefix="prefixRender"
         :value="text"
         :on-change="onTextChange"
         :on-submit="onSubmit"
-      />
-    </Flex>
-  </App>
+      >
+        <template #header>
+          <ax-sender-header
+            title="Attachments"
+            :closable="false"
+            :force-render="true"
+            :open="open"
+            :on-open-change="
+              (val: boolean) => {
+                open = val;
+              }
+            "
+            :styles="{
+              content: {
+                padding: 0,
+              },
+            }"
+          >
+            <ax-attachments
+              ref="attachmentsRef"
+              :multiple="true"
+              :max-count="MAX_COUNT"
+              :before-upload="() => false"
+              :items="items"
+              :on-change="onChange"
+              :placeholder="placeholder"
+              :get-drop-container="() => senderRef?.nativeElement"
+            >
+              <template #placeholder-icon>
+                <CloudUploadOutlined />
+              </template>
+            </ax-attachments>
+          </ax-sender-header>
+        </template>
+
+        <template #prefix>
+          <a-badge :dot="items.length > 0 && !open">
+            <a-dropdown
+              :trigger="['click']"
+              :menu="{
+                items: acceptItems,
+                onClick: ({ key }) => {
+                  selectFile(String(key));
+                },
+              }"
+              placement="topLeft"
+              :arrow="{ pointAtCenter: true }"
+            >
+              <template #iconRender="{ key }">
+                <FileImageOutlined v-if="key === 'image'" />
+                <FileWordOutlined v-else-if="key === 'docs'" />
+              </template>
+
+              <a-button :disabled="items.length >= MAX_COUNT" type="text">
+                <template #icon>
+                  <LinkOutlined />
+                </template>
+              </a-button>
+            </a-dropdown>
+          </a-badge>
+        </template>
+      </ax-sender>
+    </a-flex>
+  </a-app>
 </template>
 
 <script setup lang="ts">
@@ -22,17 +81,8 @@ import {
   FileWordOutlined,
   LinkOutlined,
 } from "@antdv-next/icons";
-import { Attachments, Sender } from "@antdv-next/x";
-import {
-  App,
-  Badge,
-  Button,
-  Dropdown,
-  Flex,
-  Typography,
-  notification,
-} from "antdv-next";
-import { h, onBeforeUnmount, ref, watch } from "vue";
+import { notification } from "antdv-next";
+import { onBeforeUnmount, ref, watch } from "vue";
 
 const MAX_COUNT = 5;
 
@@ -94,42 +144,9 @@ const placeholder = (type: "inline" | "drop") =>
         title: "Drop file here",
       }
     : {
-        icon: h(CloudUploadOutlined),
         title: "Upload files",
         description: "Click or drag files to this area to upload",
       };
-
-const senderHeader = () =>
-  h(
-    Sender.Header,
-    {
-      closable: false,
-      forceRender: true,
-      title: "Attachments",
-      open: open.value,
-      onOpenChange: (val: boolean) => {
-        open.value = val;
-      },
-      styles: {
-        content: {
-          padding: 0,
-        },
-      },
-    },
-    {
-      default: () =>
-        h(Attachments, {
-          ref: attachmentsRef,
-          multiple: true,
-          maxCount: MAX_COUNT,
-          beforeUpload: () => false,
-          items: items.value,
-          onChange,
-          placeholder,
-          getDropContainer: () => senderRef.value?.nativeElement,
-        }),
-    },
-  );
 
 const selectFile = (key: string) => {
   attachmentsRef.value?.select({
@@ -141,64 +158,13 @@ const selectFile = (key: string) => {
 const acceptItems = [
   {
     key: "image",
-    label: h(
-      Flex,
-      {
-        gap: "small",
-      },
-      {
-        default: () => [h(FileImageOutlined), h("span", "Image")],
-      },
-    ),
+    label: "Image",
   },
   {
     key: "docs",
-    label: h(
-      Flex,
-      {
-        gap: "small",
-      },
-      {
-        default: () => [h(FileWordOutlined), h("span", "Docs")],
-      },
-    ),
+    label: "Docs",
   },
 ];
-
-const prefixRender = () =>
-  h(
-    Badge,
-    {
-      dot: items.value.length > 0 && !open.value,
-    },
-    {
-      default: () =>
-        h(
-          Dropdown,
-          {
-            trigger: ["click"],
-            menu: {
-              items: acceptItems,
-              onClick: ({ key }: { key: string | number }) => {
-                selectFile(String(key));
-              },
-            },
-            placement: "topLeft",
-            arrow: {
-              pointAtCenter: true,
-            },
-          },
-          {
-            default: () =>
-              h(Button, {
-                disabled: items.value.length >= MAX_COUNT,
-                type: "text",
-                icon: h(LinkOutlined),
-              }),
-          },
-        ),
-    },
-  );
 
 const onTextChange = (value: string) => {
   text.value = value;
@@ -215,19 +181,7 @@ watch(
 );
 
 const submitDescription = () =>
-  h(Typography, null, {
-    default: () =>
-      h("ul", [
-        h("li", `You said: ${text.value}`),
-        h("li", [
-          `Attachments count: ${items.value.length}`,
-          h(
-            "ul",
-            items.value.map(item => h("li", { key: item.uid }, item.name)),
-          ),
-        ]),
-      ]),
-  });
+  `You said: ${text.value || "(empty)"}\nAttachments count: ${items.value.length}\n${items.value.map(item => `- ${item.name}`).join("\n")}`;
 
 const onSubmit = () => {
   notification.info({
@@ -239,3 +193,11 @@ const onSubmit = () => {
   text.value = "";
 };
 </script>
+
+<docs lang="zh-CN">
+调用 `ref.select` 方法可以打开选择文件对话框，来区分类型进行上传，同时设置 `multiple` 为 true 可以支持多选，设置 `maxCount` 可以限制最多选择的文件数量。
+</docs>
+
+<docs lang="en-US">
+Calling the `ref.select` method can open the file selection dialog to upload files by type. Setting `multiple` to true enables multi-selection, and setting `maxCount` can limit the maximum number of files that can be selected.
+</docs>
