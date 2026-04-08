@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Welcome } from "@antdv-next/x";
-import { Card, ConfigProvider, Flex, theme } from "antdv-next";
+import { theme } from "antdv-next";
 
 const items = [
   {
@@ -24,14 +23,14 @@ const items = [
 </script>
 
 <template>
-  <Flex vertical>
-    <ConfigProvider
+  <a-flex vertical>
+    <a-config-provider
       v-for="(item, index) in items"
       :key="index"
       :theme="{ algorithm: item.algorithm }"
     >
-      <Card :style="item.cardStyle">
-        <Welcome
+      <a-card :style="item.cardStyle">
+        <ax-welcome
           :style="{
             backgroundImage: item.background,
             borderStartStartRadius: '4px',
@@ -40,9 +39,9 @@ const items = [
           title="你好，我是 Antdv Next X"
           description="基于 Antdv Next 的 AGI 产品界面解决方案，打造更美好的智能愿景~"
         />
-      </Card>
-    </ConfigProvider>
-  </Flex>
+      </a-card>
+    </a-config-provider>
+  </a-flex>
 </template>
 
 <docs lang="zh-CN">

@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { MoreOutlined } from "@antdv-next/icons";
-import { Welcome } from "@antdv-next/x";
-import { Avatar, Button, Space, Typography } from "antdv-next";
 </script>
 
 <template>
-  <Welcome>
+  <ax-welcome>
     <template #icon>
-      <Avatar
+      <a-avatar
         shape="square"
         :size="48"
         src="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
@@ -15,26 +13,26 @@ import { Avatar, Button, Space, Typography } from "antdv-next";
     </template>
 
     <template #title>
-      <Space direction="vertical" :size="0">
+      <a-space direction="vertical" :size="0">
         <span>你好，我是 Antdv Next X</span>
-        <Typography.Text type="secondary">
+        <a-typography-text type="secondary">
           支持通过插槽自定义标题区域
-        </Typography.Text>
-      </Space>
+        </a-typography-text>
+      </a-space>
     </template>
 
     <template #description>
-      <Typography.Paragraph :style="{ marginBottom: 0 }">
+      <a-typography-paragraph :style="{ marginBottom: 0 }">
         你可以把更复杂的内容放进插槽里，比如强调文案、富文本或者自定义布局。
-      </Typography.Paragraph>
+      </a-typography-paragraph>
     </template>
 
     <template #extra>
-      <Button type="text">
+      <a-button type="text">
         <MoreOutlined />
-      </Button>
+      </a-button>
     </template>
-  </Welcome>
+  </ax-welcome>
 </template>
 
 <docs lang="zh-CN">

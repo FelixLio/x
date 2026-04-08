@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { EllipsisOutlined, ShareAltOutlined } from "@antdv-next/icons";
-import { Welcome } from "@antdv-next/x";
-import { Button, Space } from "antdv-next";
 import { computed, h } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
@@ -22,23 +20,24 @@ const semantics = computed(() => [
   { name: "description", desc: locales["zh-CN"].description },
   { name: "extra", desc: locales["zh-CN"].extra },
 ]);
-
-const extraNode = h(Space, undefined, () => [
-  h(Button, { size: "small", icon: h(ShareAltOutlined) }),
-  h(Button, { size: "small", icon: h(EllipsisOutlined) }),
-]);
 </script>
 
 <template>
   <SemanticPreview component-name="Welcome" :semantics="semantics">
     <template #default="{ classes }">
-      <Welcome
+      <ax-welcome
         icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
         title="你好，我是 Antdv Next X"
         description="基于 Antdv Next 的 AGI 产品界面解决方案，打造更美好的智能愿景~"
-        :extra="extraNode"
         :classes="classes"
-      />
+      >
+        <template #extra>
+          <a-space>
+            <a-button size="small" :icon="h(ShareAltOutlined)" />
+            <a-button size="small" :icon="h(EllipsisOutlined)" />
+          </a-space>
+        </template>
+      </ax-welcome>
     </template>
   </SemanticPreview>
 </template>

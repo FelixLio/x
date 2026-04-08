@@ -2,20 +2,16 @@
 import type { PromptsProps } from "@antdv-next/x";
 
 import { CheckCircleOutlined, CoffeeOutlined } from "@antdv-next/icons";
-import { Prompts } from "@antdv-next/x";
-import { h } from "vue";
 
 const items: PromptsProps["items"] = [
   {
     key: "1",
-    icon: h(CheckCircleOutlined, { style: { color: "#52C41A" } }),
     label: "Task Completion Secrets",
     description: "What are some tricks for getting tasks done?",
     disabled: true,
   },
   {
     key: "2",
-    icon: h(CoffeeOutlined, { style: { color: "#964B00" } }),
     label: "Time for a Coffee Break",
     description: "How to rest effectively after long hours of work?",
   },
@@ -23,7 +19,12 @@ const items: PromptsProps["items"] = [
 </script>
 
 <template>
-  <Prompts title="☕️ It's time to relax!" :items="items" />
+  <ax-prompts title="☕️ It's time to relax!" :items="items">
+    <template #iconRender="{ item }">
+      <CheckCircleOutlined v-if="item.key === '1'" style="color: #52c41a" />
+      <CoffeeOutlined v-else-if="item.key === '2'" style="color: #964b00" />
+    </template>
+  </ax-prompts>
 </template>
 
 <docs lang="zh-CN">

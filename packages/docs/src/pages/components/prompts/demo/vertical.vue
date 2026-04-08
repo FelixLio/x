@@ -2,30 +2,31 @@
 import type { PromptsProps } from "@antdv-next/x";
 
 import { CoffeeOutlined, FireOutlined, SmileOutlined } from "@antdv-next/icons";
-import { Prompts } from "@antdv-next/x";
-import { h } from "vue";
 
 const items: PromptsProps["items"] = [
   {
     key: "1",
-    icon: h(CoffeeOutlined, { style: { color: "#964B00" } }),
     description: "How to rest effectively after long hours of work?",
   },
   {
     key: "2",
-    icon: h(SmileOutlined, { style: { color: "#FAAD14" } }),
     description: "What are the secrets to maintaining a positive mindset?",
   },
   {
     key: "3",
-    icon: h(FireOutlined, { style: { color: "#FF4D4F" } }),
     description: "How to stay calm under immense pressure?",
   },
 ];
 </script>
 
 <template>
-  <Prompts title="🤔 You might also want to ask:" :items="items" vertical />
+  <ax-prompts title="🤔 You might also want to ask:" :items="items" vertical>
+    <template #iconRender="{ item }">
+      <CoffeeOutlined v-if="item.key === '1'" style="color: #964b00" />
+      <SmileOutlined v-else-if="item.key === '2'" style="color: #faad14" />
+      <FireOutlined v-else-if="item.key === '3'" style="color: #ff4d4f" />
+    </template>
+  </ax-prompts>
 </template>
 
 <docs lang="zh-CN">

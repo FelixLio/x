@@ -9,17 +9,12 @@ import {
   RocketOutlined,
   SmileOutlined,
 } from "@antdv-next/icons";
-import { Prompts } from "@antdv-next/x";
-import { Card, message } from "antdv-next";
-import { h } from "vue";
+import { message } from "antdv-next";
 
 const items: PromptsProps["items"] = [
   {
     key: "1",
-    label: h("span", {}, [
-      h(FireOutlined, { style: { color: "#FF4D4F", marginRight: "8px" } }),
-      "Hot Topics",
-    ]),
+    label: "Hot Topics",
     description: "What are you interested in?",
     children: [
       { key: "1-1", description: "What's new in X?" },
@@ -29,27 +24,20 @@ const items: PromptsProps["items"] = [
   },
   {
     key: "2",
-    label: h("span", {}, [
-      h(ReadOutlined, { style: { color: "#1890FF", marginRight: "8px" } }),
-      "Design Guide",
-    ]),
+    label: "Design Guide",
     description: "How to design a good product?",
     children: [
-      { key: "2-1", icon: h(HeartOutlined), description: "Know the well" },
-      { key: "2-2", icon: h(SmileOutlined), description: "Set the AI role" },
+      { key: "2-1", description: "Know the well" },
+      { key: "2-2", description: "Set the AI role" },
       {
         key: "2-3",
-        icon: h(CommentOutlined),
         description: "Express the feeling",
       },
     ],
   },
   {
     key: "3",
-    label: h("span", {}, [
-      h(RocketOutlined, { style: { color: "#722ED1", marginRight: "8px" } }),
-      "Start Creating",
-    ]),
+    label: "Start Creating",
     description: "How to start a new project?",
     children: [
       { key: "3-1", label: "Fast Start", description: "Install Ant Design X" },
@@ -68,8 +56,8 @@ function onItemClick(info: PromptsClickInfo) {
 </script>
 
 <template>
-  <Card :style="{ borderRadius: 0, border: 0 }">
-    <Prompts
+  <a-card :style="{ borderRadius: 0, border: 0 }">
+    <ax-prompts
       title="Do you want?"
       :items="items"
       wrap
@@ -86,8 +74,30 @@ function onItemClick(info: PromptsClickInfo) {
         },
       }"
       @item-click="onItemClick"
-    />
-  </Card>
+    >
+      <template #labelRender="{ item, originNode, nested }">
+        <span v-if="!nested && item.key === '1'">
+          <FireOutlined style="color: #ff4d4f; margin-right: 8px" />
+          {{ originNode }}
+        </span>
+        <span v-else-if="!nested && item.key === '2'">
+          <ReadOutlined style="color: #1890ff; margin-right: 8px" />
+          {{ originNode }}
+        </span>
+        <span v-else-if="!nested && item.key === '3'">
+          <RocketOutlined style="color: #722ed1; margin-right: 8px" />
+          {{ originNode }}
+        </span>
+        <template v-else>{{ originNode }}</template>
+      </template>
+
+      <template #iconRender="{ item }">
+        <HeartOutlined v-if="item.key === '2-1'" />
+        <SmileOutlined v-else-if="item.key === '2-2'" />
+        <CommentOutlined v-else-if="item.key === '2-3'" />
+      </template>
+    </ax-prompts>
+  </a-card>
 </template>
 
 <docs lang="zh-CN">

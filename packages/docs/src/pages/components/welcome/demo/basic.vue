@@ -1,9 +1,5 @@
-<script setup lang="ts">
-import { Welcome } from "@antdv-next/x";
-</script>
-
 <template>
-  <Welcome
+  <ax-welcome
     icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
     title="你好，我是 Antdv Next X"
     description="基于 Antdv Next 的 AGI 产品界面解决方案，打造更美好的智能愿景~"

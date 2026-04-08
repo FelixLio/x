@@ -6,9 +6,7 @@ import {
   InfoCircleOutlined,
   RocketOutlined,
 } from "@antdv-next/icons";
-import { Prompts } from "@antdv-next/x";
-import { Divider } from "antdv-next";
-import { computed, h } from "vue";
+import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
 import { useLocale } from "@/composables/use-locale";
@@ -56,19 +54,16 @@ const nestSemantics = computed(() => [
 const items: PromptsProps["items"] = [
   {
     key: "1",
-    icon: h(BulbOutlined, { style: { color: "#FFD700" } }),
     label: "Ignite Your Creativity",
     description: "Got any sparks for a new project?",
   },
   {
     key: "2",
-    icon: h(InfoCircleOutlined, { style: { color: "#1890FF" } }),
     label: "Uncover Background Info",
     description: "Help me understand the background of this topic.",
   },
   {
     key: "3",
-    icon: h(RocketOutlined, { style: { color: "#722ED1" } }),
     label: "Efficiency Boost Battle",
     description: "How can I work faster and better?",
   },
@@ -98,17 +93,29 @@ const nestItems: PromptsProps["items"] = [
   <div>
     <SemanticPreview component-name="Prompts" :semantics="semantics">
       <template #default="{ classes }">
-        <Prompts
+        <ax-prompts
           title="✨ Inspirational Sparks and Marvelous Tips"
           :items="items"
           :classes="classes"
-        />
+        >
+          <template #iconRender="{ item }">
+            <BulbOutlined v-if="item.key === '1'" style="color: #ffd700" />
+            <InfoCircleOutlined
+              v-else-if="item.key === '2'"
+              style="color: #1890ff"
+            />
+            <RocketOutlined
+              v-else-if="item.key === '3'"
+              style="color: #722ed1"
+            />
+          </template>
+        </ax-prompts>
       </template>
     </SemanticPreview>
-    <Divider :style="{ margin: 0, padding: 0 }" />
+    <a-divider :style="{ margin: 0, padding: 0 }" />
     <SemanticPreview component-name="Prompts" :semantics="nestSemantics">
       <template #default="{ classes }">
-        <Prompts
+        <ax-prompts
           title="✨ Nested Prompts"
           :items="nestItems"
           :classes="classes"

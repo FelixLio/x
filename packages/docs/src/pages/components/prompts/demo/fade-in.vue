@@ -8,9 +8,8 @@ import {
   SmileOutlined,
   WarningOutlined,
 } from "@antdv-next/icons";
-import { Prompts } from "@antdv-next/x";
-import { Button, Flex, Switch, message } from "antdv-next";
-import { h, ref } from "vue";
+import { message } from "antdv-next";
+import { ref } from "vue";
 
 const renderKey = ref(0);
 const fadeInLeft = ref(true);
@@ -18,31 +17,26 @@ const fadeInLeft = ref(true);
 const items: PromptsProps["items"] = [
   {
     key: "1",
-    icon: h(BulbOutlined, { style: { color: "#FFD700" } }),
     label: "Ignite Your Creativity",
     description: "Got any sparks for a new project?",
   },
   {
     key: "2",
-    icon: h(InfoCircleOutlined, { style: { color: "#1890FF" } }),
     label: "Uncover Background Info",
     description: "Help me understand the background of this topic.",
   },
   {
     key: "3",
-    icon: h(RocketOutlined, { style: { color: "#722ED1" } }),
     label: "Efficiency Boost Battle",
     description: "How can I work faster and better?",
   },
   {
     key: "4",
-    icon: h(SmileOutlined, { style: { color: "#52C41A" } }),
     label: "Tell me a Joke",
     description: "Why do not ants get sick? Because they have tiny ant-bodies!",
   },
   {
     key: "5",
-    icon: h(WarningOutlined, { style: { color: "#FF4D4F" } }),
     label: "Common Issue Solutions",
     description: "How to solve common issues? Share some tips!",
   },
@@ -54,24 +48,35 @@ function onItemClick(info: PromptsClickInfo) {
 </script>
 
 <template>
-  <Flex gap="middle" vertical>
-    <Flex gap="middle" align="center">
-      <Switch
+  <a-flex gap="middle" vertical>
+    <a-flex gap="middle" align="center">
+      <a-switch
         v-model:checked="fadeInLeft"
         checked-children="fadeInLeft"
         un-checked-children="fadeIn"
       />
-      <Button @click="renderKey++">Re-Render</Button>
-    </Flex>
-    <Prompts
+      <a-button @click="renderKey++">Re-Render</a-button>
+    </a-flex>
+    <ax-prompts
       :key="renderKey"
       :fade-in="!fadeInLeft"
       :fade-in-left="fadeInLeft"
       title="✨ Inspirational Sparks and Marvelous Tips"
       :items="items"
       @item-click="onItemClick"
-    />
-  </Flex>
+    >
+      <template #iconRender="{ item }">
+        <BulbOutlined v-if="item.key === '1'" style="color: #ffd700" />
+        <InfoCircleOutlined
+          v-else-if="item.key === '2'"
+          style="color: #1890ff"
+        />
+        <RocketOutlined v-else-if="item.key === '3'" style="color: #722ed1" />
+        <SmileOutlined v-else-if="item.key === '4'" style="color: #52c41a" />
+        <WarningOutlined v-else-if="item.key === '5'" style="color: #ff4d4f" />
+      </template>
+    </ax-prompts>
+  </a-flex>
 </template>
 
 <docs lang="zh-CN">

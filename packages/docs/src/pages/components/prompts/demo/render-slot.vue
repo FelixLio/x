@@ -2,8 +2,6 @@
 import type { PromptsProps } from "@antdv-next/x";
 
 import { BulbOutlined } from "@antdv-next/icons";
-import { Prompts } from "@antdv-next/x";
-import { Tag } from "antdv-next";
 
 const items: PromptsProps["items"] = [
   {
@@ -20,13 +18,13 @@ const items: PromptsProps["items"] = [
 </script>
 
 <template>
-  <Prompts title="Quick actions" :items="items">
+  <ax-prompts title="Quick actions" :items="items">
     <template #title="{ originNode }">
       <span>{{ originNode }} by slots</span>
     </template>
 
     <template #iconRender="{ index }">
-      <Tag color="processing">#{{ index + 1 }}</Tag>
+      <a-tag color="processing">#{{ index + 1 }}</a-tag>
     </template>
 
     <template #labelRender="{ item }">
@@ -39,7 +37,7 @@ const items: PromptsProps["items"] = [
     <template #description="{ item }">
       <span style="color: rgba(0, 0, 0, 0.45)">{{ item.description }}</span>
     </template>
-  </Prompts>
+  </ax-prompts>
 </template>
 
 <docs lang="zh-CN">
