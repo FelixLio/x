@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ActionsCopy } from "@antdv-next/x";
-import { Divider } from "antdv-next";
 import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
@@ -27,10 +25,10 @@ const semantics = computed(() => [
 </script>
 
 <template>
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
   <SemanticPreview component-name="ActionsCopy" :semantics="semantics">
     <template #default="{ classes }">
-      <ActionsCopy text="copy value" :classes="classes" />
+      <ax-actions-copy text="antdv next x" :classes="classes" />
     </template>
   </SemanticPreview>
 </template>

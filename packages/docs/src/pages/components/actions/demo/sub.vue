@@ -7,19 +7,15 @@ import {
   RedoOutlined,
   ShareAltOutlined,
 } from "@antdv-next/icons";
-import { Actions } from "@antdv-next/x";
 import { message, Modal } from "antdv-next";
-import { h } from "vue";
 
 const items: ActionsProps["items"] = [
   {
     key: "retry",
     label: "Retry",
-    icon: h(RedoOutlined),
   },
   {
     key: "edit",
-    icon: h(EditOutlined),
     label: "Edit",
   },
   {
@@ -28,16 +24,14 @@ const items: ActionsProps["items"] = [
       {
         key: "share",
         label: "Share",
-        icon: h(ShareAltOutlined),
       },
       {
         key: "import",
-        label: "Import",
+        label: "Import Data",
       },
       {
         key: "delete",
         label: "Delete",
-        icon: h(DeleteOutlined),
         danger: true,
         onItemClick: () => {
           Modal.confirm({
@@ -57,7 +51,6 @@ const items: ActionsProps["items"] = [
   {
     key: "clear",
     label: "Clear",
-    icon: h(DeleteOutlined),
     danger: true,
   },
 ];
@@ -68,7 +61,16 @@ const onClick: ActionsProps["onClick"] = ({ keyPath }) => {
 </script>
 
 <template>
-  <Actions :items="items" :on-click="onClick" />
+  <ax-actions :items="items" :on-click="onClick">
+    <template #iconRender="{ item }">
+      <RedoOutlined v-if="item.key === 'retry'" />
+      <EditOutlined v-else-if="item.key === 'edit'" />
+      <ShareAltOutlined v-else-if="item.key === 'share'" />
+      <DeleteOutlined
+        v-else-if="item.key === 'delete' || item.key === 'clear'"
+      />
+    </template>
+  </ax-actions>
 </template>
 
 <docs lang="zh-CN">

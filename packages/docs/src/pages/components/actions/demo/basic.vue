@@ -10,19 +10,15 @@ Basic usage.
 import type { ActionsProps } from "@antdv-next/x";
 
 import { EditOutlined, RedoOutlined } from "@antdv-next/icons";
-import { Actions } from "@antdv-next/x";
 import { message } from "antdv-next";
-import { h } from "vue";
 
 const items: ActionsProps["items"] = [
   {
     key: "retry",
-    icon: h(RedoOutlined),
     label: "Retry",
   },
   {
     key: "edit",
-    icon: h(EditOutlined),
     label: "Edit",
   },
 ];
@@ -33,5 +29,10 @@ const onClick: ActionsProps["onClick"] = ({ keyPath }) => {
 </script>
 
 <template>
-  <Actions :items="items" :on-click="onClick" />
+  <ax-actions :items="items" @click="onClick">
+    <template #iconRender="{ item }">
+      <RedoOutlined v-if="item.key === 'retry'" />
+      <EditOutlined v-else-if="item.key === 'edit'" />
+    </template>
+  </ax-actions>
 </template>

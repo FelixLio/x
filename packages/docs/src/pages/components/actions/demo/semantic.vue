@@ -2,8 +2,7 @@
 import type { ActionsProps } from "@antdv-next/x";
 
 import { CopyOutlined, ShareAltOutlined } from "@antdv-next/icons";
-import { Actions } from "@antdv-next/x";
-import { computed, h } from "vue";
+import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
 import { useLocale } from "@/composables/use-locale";
@@ -37,7 +36,6 @@ const items: ActionsProps["items"] = [
   {
     key: "copy",
     label: "Copy",
-    icon: h(CopyOutlined),
   },
   {
     key: "more",
@@ -45,9 +43,8 @@ const items: ActionsProps["items"] = [
       {
         key: "share",
         label: "Share",
-        icon: h(ShareAltOutlined),
       },
-      { key: "import", label: "Import" },
+      { key: "import", label: "Import Data" },
     ],
   },
 ];
@@ -56,7 +53,7 @@ const items: ActionsProps["items"] = [
 <template>
   <SemanticPreview component-name="Actions" :semantics="semantics">
     <template #default="{ classes }">
-      <Actions
+      <ax-actions
         :items="items"
         :classes="classes"
         :dropdown-props="{
@@ -64,7 +61,12 @@ const items: ActionsProps["items"] = [
           placement: 'topLeft',
           getPopupContainer: triggerNode => triggerNode.parentElement,
         }"
-      />
+      >
+        <template #iconRender="{ item }">
+          <CopyOutlined v-if="item.key === 'copy'" />
+          <ShareAltOutlined v-else-if="item.key === 'share'" />
+        </template>
+      </ax-actions>
     </template>
   </SemanticPreview>
 </template>

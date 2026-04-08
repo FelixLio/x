@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ShakeOutlined, ShareAltOutlined } from "@antdv-next/icons";
-import { ActionsItem } from "@antdv-next/x";
-import { Divider } from "antdv-next";
-import { computed, h } from "vue";
+import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
 import { useLocale } from "@/composables/use-locale";
@@ -46,52 +44,56 @@ const runningSemantics = computed(() => [
 const errorSemantics = computed(() => [
   { name: "error", desc: semanticLocale.value.error },
 ]);
-
-const defaultIcon = h(ShareAltOutlined);
-const runningIcon = h(ShakeOutlined);
 </script>
 
 <template>
   <SemanticPreview component-name="ActionsItem" :semantics="defaultSemantics">
     <template #default="{ classes }">
-      <ActionsItem :default-icon="defaultIcon" :classes="classes" />
+      <ax-actions-item :classes="classes">
+        <template #defaultIcon>
+          <ShareAltOutlined />
+        </template>
+      </ax-actions-item>
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview component-name="ActionsItem" :semantics="loadingSemantics">
     <template #default="{ classes }">
-      <ActionsItem
-        :default-icon="defaultIcon"
-        status="loading"
-        :classes="classes"
-      />
+      <ax-actions-item status="loading" :classes="classes">
+        <template #defaultIcon>
+          <ShareAltOutlined />
+        </template>
+      </ax-actions-item>
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview component-name="ActionsItem" :semantics="runningSemantics">
     <template #default="{ classes }">
-      <ActionsItem
-        :default-icon="defaultIcon"
-        :running-icon="runningIcon"
-        status="running"
-        :classes="classes"
-      />
+      <ax-actions-item status="running" :classes="classes">
+        <template #defaultIcon>
+          <ShareAltOutlined />
+        </template>
+
+        <template #runningIcon>
+          <ShakeOutlined />
+        </template>
+      </ax-actions-item>
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview component-name="ActionsItem" :semantics="errorSemantics">
     <template #default="{ classes }">
-      <ActionsItem
-        :default-icon="defaultIcon"
-        status="error"
-        :classes="classes"
-      />
+      <ax-actions-item status="error" :classes="classes">
+        <template #defaultIcon>
+          <ShareAltOutlined />
+        </template>
+      </ax-actions-item>
     </template>
   </SemanticPreview>
 </template>

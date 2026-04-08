@@ -2,39 +2,26 @@
 import type { ActionsProps } from "@antdv-next/x";
 
 import { RedoOutlined } from "@antdv-next/icons";
-import { Actions, ActionsCopy } from "@antdv-next/x";
-import { Button, message, Pagination, Space, Switch } from "antdv-next";
-import { computed, h, ref } from "vue";
+import { message } from "antdv-next";
+import { ref } from "vue";
 
 const curPage = ref(1);
 const renderKey = ref(0);
 const fadeInLeft = ref(true);
 
-const items = computed<ActionsProps["items"]>(() => [
+const items: ActionsProps["items"] = [
   {
     key: "pagination",
-    actionRender: () =>
-      h(Pagination, {
-        simple: true,
-        current: curPage.value,
-        onChange: (page: number) => {
-          curPage.value = page;
-        },
-        total: 5,
-        pageSize: 1,
-      }),
   },
   {
     key: "retry",
-    icon: h(RedoOutlined),
     label: "Retry",
   },
   {
     key: "copy",
     label: "Copy",
-    actionRender: () => h(ActionsCopy, { text: "copy value" }),
   },
-]);
+];
 
 const onClick: ActionsProps["onClick"] = ({ keyPath }) => {
   message.success(`you clicked ${keyPath.join(",")}`);
@@ -42,25 +29,41 @@ const onClick: ActionsProps["onClick"] = ({ keyPath }) => {
 </script>
 
 <template>
-  <Space direction="vertical" style="display: flex; width: 100%" :size="12">
-    <Space wrap>
-      <Switch
+  <a-space direction="vertical" style="display: flex; width: 100%" :size="12">
+    <a-space wrap>
+      <a-switch
         v-model:checked="fadeInLeft"
         checked-children="fadeInLeft"
         un-checked-children="fadeIn"
       />
-      <Button @click="renderKey += 1"> Re-Render </Button>
-    </Space>
+      <a-button @click="renderKey += 1"> Re-Render </a-button>
+    </a-space>
 
-    <Actions
+    <ax-actions
       :key="renderKey"
       :fade-in="!fadeInLeft"
       :fade-in-left="fadeInLeft"
       :items="items"
       :on-click="onClick"
       variant="borderless"
-    />
-  </Space>
+    >
+      <template #iconRender="{ item }">
+        <RedoOutlined v-if="item.key === 'retry'" />
+      </template>
+
+      <template #actionRender="{ item }">
+        <a-pagination
+          v-if="item.key === 'pagination'"
+          simple
+          :current="curPage"
+          :total="5"
+          :page-size="1"
+          @change="page => (curPage = page)"
+        />
+        <a-actions-copy v-else-if="item.key === 'copy'" text="antdv next x" />
+      </template>
+    </ax-actions>
+  </a-space>
 </template>
 
 <docs lang="zh-CN">

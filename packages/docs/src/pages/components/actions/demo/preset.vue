@@ -6,15 +6,8 @@ import type {
 } from "@antdv-next/x";
 
 import { CheckOutlined, ShareAltOutlined } from "@antdv-next/icons";
-import {
-  Actions,
-  ActionsAudio,
-  ActionsCopy,
-  ActionsFeedback,
-  ActionsItem,
-} from "@antdv-next/x";
-import { message, Pagination } from "antdv-next";
-import { computed, h, ref } from "vue";
+import { message } from "antdv-next";
+import { computed, ref } from "vue";
 
 const curPage = ref(1);
 const feedbackStatus = ref<ActionsFeedbackProps["value"]>("default");
@@ -43,64 +36,77 @@ function toggleStatus(type: "share" | "audio") {
 const items = computed<ActionsProps["items"]>(() => [
   {
     key: "pagination",
-    actionRender: () =>
-      h(Pagination, {
-        simple: true,
-        current: curPage.value,
-        onChange: (page: number) => {
-          curPage.value = page;
-        },
-        total: 5,
-        pageSize: 1,
-      }),
   },
   {
     key: "feedback",
-    actionRender: () =>
-      h(ActionsFeedback, {
-        value: feedbackStatus.value,
-        styles: {
-          liked: {
-            color: "#f759ab",
-          },
-        },
-        onChange: val => {
-          feedbackStatus.value = val;
-          message.success(`Change feedback value to: ${val}`);
-        },
-      }),
   },
   {
     key: "copy",
     label: "Copy",
-    actionRender: () => h(ActionsCopy, { text: "copy value" }),
   },
   {
     key: "audio",
     label: "Audio",
-    actionRender: () =>
-      h(ActionsAudio, {
-        onClick: () => toggleStatus("audio"),
-        status: audioStatus.value,
-      }),
   },
   {
     key: "share",
     label: "Share",
-    actionRender: () =>
-      h(ActionsItem, {
-        onClick: () => toggleStatus("share"),
-        label: shareStatus.value,
-        status: shareStatus.value,
-        defaultIcon: h(ShareAltOutlined),
-        runningIcon: h(CheckOutlined),
-      }),
   },
 ]);
+
+const handleFeedbackChange = (val: ActionsFeedbackProps["value"]) => {
+  feedbackStatus.value = val;
+  message.success(`Updated antdv next x feedback to: ${val}`);
+};
 </script>
 
 <template>
-  <Actions :items="items" />
+  <ax-actions :items="items">
+    <template #actionRender="{ item }">
+      <a-pagination
+        v-if="item.key === 'pagination'"
+        simple
+        :current="curPage"
+        :total="5"
+        :page-size="1"
+        @change="page => (curPage = page)"
+      />
+
+      <ax-actions-feedback
+        v-else-if="item.key === 'feedback'"
+        :value="feedbackStatus"
+        :styles="{
+          liked: {
+            color: '#f759ab',
+          },
+        }"
+        @change="handleFeedbackChange"
+      />
+
+      <ax-actions-copy v-else-if="item.key === 'copy'" text="antdv next x" />
+
+      <ax-actions-audio
+        v-else-if="item.key === 'audio'"
+        :status="audioStatus"
+        @click="toggleStatus('audio')"
+      />
+
+      <ax-actions-item
+        v-else-if="item.key === 'share'"
+        :label="shareStatus"
+        :status="shareStatus"
+        @click="toggleStatus('share')"
+      >
+        <template #defaultIcon>
+          <ShareAltOutlined />
+        </template>
+
+        <template #runningIcon>
+          <CheckOutlined />
+        </template>
+      </ax-actions-item>
+    </template>
+  </ax-actions>
 </template>
 
 <docs lang="zh-CN">

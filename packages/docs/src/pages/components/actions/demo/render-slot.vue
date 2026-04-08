@@ -8,8 +8,6 @@ import {
   RedoOutlined,
   ShareAltOutlined,
 } from "@antdv-next/icons";
-import { Actions, ActionsCopy, ActionsItem } from "@antdv-next/x";
-import { Divider, Flex, Tag, Typography } from "antdv-next";
 import { ref } from "vue";
 
 const shareStatus = ref<ActionsItemProps["status"]>("default");
@@ -44,26 +42,26 @@ const toggleShare = () => {
 </script>
 
 <template>
-  <Flex vertical gap="middle">
+  <a-flex vertical gap="middle">
     <div>
-      <Typography.Text type="secondary">`iconRender`</Typography.Text>
+      <a-typography-text type="secondary">`iconRender`</a-typography-text>
     </div>
 
-    <Actions :items="iconItems">
+    <ax-actions :items="iconItems">
       <template #iconRender="{ item, index }">
-        <Tag color="processing">#{{ index + 1 }} {{ item.key }}</Tag>
+        <a-tag color="processing">#{{ index + 1 }} {{ item.key }}</a-tag>
       </template>
-    </Actions>
+    </ax-actions>
 
-    <Divider style="margin: 0" />
+    <a-divider style="margin: 0" />
 
     <div>
-      <Typography.Text type="secondary">`actionRender`</Typography.Text>
+      <a-typography-text type="secondary">`actionRender`</a-typography-text>
     </div>
 
-    <Actions :items="actionItems">
+    <ax-actions :items="actionItems">
       <template #actionRender="{ item }">
-        <ActionsItem
+        <ax-actions-item
           v-if="item.key === 'share'"
           :status="shareStatus"
           label="Share"
@@ -78,20 +76,20 @@ const toggleShare = () => {
           <template #runningIcon>
             <CheckOutlined />
           </template>
-        </ActionsItem>
+        </ax-actions-item>
       </template>
-    </Actions>
+    </ax-actions>
 
-    <Divider style="margin: 0" />
+    <a-divider style="margin: 0" />
 
     <div>
-      <Typography.Text type="secondary">
+      <a-typography-text type="secondary">
         `ActionsCopy.iconRender` / `ActionsItem` slots
-      </Typography.Text>
+      </a-typography-text>
     </div>
 
-    <Flex gap="middle">
-      <ActionsCopy text="copy value">
+    <a-flex gap="middle">
+      <ax-actions-copy text="antdv next x">
         <template #iconRender="{ status }">
           <span
             :style="{
@@ -103,11 +101,11 @@ const toggleShare = () => {
             <CopyOutlined v-else />
           </span>
         </template>
-      </ActionsCopy>
+      </ax-actions-copy>
 
-      <ActionsItem
+      <ax-actions-item
         :status="shareStatus"
-        label="Independent Item"
+        label="Independent antdv next x action"
         default-icon="default"
         running-icon="running"
         @click="toggleShare"
@@ -119,9 +117,9 @@ const toggleShare = () => {
         <template #runningIcon>
           <LoadingOutlined />
         </template>
-      </ActionsItem>
-    </Flex>
-  </Flex>
+      </ax-actions-item>
+    </a-flex>
+  </a-flex>
 </template>
 
 <docs lang="zh-CN">

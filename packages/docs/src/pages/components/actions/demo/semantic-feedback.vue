@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ActionsFeedback } from "@antdv-next/x";
-import { Divider } from "antdv-next";
 import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
@@ -50,26 +48,26 @@ const dislikedSemantics = computed(() => [
     :semantics="defaultSemantics"
   >
     <template #default="{ classes }">
-      <ActionsFeedback :classes="classes" />
+      <ax-actions-feedback :classes="classes" />
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview component-name="ActionsFeedback" :semantics="likedSemantics">
     <template #default="{ classes }">
-      <ActionsFeedback value="like" :classes="classes" />
+      <ax-actions-feedback value="like" :classes="classes" />
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview
     component-name="ActionsFeedback"
     :semantics="dislikedSemantics"
   >
     <template #default="{ classes }">
-      <ActionsFeedback value="dislike" :classes="classes" />
+      <ax-actions-feedback value="dislike" :classes="classes" />
     </template>
   </SemanticPreview>
 </template>

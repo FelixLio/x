@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ActionsAudio } from "@antdv-next/x";
-import { Divider } from "antdv-next";
 import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
@@ -50,31 +48,31 @@ const errorSemantics = computed(() => [
 <template>
   <SemanticPreview component-name="ActionsAudio" :semantics="defaultSemantics">
     <template #default="{ classes }">
-      <ActionsAudio :classes="classes" />
+      <ax-actions-audio :classes="classes" />
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview component-name="ActionsAudio" :semantics="loadingSemantics">
     <template #default="{ classes }">
-      <ActionsAudio status="loading" :classes="classes" />
+      <ax-actions-audio status="loading" :classes="classes" />
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview component-name="ActionsAudio" :semantics="runningSemantics">
     <template #default="{ classes }">
-      <ActionsAudio status="running" :classes="classes" />
+      <ax-actions-audio status="running" :classes="classes" />
     </template>
   </SemanticPreview>
 
-  <Divider :style="{ margin: 0, padding: 0 }" />
+  <a-divider :style="{ margin: 0, padding: 0 }" />
 
   <SemanticPreview component-name="ActionsAudio" :semantics="errorSemantics">
     <template #default="{ classes }">
-      <ActionsAudio status="error" :classes="classes" />
+      <ax-actions-audio status="error" :classes="classes" />
     </template>
   </SemanticPreview>
 </template>
