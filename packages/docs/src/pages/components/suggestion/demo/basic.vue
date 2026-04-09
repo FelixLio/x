@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type { SuggestionItem } from "@antdv-next/x";
 
-import { OpenAIFilled } from "@antdv-next/icons";
-import { Sender, Suggestion } from "@antdv-next/x";
+import { BulbOutlined } from "@antdv-next/icons";
 import { message } from "antdv-next";
-import { h, onBeforeUnmount, ref } from "vue";
+import { onBeforeUnmount, ref } from "vue";
 
 const value = ref("");
 const loading = ref(false);
@@ -13,17 +12,16 @@ const items: SuggestionItem[] = [
   { label: "Write a report", value: "report" },
   { label: "Draw a picture", value: "draw" },
   {
-    label: "Check some knowledge",
+    label: "Explore a topic",
     value: "knowledge",
-    icon: h(OpenAIFilled),
     children: [
       {
-        label: "About React",
-        value: "react",
+        label: "About Vue",
+        value: "vue",
       },
       {
-        label: "About Ant Design",
-        value: "antd",
+        label: "About Design Tokens",
+        value: "tokens",
       },
     ],
   },
@@ -64,9 +62,9 @@ const onSenderChange = (
 </script>
 
 <template>
-  <Suggestion :items="items" :on-select="onSelect">
+  <ax-suggestion :items="items" :on-select="onSelect">
     <template #default="{ onTrigger, onKeyDown }">
-      <Sender
+      <ax-sender
         :loading="loading"
         :value="value"
         placeholder="输入 / 获取建议"
@@ -75,7 +73,10 @@ const onSenderChange = (
         :on-submit="onSubmit"
       />
     </template>
-  </Suggestion>
+    <template #iconRender="{ item }">
+      <BulbOutlined v-if="item.value === 'knowledge'" />
+    </template>
+  </ax-suggestion>
 </template>
 
 <docs lang="zh-CN">

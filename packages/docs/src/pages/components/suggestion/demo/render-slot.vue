@@ -2,8 +2,7 @@
 import type { SuggestionItem } from "@antdv-next/x";
 
 import { FireOutlined, SearchOutlined } from "@antdv-next/icons";
-import { Sender, Suggestion } from "@antdv-next/x";
-import { h, ref } from "vue";
+import { ref } from "vue";
 
 const value = ref("");
 
@@ -11,13 +10,11 @@ const items: SuggestionItem[] = [
   {
     label: "Trending topics",
     value: "trending",
-    icon: h(FireOutlined),
     extra: "Hot",
   },
   {
     label: "Search docs",
     value: "docs",
-    icon: h(SearchOutlined),
     extra: "Cmd+K",
   },
 ];
@@ -41,9 +38,9 @@ const onSenderChange = (
 </script>
 
 <template>
-  <Suggestion :items="items" :on-select="onSelect">
+  <ax-suggestion :items="items" :on-select="onSelect">
     <template #default="{ onTrigger, onKeyDown }">
-      <Sender
+      <ax-sender
         :value="value"
         placeholder="输入 / 查看自定义建议项"
         :on-change="(nextValue: string) => onSenderChange(nextValue, onTrigger)"
@@ -52,26 +49,25 @@ const onSenderChange = (
     </template>
 
     <template #iconRender="{ item }">
-      <span style="display: inline-flex; color: #1677ff">
-        #{{ item.value }}
+      <span class="ax-suggestion-item-icon">
+        <FireOutlined v-if="item.value === 'trending'" />
+        <SearchOutlined v-else-if="item.value === 'docs'" />
       </span>
     </template>
 
     <template #labelRender="{ item }">
-      <span>
-        {{ item.label }}
-        <span style="margin-inline-start: 8px; color: rgba(0, 0, 0, 0.45)">
-          /{{ item.value }}
-        </span>
+      <span class="ax-suggestion-item-label">
+        <span>{{ item.label }}</span>
+        <span class="ax-suggestion-item-keyword"> /{{ item.value }} </span>
       </span>
     </template>
 
     <template #extraRender="{ item }">
-      <span style="color: #52c41a; font-size: 12px">
+      <span class="ax-suggestion-item-extra">
         {{ item.extra }}
       </span>
     </template>
-  </Suggestion>
+  </ax-suggestion>
 </template>
 
 <docs lang="zh-CN">
@@ -81,3 +77,25 @@ const onSenderChange = (
 <docs lang="en-US">
 Customize label, icon, and extra areas of each suggestion item with dedicated slots.
 </docs>
+
+<style scoped>
+.ax-suggestion-item-icon {
+  color: #1677ff;
+  display: inline-flex;
+}
+
+.ax-suggestion-item-label {
+  align-items: center;
+  display: inline-flex;
+}
+
+.ax-suggestion-item-keyword {
+  color: rgba(0, 0, 0, 0.45);
+  margin-inline-start: 8px;
+}
+
+.ax-suggestion-item-extra {
+  color: #52c41a;
+  font-size: 12px;
+}
+</style>

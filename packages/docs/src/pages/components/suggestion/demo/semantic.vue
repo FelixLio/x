@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { SuggestionItem } from "@antdv-next/x";
 
-import { OpenAIFilled } from "@antdv-next/icons";
-import { Sender, Suggestion } from "@antdv-next/x";
-import { computed, h } from "vue";
+import { BulbOutlined } from "@antdv-next/icons";
+import { computed } from "vue";
 
 import { SemanticPreview } from "@/components/semantic";
 import { useLocale } from "@/composables/use-locale";
@@ -37,17 +36,16 @@ const items: SuggestionItem[] = [
   { label: "Write a report", value: "report" },
   { label: "Draw a picture", value: "draw" },
   {
-    label: "Check some knowledge",
+    label: "Explore a topic",
     value: "knowledge",
-    icon: h(OpenAIFilled),
     children: [
       {
-        label: "About React",
-        value: "react",
+        label: "About Vue",
+        value: "vue",
       },
       {
-        label: "About Ant Design",
-        value: "antd",
+        label: "About Design Tokens",
+        value: "tokens",
       },
     ],
   },
@@ -64,16 +62,19 @@ const getPopupContainer = (triggerNode: HTMLElement) =>
     :height="300"
   >
     <template #default="{ classes }">
-      <Suggestion
+      <ax-suggestion
         open
         :items="items"
         :classes="classes"
         :get-popup-container="getPopupContainer"
       >
         <template #default="{ onKeyDown }">
-          <Sender placeholder="输入 / 获取建议" :on-key-down="onKeyDown" />
+          <ax-sender placeholder="输入 / 获取建议" :on-key-down="onKeyDown" />
         </template>
-      </Suggestion>
+        <template #iconRender="{ item }">
+          <BulbOutlined v-if="item.value === 'knowledge'" />
+        </template>
+      </ax-suggestion>
     </template>
   </SemanticPreview>
 </template>

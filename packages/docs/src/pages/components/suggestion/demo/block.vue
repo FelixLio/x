@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { SuggestionItem } from "@antdv-next/x";
 
-import { Sender, Suggestion } from "@antdv-next/x";
 import { Tag, message } from "antdv-next";
 import { h, onBeforeUnmount, ref } from "vue";
 
@@ -53,9 +52,9 @@ const onSenderChange = (
 </script>
 
 <template>
-  <Suggestion block :items="items" :on-select="onSelect">
+  <ax-suggestion block :items="items" :on-select="onSelect">
     <template #default="{ onTrigger, onKeyDown }">
-      <Sender
+      <ax-sender
         :loading="loading"
         :value="value"
         placeholder="输入 / 获取建议"
@@ -64,7 +63,7 @@ const onSenderChange = (
         :on-submit="onSubmit"
       />
     </template>
-  </Suggestion>
+  </ax-suggestion>
 </template>
 
 <docs lang="zh-CN">

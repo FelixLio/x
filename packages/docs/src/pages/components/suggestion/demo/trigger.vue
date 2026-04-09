@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Suggestion } from "@antdv-next/x";
 import { Select } from "antdv-next";
 import { ref } from "vue";
 
@@ -33,7 +32,7 @@ const handleKeyDown = (
 </script>
 
 <template>
-  <Suggestion
+  <ax-suggestion
     :items="
       (info?: string) => [
         {
@@ -59,7 +58,10 @@ const handleKeyDown = (
         "
       />
     </template>
-  </Suggestion>
+    <template #labelRender="{ item }">
+      <span class="ax-suggestion-item-label">{{ item.label }}</span>
+    </template>
+  </ax-suggestion>
 </template>
 
 <docs lang="zh-CN">
@@ -69,3 +71,9 @@ const handleKeyDown = (
 <docs lang="en-US">
 Support custom trigger symbols such as `/` and `#` to generate dynamic suggestions.
 </docs>
+
+<style scoped>
+.ax-suggestion-item-label {
+  font-weight: 500;
+}
+</style>
