@@ -177,7 +177,7 @@ describe("FileCard", () => {
     expect(wrapper.find(".custom-icon").exists()).toBe(true);
   });
 
-  it("supports description, mask and iconRender slots", () => {
+  it("supports description, mask and icon slots", () => {
     const wrapper = mount(FileCard, {
       props: {
         name: "test.txt",
@@ -192,7 +192,7 @@ describe("FileCard", () => {
         mask: ({ info }: any) => (
           <span class="slot-mask">{`mask-${info.name}`}</span>
         ),
-        iconRender: ({ info }: any) => (
+        icon: ({ info }: any) => (
           <span class="slot-icon">{`icon-${info.name}`}</span>
         ),
       },

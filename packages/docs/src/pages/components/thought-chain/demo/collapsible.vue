@@ -34,7 +34,7 @@ const items: ThoughtChainProps["items"] = [
             title="Executing command"
             description="mkdir -p component"
           >
-            <template #iconRender>
+            <template #icon>
               <CodeOutlined />
             </template>
           </ax-thought-chain-item>
@@ -47,7 +47,7 @@ const items: ThoughtChainProps["items"] = [
             title="Creating file"
             description="component/index.tsx"
           >
-            <template #iconRender>
+            <template #icon>
               <EditOutlined />
             </template>
           </ax-thought-chain-item>
@@ -60,7 +60,7 @@ const items: ThoughtChainProps["items"] = [
             title="Creating file"
             description="component/index.zh-CN.md"
           >
-            <template #iconRender>
+            <template #icon>
               <EditOutlined />
             </template>
           </ax-thought-chain-item>
@@ -73,7 +73,7 @@ const items: ThoughtChainProps["items"] = [
             title="Creating file"
             description="component/index.en-US.md"
           >
-            <template #iconRender>
+            <template #icon>
               <EditOutlined />
             </template>
           </ax-thought-chain-item>

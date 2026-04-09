@@ -94,13 +94,13 @@ export const XThoughtChainItem = defineComponent({
     return () => {
       const cls = itemPrefixCls.value;
       const statusCls = `${props.prefixCls}-status`;
-      const iconRenderSlot = slots.iconRender ?? slots["icon-render"];
+      const iconSlot = slots.icon;
 
       const originIconNode = props.status
         ? STATUS_ICON_MAP[props.status]
         : props.icon;
-      const iconNode = iconRenderSlot
-        ? iconRenderSlot({
+      const iconNode = iconSlot
+        ? iconSlot({
             originNode: originIconNode,
             status: props.status,
           } as ThoughtChainItemIconSlotInfo)

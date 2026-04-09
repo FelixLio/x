@@ -84,11 +84,11 @@ import { Actions, ActionsCopy } from "@antdv-next/x";
 
 #### ActionsCopy 插槽
 
-| 插槽名       | 说明         | 类型                                     |
-| ------------ | ------------ | ---------------------------------------- |
-| `iconRender` | 复制图标插槽 | `({ originNode, status }) => VNodeChild` |
+| 插槽名 | 说明         | 类型                                     |
+| ------ | ------------ | ---------------------------------------- |
+| `icon` | 复制图标插槽 | `({ originNode, status }) => VNodeChild` |
 
-`status` 取值为 `'default' \| 'copied'`。当传入单个 `icon` 或单个 `iconRender` 结果时，会同时用于默认态和复制成功态；如果你需要区分两种状态，推荐使用 `iconRender` 里的 `status` 参数。
+`status` 取值为 `'default' \| 'copied'`。当传入单个 `icon` 或 `icon` 插槽结果时，会同时用于默认态和复制成功态；如果你需要区分两种状态，推荐使用 `icon` 里的 `status` 参数。
 
 ### ActionsAudio
 

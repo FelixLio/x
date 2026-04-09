@@ -51,7 +51,7 @@ description: 用卡片的形式展示文件。
 | ------------- | -------------- | -------------------------------------- |
 | `description` | 描述区渲染插槽 | `({ info, originNode }) => VNodeChild` |
 | `mask`        | 遮罩区渲染插槽 | `({ info, originNode }) => VNodeChild` |
-| `iconRender`  | 图标渲染插槽   | `({ info, originNode }) => VNodeChild` |
+| `icon`        | 图标渲染插槽   | `({ info, originNode }) => VNodeChild` |
 
 插槽优先级高于同名属性内容；`originNode` 为属性或默认逻辑计算后的原始节点。
 

@@ -11,7 +11,7 @@ import { AndroidOutlined } from "@antdv-next/icons";
     />
 
     <ax-file-card name="antdv-next-x-android.apk" :byte="1024 * 1024">
-      <template #iconRender>
+      <template #icon>
         <AndroidOutlined style="font-size: 36px; color: #22b35e" />
       </template>
     </ax-file-card>

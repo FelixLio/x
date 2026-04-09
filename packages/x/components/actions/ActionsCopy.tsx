@@ -86,25 +86,23 @@ export const XActionsCopy = defineComponent({
       return rest;
     });
 
-    const iconRenderSlot = computed(
-      () => slots.iconRender ?? slots["icon-render"],
-    );
+    const iconSlot = computed(() => slots.icon);
 
     const mergedCopyIcons = computed(() => {
       const [defaultOriginNode, copiedOriginNode] = normalizeCopyIcons(
         props.icon,
       );
 
-      if (!iconRenderSlot.value) {
+      if (!iconSlot.value) {
         return props.icon;
       }
 
       return [
-        iconRenderSlot.value({
+        iconSlot.value({
           originNode: defaultOriginNode,
           status: "default",
         } satisfies ActionsCopyIconSlotInfo),
-        iconRenderSlot.value({
+        iconSlot.value({
           originNode: copiedOriginNode,
           status: "copied",
         } satisfies ActionsCopyIconSlotInfo),

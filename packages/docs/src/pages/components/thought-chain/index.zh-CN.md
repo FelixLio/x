@@ -81,7 +81,7 @@ description: 思维链组件用于可视化和追踪 Agent 对 Actions 和 Tools
 
 | 插槽名        | 说明       | 类型                                     |
 | ------------- | ---------- | ---------------------------------------- |
-| `iconRender`  | 自定义图标 | `({ originNode, status }) => VNodeChild` |
+| `icon`        | 自定义图标 | `({ originNode, status }) => VNodeChild` |
 | `title`       | 自定义标题 | `({ originNode }) => VNodeChild`         |
 | `description` | 自定义描述 | `({ originNode }) => VNodeChild`         |
 

@@ -83,9 +83,9 @@ const role = computed<BubbleListProps["role"]>(() => ({
 </template>
 
 <docs lang="zh-CN">
-`BubbleList` 暴露与 `Bubble` 同名插槽（`contentRender`、`loadingRender`、`avatar`、`header`、`footer`、`extra`），并额外提供 `item/index/role`，方便在列表层统一定制渲染。
+`BubbleList` 暴露列表级插槽（`contentRender`、`loadingRender`、`avatar`、`header`、`footer`、`extra`），并额外提供 `item/index/role`，方便在列表层统一定制渲染。
 </docs>
 
 <docs lang="en-US">
-`BubbleList` exposes Bubble-compatible slot names (`contentRender`, `loadingRender`, `avatar`, `header`, `footer`, `extra`) and provides `item/index/role` for list-level customization.
+`BubbleList` exposes list-level slots (`contentRender`, `loadingRender`, `avatar`, `header`, `footer`, `extra`) and provides `item/index/role` for list-level customization.
 </docs>

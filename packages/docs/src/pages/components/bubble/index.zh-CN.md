@@ -68,17 +68,17 @@ description: 用于聊天消息展示的气泡组件。
 
 #### 插槽
 
-| 插槽            | 说明               | 类型                                |
-| --------------- | ------------------ | ----------------------------------- |
-| `contentRender` | 自定义内容渲染插槽 | `({ content, info }) => VNodeChild` |
-| `loadingRender` | 自定义加载渲染插槽 | `({ content, info }) => VNodeChild` |
-| `header`        | 气泡头部内容       | `(content, info) => VNodeChild`     |
-| `footer`        | 气泡尾部内容       | `(content, info) => VNodeChild`     |
-| `avatar`        | 头像区域           | `(content, info) => VNodeChild`     |
-| `extra`         | 额外内容区域       | `(content, info) => VNodeChild`     |
+| 插槽      | 说明               | 类型                                |
+| --------- | ------------------ | ----------------------------------- |
+| `content` | 自定义内容渲染插槽 | `({ content, info }) => VNodeChild` |
+| `loading` | 自定义加载渲染插槽 | `({ content, info }) => VNodeChild` |
+| `header`  | 气泡头部内容       | `(content, info) => VNodeChild`     |
+| `footer`  | 气泡尾部内容       | `(content, info) => VNodeChild`     |
+| `avatar`  | 头像区域           | `(content, info) => VNodeChild`     |
+| `extra`   | 额外内容区域       | `(content, info) => VNodeChild`     |
 
-内容渲染优先级：`contentRender` 插槽 > `contentRender` 属性 > `content` 属性。
-加载渲染优先级：`loadingRender` 插槽 > `loadingRender` 属性 > 默认 Loading。
+内容渲染优先级：`content` 插槽 > `contentRender` 属性 > `content` 属性。
+加载渲染优先级：`loading` 插槽 > `loadingRender` 属性 > 默认 Loading。
 
 > 推荐优先使用 `BubbleList`、`BubbleSystem`、`BubbleDivider` 导出。`Bubble.List`、`Bubble.System`、`Bubble.Divider` 旧写法仍兼容。
 

@@ -44,7 +44,7 @@ const semantics = computed(() => [
         status="success"
         :classes="classes"
       >
-        <template #iconRender>
+        <template #icon>
           <CodeOutlined />
         </template>
       </ax-thought-chain-item>

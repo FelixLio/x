@@ -136,7 +136,7 @@ function getStatusColor(status?: ThoughtChainItemStatus) {
           ThoughtChain.Item slots
         </a-typography-title>
         <ax-thought-chain-item variant="outlined" status="success">
-          <template #iconRender>
+          <template #icon>
             <CheckCircleTwoTone two-tone-color="#52c41a" />
           </template>
           <template #title>

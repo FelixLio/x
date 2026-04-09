@@ -53,7 +53,7 @@ onBeforeUnmount(() => {
     </a-space>
     <a-typography>
       <ax-bubble :content="content">
-        <template #contentRender="{ content: value }">
+        <template #content="{ content: value }">
           <XMarkdown :content="value" :streaming="streaming" />
         </template>
       </ax-bubble>

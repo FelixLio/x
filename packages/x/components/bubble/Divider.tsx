@@ -69,7 +69,7 @@ export const XBubbleDivider = defineComponent({
         styles={props.styles}
         classes={props.classes}
         v-slots={{
-          contentRender: ({ content }: any) => (
+          content: ({ content }: any) => (
             <Divider {...props.dividerProps}>{content}</Divider>
           ),
         }}

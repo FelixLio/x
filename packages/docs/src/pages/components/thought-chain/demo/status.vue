@@ -67,7 +67,7 @@ async function onClick() {
       {{ loading ? "Running" : "Run Next" }}
     </a-button>
     <ax-thought-chain :items="items">
-      <template #iconRender="{ status }">
+      <template #icon="{ status }">
         <CheckCircleOutlined v-if="status === 'success'" />
         <InfoCircleOutlined v-else-if="status === 'error'" />
         <LoadingOutlined v-else-if="status === 'loading'" />

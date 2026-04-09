@@ -16,7 +16,7 @@ const listItems: FileCardProps[] = [
       :byte="1024 * 1024"
       mask="default mask"
     >
-      <template #iconRender="{ info }">
+      <template #icon="{ info }">
         <a-tag color="processing">{{ info.nameSuffix }}</a-tag>
       </template>
 

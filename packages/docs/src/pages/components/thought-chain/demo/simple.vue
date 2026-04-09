@@ -111,17 +111,17 @@ function onClick() {
       >
       <a-flex wrap align="center" gap="middle">
         <ax-thought-chain-item variant="solid" title="Task Completed">
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
         <ax-thought-chain-item variant="outlined" title="Task Completed">
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
         <ax-thought-chain-item variant="text" title="Task Completed">
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
@@ -139,7 +139,7 @@ function onClick() {
           title="Opening Webpage"
           description="https://x.ant.design/docs/playground/copilot"
         >
-          <template #iconRender>
+          <template #icon>
             <GlobalOutlined />
           </template>
         </ax-thought-chain-item>
@@ -149,7 +149,7 @@ function onClick() {
           title="Creating"
           description="todo.md"
         >
-          <template #iconRender>
+          <template #icon>
             <EditOutlined />
           </template>
         </ax-thought-chain-item>
@@ -159,7 +159,7 @@ function onClick() {
           title="Searching"
           description="Route Information"
         >
-          <template #iconRender>
+          <template #icon>
             <SearchOutlined />
           </template>
         </ax-thought-chain-item>
@@ -170,7 +170,7 @@ function onClick() {
           title="Opening Webpage"
           description="https://x.ant.design/docs/playground/copilot"
         >
-          <template #iconRender>
+          <template #icon>
             <GlobalOutlined />
           </template>
         </ax-thought-chain-item>
@@ -205,7 +205,7 @@ function onClick() {
           variant="solid"
           title="Task Completed"
         >
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
@@ -214,7 +214,7 @@ function onClick() {
           variant="outlined"
           title="Task Completed"
         >
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
@@ -224,7 +224,7 @@ function onClick() {
           title="Task Completed"
           description="Route Information"
         >
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
@@ -242,7 +242,7 @@ function onClick() {
           variant="solid"
           title="Task Completed"
         >
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
@@ -252,7 +252,7 @@ function onClick() {
           variant="outlined"
           title="Task Completed"
         >
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
@@ -263,7 +263,7 @@ function onClick() {
           title="Task Completed"
           description="Route Information"
         >
-          <template #iconRender>
+          <template #icon>
             <SunOutlined />
           </template>
         </ax-thought-chain-item>
@@ -275,7 +275,7 @@ function onClick() {
           title="Opening Webpage"
           description="playground/copilot"
         >
-          <template #iconRender>
+          <template #icon>
             <GlobalOutlined />
           </template>
         </ax-thought-chain-item>
@@ -287,7 +287,7 @@ function onClick() {
           title="Opening Webpage"
           description="playground/copilot"
         >
-          <template #iconRender>
+          <template #icon>
             <GlobalOutlined />
           </template>
         </ax-thought-chain-item>
@@ -299,7 +299,7 @@ function onClick() {
           title="Opening Webpage"
           description="playground/copilot"
         >
-          <template #iconRender>
+          <template #icon>
             <GlobalOutlined />
           </template>
         </ax-thought-chain-item>

@@ -116,14 +116,14 @@ describe("Bubble", () => {
     expect(wrapper.find(".extra-prop").exists()).toBe(false);
   });
 
-  it("supports contentRender slot", () => {
+  it("supports content slot", () => {
     const wrapper = mount(Bubble, {
       props: {
         content: "SlotContent",
         info: { key: "content-key", status: "success" as any },
       },
       slots: {
-        contentRender: ({ content, info }: any) => (
+        content: ({ content, info }: any) => (
           <div class="content-render-slot">{`${content}-${info.key}-${info.status}`}</div>
         ),
       },
@@ -148,7 +148,7 @@ describe("Bubble", () => {
     expect(wrapper.text()).toContain("PropContent-prop-key-success");
   });
 
-  it("prefers contentRender slot over contentRender prop", () => {
+  it("prefers content slot over contentRender prop", () => {
     const wrapper = mount(Bubble, {
       props: {
         content: "PropContent",
@@ -157,7 +157,7 @@ describe("Bubble", () => {
         ),
       },
       slots: {
-        contentRender: () => (
+        content: () => (
           <div class="content-render-slot-priority">slot-render</div>
         ),
       },
@@ -178,14 +178,14 @@ describe("Bubble", () => {
     expect(wrapper.text()).toContain("PlainContent");
   });
 
-  it("supports loadingRender slot", () => {
+  it("supports loading slot", () => {
     const wrapper = mount(Bubble, {
       props: {
         content: "Loading content",
         loading: true,
       },
       slots: {
-        loadingRender: ({ content, info }: any) => (
+        loading: ({ content, info }: any) => (
           <div class="loading-render-slot">{`loading-${content}-${String(info?.status)}`}</div>
         ),
       },
@@ -212,7 +212,7 @@ describe("Bubble", () => {
     expect(wrapper.text()).toContain("loading-Loading content");
   });
 
-  it("prefers loadingRender slot over loadingRender prop", () => {
+  it("prefers loading slot over loadingRender prop", () => {
     const wrapper = mount(Bubble, {
       props: {
         content: "Loading content",
@@ -222,7 +222,7 @@ describe("Bubble", () => {
         ),
       },
       slots: {
-        loadingRender: () => (
+        loading: () => (
           <div class="loading-render-slot-priority">slot-loading</div>
         ),
       },
@@ -265,7 +265,7 @@ describe("Bubble", () => {
         loading: true,
       },
       slots: {
-        loadingRender: () => <div class="custom-loading">Loading...</div>,
+        loading: () => <div class="custom-loading">Loading...</div>,
       },
     });
 
@@ -312,7 +312,7 @@ describe("Bubble", () => {
     expect(wrapper.find(".antd-bubble-end").exists()).toBe(true);
   });
 
-  it("supports contentRender slot with object content", () => {
+  it("supports content slot with object content", () => {
     const complexContent = {
       type: "message",
       text: "Complex",
@@ -323,7 +323,7 @@ describe("Bubble", () => {
         content: complexContent as any,
       },
       slots: {
-        contentRender: ({ content }: any) => (
+        content: ({ content }: any) => (
           <div class="complex-render">{`${content.type}: ${content.text}`}</div>
         ),
       },

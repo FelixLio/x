@@ -84,13 +84,13 @@ const toggleShare = () => {
 
     <div>
       <a-typography-text type="secondary">
-        `ActionsCopy.iconRender` / `ActionsItem` slots
+        `ActionsCopy.icon` / `ActionsItem` slots
       </a-typography-text>
     </div>
 
     <a-flex gap="middle">
       <ax-actions-copy text="antdv next x">
-        <template #iconRender="{ status }">
+        <template #icon="{ status }">
           <span
             :style="{
               display: 'inline-flex',
@@ -123,9 +123,9 @@ const toggleShare = () => {
 </template>
 
 <docs lang="zh-CN">
-通过插槽自定义 Actions、ActionsCopy 与 ActionsItem 的图标和操作渲染。`ActionsCopy.iconRender` 会额外提供 `status`，可区分默认态与复制成功态。
+通过插槽自定义 Actions、ActionsCopy 与 ActionsItem 的图标和操作渲染。`ActionsCopy.icon` 会额外提供 `status`，可区分默认态与复制成功态。
 </docs>
 
 <docs lang="en-US">
-Customize icon and action rendering for Actions, ActionsCopy, and ActionsItem with slots. `ActionsCopy.iconRender` also receives `status` so you can render different icons for the default and copied states.
+Customize icon and action rendering for Actions, ActionsCopy, and ActionsItem with slots. `ActionsCopy.icon` also receives `status` so you can render different icons for the default and copied states.
 </docs>

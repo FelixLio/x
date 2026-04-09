@@ -83,11 +83,11 @@ import { Actions, ActionsCopy } from "@antdv-next/x";
 
 #### ActionsCopy Slots
 
-| Slot Name    | Description    | Type                                     |
-| ------------ | -------------- | ---------------------------------------- |
-| `iconRender` | Copy icon slot | `({ originNode, status }) => VNodeChild` |
+| Slot Name | Description    | Type                                     |
+| --------- | -------------- | ---------------------------------------- |
+| `icon`    | Copy icon slot | `({ originNode, status }) => VNodeChild` |
 
-`status` is `'default' | 'copied'`. When you pass a single `icon` or return a single `iconRender` node, it will be used for both states. If you want different icons for each state, use the `status` field in `iconRender`.
+`status` is `'default' | 'copied'`. When you pass a single `icon` or return a single `icon` slot node, it will be used for both states. If you want different icons for each state, use the `status` field in `icon`.
 
 ### ActionsAudio
 

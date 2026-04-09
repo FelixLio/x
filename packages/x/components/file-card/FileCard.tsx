@@ -431,7 +431,7 @@ export const XFileCard = defineComponent({
           mask={props.mask}
           descriptionRenderSlot={slots.description}
           maskRenderSlot={slots.mask}
-          iconRenderSlot={slots.iconRender}
+          iconSlot={slots.icon}
           classes={mergedClasses.value}
           styles={mergedStyles.value}
         />

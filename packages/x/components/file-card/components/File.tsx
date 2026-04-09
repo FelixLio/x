@@ -29,7 +29,7 @@ export interface FileProps {
   mask?: ExtendNode;
   descriptionRenderSlot?: (info: FileCardSlotInfo) => VNodeChild;
   maskRenderSlot?: (info: FileCardSlotInfo) => VNodeChild;
-  iconRenderSlot?: (info: FileCardSlotInfo) => VNodeChild;
+  iconSlot?: (info: FileCardSlotInfo) => VNodeChild;
 }
 
 const File = defineComponent({
@@ -117,8 +117,8 @@ const File = defineComponent({
       type: Function as PropType<FileProps["maskRenderSlot"]>,
       default: undefined,
     },
-    iconRenderSlot: {
-      type: Function as PropType<FileProps["iconRenderSlot"]>,
+    iconSlot: {
+      type: Function as PropType<FileProps["iconSlot"]>,
       default: undefined,
     },
   },
@@ -206,7 +206,7 @@ const File = defineComponent({
             ...props.styles.icon,
           }}
         >
-          {renderWithSlot(props.iconRenderSlot, iconNode.value)}
+          {renderWithSlot(props.iconSlot, iconNode.value)}
         </div>
         <div class={`${compCls.value}-content`}>
           <div

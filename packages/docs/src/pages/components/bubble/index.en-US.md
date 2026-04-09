@@ -67,17 +67,17 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 #### Slots
 
-| Slot            | Description                | Type                                |
-| --------------- | -------------------------- | ----------------------------------- |
-| `contentRender` | Custom content render slot | `({ content, info }) => VNodeChild` |
-| `loadingRender` | Custom loading render slot | `({ content, info }) => VNodeChild` |
-| `header`        | Bubble header content      | `(content, info) => VNodeChild`     |
-| `footer`        | Bubble footer content      | `(content, info) => VNodeChild`     |
-| `avatar`        | Avatar area                | `(content, info) => VNodeChild`     |
-| `extra`         | Extra content area         | `(content, info) => VNodeChild`     |
+| Slot      | Description                | Type                                |
+| --------- | -------------------------- | ----------------------------------- |
+| `content` | Custom content render slot | `({ content, info }) => VNodeChild` |
+| `loading` | Custom loading render slot | `({ content, info }) => VNodeChild` |
+| `header`  | Bubble header content      | `(content, info) => VNodeChild`     |
+| `footer`  | Bubble footer content      | `(content, info) => VNodeChild`     |
+| `avatar`  | Avatar area                | `(content, info) => VNodeChild`     |
+| `extra`   | Extra content area         | `(content, info) => VNodeChild`     |
 
-Content render priority: `contentRender` slot > `contentRender` prop > `content` prop.
-Loading render priority: `loadingRender` slot > `loadingRender` prop > default Loading.
+Content render priority: `content` slot > `contentRender` prop > `content` prop.
+Loading render priority: `loading` slot > `loadingRender` prop > default Loading.
 
 Prefer `BubbleList`, `BubbleSystem`, and `BubbleDivider` exports. Legacy `Bubble.List`, `Bubble.System`, and `Bubble.Divider` syntax remains compatible.
 

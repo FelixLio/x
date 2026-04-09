@@ -80,7 +80,7 @@ description: The ThoughtChain component is used to visualize and track the call 
 
 | Slot Name     | Description        | Type                                     |
 | ------------- | ------------------ | ---------------------------------------- |
-| `iconRender`  | Custom icon        | `({ originNode, status }) => VNodeChild` |
+| `icon`        | Custom icon        | `({ originNode, status }) => VNodeChild` |
 | `title`       | Custom title       | `({ originNode }) => VNodeChild`         |
 | `description` | Custom description | `({ originNode }) => VNodeChild`         |
 

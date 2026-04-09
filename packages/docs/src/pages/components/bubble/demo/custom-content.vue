@@ -23,7 +23,7 @@ function updateAction() {
 
 <template>
   <ax-bubble :content="content">
-    <template #contentRender="{ content: value }">
+    <template #content="{ content: value }">
       <a-space align="center" :size="10">
         <a-image :width="50" :src="value.imageUrl" :preview="false" />
         <a-typography-text strong>

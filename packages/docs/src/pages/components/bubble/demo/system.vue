@@ -7,13 +7,13 @@ const text = "Hello, this is a system message";
     <ax-bubble-system :content="text" />
 
     <ax-bubble-system variant="outlined" shape="round" :content="text">
-      <template #contentRender="{ content }">
+      <template #content="{ content }">
         <span> {{ content }} <a-typography-link>ok</a-typography-link> </span>
       </template>
     </ax-bubble-system>
 
     <ax-bubble-system variant="borderless" :content="text">
-      <template #contentRender="{ content }">
+      <template #content="{ content }">
         <span>
           {{ content }} <a-typography-link>cancel</a-typography-link>
         </span>

@@ -55,14 +55,14 @@ describe("ActionsCopy", () => {
     expect(wrapper.find(".root-class").exists()).toBe(true);
   });
 
-  it("supports iconRender slot", () => {
+  it("supports icon slot", () => {
     const wrapper = mount(ActionsCopy, {
       props: {
         text: "copy",
         icon: <span class="copy-icon">copy-icon</span>,
       },
       slots: {
-        iconRender: ({ originNode }: any) => (
+        icon: ({ originNode }: any) => (
           <span class="slot-copy-icon">{originNode ? "slot" : "empty"}</span>
         ),
       },
@@ -71,7 +71,7 @@ describe("ActionsCopy", () => {
     expect(wrapper.find(".slot-copy-icon").exists()).toBe(true);
   });
 
-  it("supports status in iconRender slot", async () => {
+  it("supports status in icon slot", async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     const clipboard = navigator.clipboard;
 
@@ -87,7 +87,7 @@ describe("ActionsCopy", () => {
         text: "copy value",
       },
       slots: {
-        iconRender: ({ status }: any) => (
+        icon: ({ status }: any) => (
           <span
             class={
               status === "copied" ? "slot-copy-icon-copied" : "slot-copy-icon"

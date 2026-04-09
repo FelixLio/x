@@ -210,7 +210,7 @@ onBeforeUnmount(() => {
     </a-space>
 
     <ax-bubble :content="content" variant="outlined">
-      <template #contentRender="{ content: value }">
+      <template #content="{ content: value }">
         <XMarkdown
           style="white-space: normal"
           :content="value"

@@ -65,7 +65,7 @@ describe("ThoughtChain.Item", () => {
     expect(wrapper.find(".my-icon").exists()).toBe(true);
   });
 
-  it("supports iconRender, title and description slots", () => {
+  it("supports icon, title and description slots", () => {
     const wrapper = mount(Item, {
       props: {
         title: "Prop Title",
@@ -74,7 +74,7 @@ describe("ThoughtChain.Item", () => {
         status: "success",
       },
       slots: {
-        iconRender: ({ originNode, status }: any) => (
+        icon: ({ originNode, status }: any) => (
           <span class="slot-icon">{`${status}-${originNode ? "origin" : "none"}`}</span>
         ),
         title: ({ originNode }: any) => (

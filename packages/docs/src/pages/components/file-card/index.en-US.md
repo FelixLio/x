@@ -50,7 +50,7 @@ description: Display files in the form of cards.
 | ------------- | ----------------------- | -------------------------------------- |
 | `description` | Description render slot | `({ info, originNode }) => VNodeChild` |
 | `mask`        | Mask render slot        | `({ info, originNode }) => VNodeChild` |
-| `iconRender`  | Icon render slot        | `({ info, originNode }) => VNodeChild` |
+| `icon`        | Icon render slot        | `({ info, originNode }) => VNodeChild` |
 
 Slots take precedence over prop-driven content. `originNode` is the node resolved from props or default rendering.
 

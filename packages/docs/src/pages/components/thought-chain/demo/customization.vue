@@ -59,7 +59,7 @@ const items: ThoughtChainItemType[] = [
             title="Executing command"
             description="mkdir -p component"
           >
-            <template #iconRender>
+            <template #icon>
               <CodeOutlined />
             </template>
           </ax-thought-chain-item>
@@ -71,7 +71,7 @@ const items: ThoughtChainItemType[] = [
             title="Creating file"
             description="component/index.tsx"
           >
-            <template #iconRender>
+            <template #icon>
               <EditOutlined />
             </template>
           </ax-thought-chain-item>
@@ -83,7 +83,7 @@ const items: ThoughtChainItemType[] = [
             title="Continue creating file"
             description="component/index.zh-CN.md"
           >
-            <template #iconRender>
+            <template #icon>
               <EditOutlined />
             </template>
           </ax-thought-chain-item>
@@ -95,7 +95,7 @@ const items: ThoughtChainItemType[] = [
             title="Continue creating file"
             description="component/index.en-US.md"
           >
-            <template #iconRender>
+            <template #icon>
               <EditOutlined />
             </template>
           </ax-thought-chain-item>

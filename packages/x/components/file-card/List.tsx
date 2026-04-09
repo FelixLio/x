@@ -262,7 +262,7 @@ export const XFileCardList = defineComponent({
                         index: itemIndex,
                       } as FileCardListSlotInfo)
                   : undefined,
-                iconRender: slots.iconRender
+                icon: slots.iconRender
                   ? (slotInfo: FileCardSlotInfo) =>
                       slots.iconRender?.({
                         ...slotInfo,

@@ -323,21 +323,17 @@ export const XBubbleList = defineComponent({
               };
 
               if (slots.contentRender) {
-                bubbleSlots.contentRender = bindListSlot("contentRender");
+                bubbleSlots.content = bindListSlot("contentRender");
               } else if (contentRender) {
-                bubbleSlots.contentRender = ({
-                  content,
-                  info: bubbleInfo,
-                }: any) => contentRender(content, bubbleInfo);
+                bubbleSlots.content = ({ content, info: bubbleInfo }: any) =>
+                  contentRender(content, bubbleInfo);
               }
 
               if (slots.loadingRender) {
-                bubbleSlots.loadingRender = bindListSlot("loadingRender");
+                bubbleSlots.loading = bindListSlot("loadingRender");
               } else if (loadingRender) {
-                bubbleSlots.loadingRender = ({
-                  content,
-                  info: bubbleInfo,
-                }: any) => loadingRender(content, bubbleInfo);
+                bubbleSlots.loading = ({ content, info: bubbleInfo }: any) =>
+                  loadingRender(content, bubbleInfo);
               }
 
               for (const name of bubbleSlotNames) {

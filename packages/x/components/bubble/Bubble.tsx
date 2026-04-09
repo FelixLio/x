@@ -164,8 +164,8 @@ export const XBubble = defineComponent({
     });
 
     const memoedContent = computed(() => {
-      if (slots.contentRender) {
-        const slotNode = slots.contentRender({
+      if (slots.content) {
+        const slotNode = slots.content({
           content: props.content,
           info: props.info,
         });
@@ -317,8 +317,8 @@ export const XBubble = defineComponent({
 
     const renderContent = () => {
       if (props.loading) {
-        if (slots.loadingRender) {
-          const slotNode = slots.loadingRender({
+        if (slots.loading) {
+          const slotNode = slots.loading({
             content: props.content,
             info: props.info,
           });
