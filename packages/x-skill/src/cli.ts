@@ -11,15 +11,15 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import SkillLoader from "./getSkillRepo";
-import HelpManager from "./help";
+import SkillLoader from "./getSkillRepo.js";
+import HelpManager from "./help.js";
 import {
   emojis,
   getMessage,
   type Language,
   type LocaleMessages,
   messages,
-} from "./locale/index";
+} from "./locale/index.js";
 
 interface SkillConfig {
   targets: {
