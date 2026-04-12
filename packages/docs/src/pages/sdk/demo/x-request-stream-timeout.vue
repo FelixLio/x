@@ -14,7 +14,7 @@ const PATH = "/chat";
 const ND_JSON_SEPARATOR = "\n\n";
 
 async function mockFetch() {
-  const sseData = `data: {"id":"0","choices":[{"index":0,"delta":{"content":"Hello","role":"assistant"}}],"created":1733129200,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"1","choices":[{"index":1,"delta":{"content":"world!","role":"assistant"}}],"created":1733129300,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"2","choices":[{"index":2,"delta":{"content":"I","role":"assistant"}}],"created":1733129400,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"3","choices":[{"index":3,"delta":{"content":"am","role":"assistant"}}],"created":1733129500,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"4","choices":[{"index":4,"delta":{"content":"Ant Design X!","role":"assistant"}}],"created":1733129600,"model":"gpt-4o"}`;
+  const sseData = `data: {"id":"0","choices":[{"index":0,"delta":{"content":"Hello","role":"assistant"}}],"created":1733129200,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"1","choices":[{"index":1,"delta":{"content":"world!","role":"assistant"}}],"created":1733129300,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"2","choices":[{"index":2,"delta":{"content":"I","role":"assistant"}}],"created":1733129400,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"3","choices":[{"index":3,"delta":{"content":"am","role":"assistant"}}],"created":1733129500,"model":"gpt-4o"}${ND_JSON_SEPARATOR}data: {"id":"4","choices":[{"index":4,"delta":{"content":"Antv Next X!","role":"assistant"}}],"created":1733129600,"model":"gpt-4o"}`;
   const chunks = sseData.split(ND_JSON_SEPARATOR);
   const response = new Response(
     new ReadableStream({

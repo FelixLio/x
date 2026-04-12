@@ -7,7 +7,7 @@ import Conversations from "../index";
 const items = [
   {
     key: "demo1",
-    label: "What is Ant Design X ?",
+    label: "What is Antv Next X ?",
     icon: h("div", { class: "conversation-icon" }, "icon"),
     group: "pinned",
   },
@@ -86,7 +86,7 @@ describe("Conversations", () => {
 
     const active = wrapper.find(".antd-conversations-item-active");
     expect(active.exists()).toBe(true);
-    expect(active.text()).toContain("What is Ant Design X ?");
+    expect(active.text()).toContain("What is Antv Next X ?");
   });
 
   it("handles controlled activeKey", async () => {
@@ -100,7 +100,7 @@ describe("Conversations", () => {
     );
 
     expect(wrapper.find(".antd-conversations-item-active").text()).toContain(
-      "What is Ant Design X ?",
+      "What is Antv Next X ?",
     );
 
     await wrapper.setProps({ activeKey: "demo4" });
@@ -128,7 +128,7 @@ describe("Conversations", () => {
       "demo1",
       expect.objectContaining({
         key: "demo1",
-        label: "What is Ant Design X ?",
+        label: "What is Antv Next X ?",
       }),
     );
 
@@ -230,7 +230,7 @@ describe("Conversations", () => {
         item: expect.objectContaining({ key: "demo1" }),
         index: 0,
         active: true,
-        originNode: "What is Ant Design X ?",
+        originNode: "What is Antv Next X ?",
       }),
     );
   });
@@ -270,7 +270,7 @@ describe("Conversations", () => {
       }),
     );
 
-    expect(wrapper.text()).toContain("What is Ant Design X ?");
+    expect(wrapper.text()).toContain("What is Antv Next X ?");
     expect(wrapper.find(".conversation-icon").exists()).toBe(true);
   });
 
@@ -286,7 +286,7 @@ describe("Conversations", () => {
     );
 
     expect(wrapper.find(".conversation-icon").exists()).toBe(false);
-    expect(wrapper.text()).not.toContain("What is Ant Design X ?");
+    expect(wrapper.text()).not.toContain("What is Antv Next X ?");
   });
 
   it("supports grouping and custom group label", () => {

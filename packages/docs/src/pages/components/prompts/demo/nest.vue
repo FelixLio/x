@@ -41,7 +41,7 @@ const items: PromptsProps["items"] = [
     label: "Start Creating",
     description: "How to start a new project?",
     children: [
-      { key: "3-1", label: "Fast Start", description: "Install Ant Design X" },
+      { key: "3-1", label: "Fast Start", description: "Install Antv Next X" },
       {
         key: "3-2",
         label: "Online Playground",

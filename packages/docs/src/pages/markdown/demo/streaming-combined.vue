@@ -201,7 +201,7 @@ const runStream = () => {
 
       <a-flex style="flex: 1; min-height: 0; overflow: auto">
         <ax-bubble :content="text.slice(0, index)">
-          <template #contentRender="{ content }">
+          <template #content="{ content }">
             <XMarkdown
               :class-name="markdownClass"
               :content="content"

@@ -16,11 +16,11 @@ import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { useDarkMode } from "@/composables/use-dark-mode";
 
 const text = `
-# Ant Design X: AI Conversation UI Framework
+# Antv Next X: AI Conversation UI Framework
 
 > "Easily build AI-driven interfaces"
 >
-> — Ant Design X Team
+> — Antv Next X Team
 
 ## Features
 
@@ -44,7 +44,7 @@ Based on the RICH interaction paradigm:
 - **Conversations**: Conversation history management
 - **Welcome**: Welcome screen component
 
-> Ant Design X is more than just a component library—it's a complete solution for building AI-powered applications.
+> Antv Next X is more than just a component library—it's a complete solution for building AI-powered applications.
 `;
 
 const { Text } = Typography;
@@ -208,7 +208,7 @@ const runStream = () => {
         variant="borderless"
         :content="text.slice(0, index)"
       >
-        <template #contentRender="{ content }">
+        <template #content="{ content }">
           <XMarkdown
             :content="content"
             :debug="enableDebug"

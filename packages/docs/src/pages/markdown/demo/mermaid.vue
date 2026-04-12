@@ -199,7 +199,7 @@ const rerender = () => {
       :styles="{ content: { width: '700px' } }"
       variant="outlined"
     >
-      <template #contentRender="{ content }">
+      <template #content="{ content }">
         <XMarkdown
           :content="content"
           :components="components"

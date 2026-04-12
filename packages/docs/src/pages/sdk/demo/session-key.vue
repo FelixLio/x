@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import type {
-  ConversationItemType,
-  ConversationsProps,
-  SenderRef,
-} from "@antdv-next/x";
+import type { ConversationItemType, SenderRef } from "@antdv-next/x";
 import type {
   DefaultMessageInfo,
   SSEFields,
@@ -19,7 +15,7 @@ import {
   useXConversations,
   XRequest,
 } from "@antdv-next/x-sdk";
-import { Flex, Typography, theme } from "antdv-next";
+import { Flex, theme, Typography } from "antdv-next";
 import { computed, ref, watch } from "vue";
 
 import { useLocale } from "@/composables/use-locale";
@@ -44,9 +40,9 @@ const locale = computed(() => {
     thinking: isCN ? "思考中" : "Thinking",
     requestAborted: isCN ? "请求已中止" : "Request aborted",
     somethingWrong: isCN ? "出了点问题" : "Something went wrong",
-    welcomeTitle: "Hello, I'm Ant Design X",
+    welcomeTitle: "Hello, I'm Antv Next X",
     welcomeDescription: isCN
-      ? "基于 Ant Design 的 AGI 产品界面解决方案，构建更好的智能交互体验。"
+      ? "基于 Antv Next X 的 AGI 产品界面解决方案，构建更好的智能交互体验。"
       : "Base on Ant Design, AGI product interface solution, create a better intelligent vision~",
   };
 });
@@ -259,7 +255,7 @@ function handleSubmit(value: string) {
           <Flex gap="small" :style="{ maxWidth: '426px' }">
             <img
               src="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
-              alt="Ant Design X"
+              alt="Antv Next X"
               :style="{ width: '64px', height: '64px' }"
             />
             <Flex vertical gap="small">

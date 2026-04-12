@@ -12,7 +12,7 @@ const referenceList = [
 const source = `
 # Custom Footnote Plugin
 
-Ant Design X provides extensible Markdown rendering[^1], so you can add plugins and map them to business components[^2].
+Antdv Next X provides extensible Markdown rendering[^1], so you can add plugins and map them to business components[^2].
 
 - Parse custom syntax
 - Render business UI

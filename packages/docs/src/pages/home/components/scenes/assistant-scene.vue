@@ -247,7 +247,7 @@ const placeholderMessage = computed<BubbleItemType>(() => ({
   content: h(Welcome, {
     icon: h("img", {
       src: "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp",
-      alt: "Ant Design X",
+      alt: "Antv Next X",
     }),
     variant: "borderless",
     title: t("home.scenes.greetingShort"),

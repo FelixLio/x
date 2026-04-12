@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import type {
-  ConversationItemType,
-  ConversationsProps,
-  SenderRef,
-} from "@antdv-next/x";
+import type { ConversationItemType, SenderRef } from "@antdv-next/x";
 import type {
   DefaultMessageInfo,
   SSEFields,
@@ -229,7 +225,7 @@ function handleSubmit(value: string) {
           v-if="activeConversationKey === DEFAULT_KEY"
           variant="borderless"
           icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
-          title="Hello, I'm Ant Design X"
+          title="Hello, I'm Antv Next X"
           description="Base on Ant Design, AGI product interface solution, create a better intelligent vision~"
         />
         <BubbleList

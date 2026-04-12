@@ -19,7 +19,7 @@ async function mockFetch() {
     `{data:{"id":"1","choices":[{"index":1,"delta":{"content":"world!","role":"assistant"}}],"created":1733129300,"model":"gpt-4o"}}`,
     `{data:{"id":"2","choices":[{"index":2,"delta":{"content":"I","role":"assistant"}}],"created":1733129400,"model":"gpt-4o"}}`,
     `{data:{"id":"3","choices":[{"index":3,"delta":{"content":"am","role":"assistant"}}],"created":1733129500,"model":"gpt-4o"}}`,
-    `{data:{"id":"4","choices":[{"index":4,"delta":{"content":"Ant Design X!","role":"assistant"}}],"created":1733129600,"model":"gpt-4o"}}`,
+    `{data:{"id":"4","choices":[{"index":4,"delta":{"content":"Antv Next X!","role":"assistant"}}],"created":1733129600,"model":"gpt-4o"}}`,
   ];
   const response = new Response(
     new ReadableStream({

@@ -331,7 +331,7 @@ const rerender = () => {
     </Flex>
 
     <Bubble :content="text.slice(0, index)" variant="outlined">
-      <template #contentRender="{ content }">
+      <template #content="{ content }">
         <XMarkdown
           :content="content"
           :config="markdownConfig"

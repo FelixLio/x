@@ -52,7 +52,7 @@ console.log(message);
 | Parse | Done |
 | Render | Running |
 
-[Link example](https://x.ant.design/x-markdowns/introduce)
+[Link example](https://x.antdv-next.com/markdown)
 
 ## HTML and Security
 <div style="padding: 8px; border: 1px solid #aaa;">

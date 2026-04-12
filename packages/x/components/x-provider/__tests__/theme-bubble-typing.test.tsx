@@ -25,7 +25,7 @@ describe("XProvider theme Bubble typing token", () => {
                 }}
               >
                 <Bubble
-                  content={"Ant Design X - Better UI toolkit. ".repeat(4)}
+                  content={"Antv Next X - Better UI toolkit. ".repeat(4)}
                   typing={{ effect: "typing", step: 1, interval: 100 }}
                 />
               </XProvider>
@@ -61,7 +61,7 @@ describe("XProvider theme Bubble typing token", () => {
               }}
             >
               <Bubble
-                content={"Ant Design X - Better UI toolkit. ".repeat(4)}
+                content={"Antv Next X - Better UI toolkit. ".repeat(4)}
                 typing={{ effect: "typing", step: 1, interval: 100 }}
               />
             </XProvider>
@@ -102,7 +102,7 @@ describe("XProvider theme Bubble typing token", () => {
                 }}
               >
                 <Bubble
-                  content={"Ant Design X - Better UI toolkit. ".repeat(4)}
+                  content={"Antv Next X - Better UI toolkit. ".repeat(4)}
                   typing={{ effect: "typing", step: 1, interval: 100 }}
                 />
               </XProvider>

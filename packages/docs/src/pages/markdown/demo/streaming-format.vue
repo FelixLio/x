@@ -10,7 +10,7 @@ import { useDarkMode } from "@/composables/use-dark-mode";
 const demos = [
   {
     title: "Mixed Syntax",
-    content: `## Ant Design X
+    content: `## Antdv Next X
 
 ![Logo](https://mdn.alipayobjects.com/huamei_yz9z7c/afts/img/0lMhRYbo0-8AAAAAQDAAAAgADlJoAQFr/original)
 
@@ -30,22 +30,21 @@ UI components, streaming Markdown, and AI SDK in one toolkit.
 | @antdv-next/x-markdown | Streaming Markdown |
 | @antdv-next/x-sdk | Tools & APIs |
 
-<welcome data-icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp" title="Hello, I'm Ant Design X" data-description="AGI interface solution based on Ant Design"></welcome>
+<welcome data-icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp" title="Hello, I'm Antdv Next X" data-description="AI interface solution based on Antdv Next"></welcome>
 `,
   },
   {
     title: "Link Syntax",
-    content: "Learn more: [Ant Design X](https://github.com/ant-design/x).",
+    content: "Learn more: [Antdv Next X](https://github.com/antdv-next/x).",
   },
   {
     title: "Image Syntax",
-    content:
-      "![Ant Design X](https://mdn.alipayobjects.com/huamei_yz9z7c/afts/img/0lMhRYbo0-8AAAAAQDAAAAgADlJoAQFr/original)",
+    content: "![Antdv Next X](https://x.antdv-next.com/x.svg)",
   },
   {
     title: "Html",
     content:
-      '<welcome data-icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp" title="Hello, I\'m Ant Design X" data-description="AGI interface solution based on Ant Design"></welcome>',
+      '<welcome data-icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp" title="Hello, I\'m Antdv Next X" data-description="AI interface solution based on Antdv Next"></welcome>',
   },
   {
     title: "Table",
@@ -255,7 +254,7 @@ const WelcomeCard = defineComponent({
       const icon =
         String(attrs["data-icon"] ?? attrs.icon ?? "") ||
         "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp";
-      const title = String(attrs.title ?? "") || "Hello, I'm Ant Design X";
+      const title = String(attrs.title ?? "") || "Hello, I'm Antdv Next X";
       const description =
         String(attrs["data-description"] ?? attrs.description ?? "") ||
         "AGI interface solution based on Ant Design";

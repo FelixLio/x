@@ -14,7 +14,7 @@ import {
   type VNode,
 } from "vue";
 
-const text = `Ant Financial has a large number of enterprise-level products.<sup>1</sup> With complex scenarios, designers and developers often need to respond fast due to frequent changes in product demands and concurrent R & D workflow.<sup>2</sup> Many similar contents exist in the process. Through abstraction, we could obtain some stable and highly reusable components and pages.<sup>3</sup>`;
+const text = `Antdv Next X serves AI-native scenarios with reusable interaction components and patterns.<sup>1</sup> In rapidly evolving product cycles, designers and developers need to iterate quickly while maintaining consistency.<sup>2</sup> Through abstraction and composability, teams can build stable, reusable pages and workflows faster.<sup>3</sup>`;
 
 function extractText(nodes: VNode[]): string {
   return nodes
@@ -31,19 +31,19 @@ const items: SourcesProps["items"] = [
   {
     title: "1. Data source",
     key: 1,
-    url: "https://x.ant.design/components/overview",
+    url: "https://x.antdv-next.com/components/introduce/",
     description:
       "Artificial Intelligence, often abbreviated as AI, is a broad branch of computer science concerned with building smart machines capable of performing tasks that typically require human intelligence.",
   },
   {
     title: "2. Data source",
     key: 2,
-    url: "https://x.ant.design/components/overview",
+    url: "https://x.antdv-next.com/markdown",
   },
   {
     title: "3. Data source",
     key: 3,
-    url: "https://x.ant.design/components/overview",
+    url: "https://github.com/antdv-next/x",
   },
 ];
 
@@ -130,7 +130,7 @@ const rerender = () => {
     </Flex>
 
     <Bubble :content="text.slice(0, index)" variant="outlined">
-      <template #contentRender="{ content }">
+      <template #content="{ content }">
         <XMarkdown
           :content="content"
           :components="components"

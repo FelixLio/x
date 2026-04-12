@@ -197,7 +197,7 @@ const rerender = () => {
     </a-flex>
 
     <ax-bubble :content="text.slice(0, index)" variant="outlined">
-      <template #contentRender="{ content }">
+      <template #content="{ content }">
         <XMarkdown
           :content="content"
           :components="components"
