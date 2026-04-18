@@ -1,10 +1,10 @@
 import type { MermaidConfig } from "mermaid";
 import type {
   CSSProperties,
+  HTMLAttributes,
   PropType,
   StyleValue,
   VNodeChild,
-  HTMLAttributes,
 } from "vue";
 
 import {
@@ -516,6 +516,7 @@ const XMermaid = defineComponent({
           securityLevel: "strict",
           theme: "default",
           fontFamily: "monospace",
+          suppressErrorRendering: true,
           ...nextConfig,
         });
       },
